@@ -2117,20 +2117,485 @@ window.b4AnalyzeAvatar = async function() {
       
       <!-- SECTION: CONTENT PERFORMANCE -->
       <section class="section" id="section-content">
-        <div class="section-header">
-          <h1 class="section-title">Content Performance</h1>
-          <p class="section-desc">Instagram · Análisis manual · Trial Reels</p>
+<style>
+.b5-title{font-size:24px;font-weight:600;color:#f0f0f8;letter-spacing:-0.3px;margin-bottom:4px;}
+.b5-desc{font-size:13px;color:#9090b0;}
+.b5-tabs{display:flex;gap:4px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.b5-tab{font-size:13px;padding:6px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.10);background:#0a0a0f;color:#9090b0;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 120ms ease;}
+.b5-tab.on{background:#7c6fe0;color:#fff;border-color:#7c6fe0;}
+.b5-tab:hover:not(.on){background:rgba(255,255,255,0.05);color:#f0f0f8;}
+.b5-page{display:none;}
+.b5-page.on{display:block;}
+.b5-toast{background:#085041;color:#9FE1CB;font-size:13px;padding:7px 14px;border-radius:8px;margin-bottom:1rem;display:none;}
+.b5-card{background:#16161f;border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.b5-card-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:8px;}
+.b5-card-title{font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#9090b0;letter-spacing:.1em;text-transform:uppercase;}
+.b5-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:20px;}
+.b5-mc{background:#16161f;border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px 18px;transition:background 120ms ease;}
+.b5-mc:hover{background:#1c1c28;}
+.b5-mc-lbl{display:flex;align-items:center;gap:6px;font-size:10px;font-family:'DM Mono',monospace;font-weight:500;color:#55556a;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.b5-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.b5-dot.p{background:#7c6fe0;box-shadow:0 0 6px #7c6fe0;}
+.b5-dot.g{background:#1db87a;box-shadow:0 0 6px #1db87a;}
+.b5-dot.b{background:#3d9de8;box-shadow:0 0 6px #3d9de8;}
+.b5-dot.a{background:#e8a830;box-shadow:0 0 6px #e8a830;}
+.b5-mc-val{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;letter-spacing:-0.5px;line-height:1;}
+.b5-mc-val.p{color:#7c6fe0;}.b5-mc-val.g{color:#1db87a;}.b5-mc-val.b{color:#3d9de8;}.b5-mc-val.a{color:#e8a830;}
+.b5-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.b5-fg{display:flex;flex-direction:column;gap:4px;}
+.b5-fg.full{grid-column:1/-1;}
+.b5-fg label{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;}
+.b5-fg input,.b5-fg select,.b5-fg textarea{font-size:13px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;font-family:'DM Sans',sans-serif;}
+.b5-fg textarea{resize:vertical;min-height:60px;}
+.b5-num-card{background:#12121a;border:1px solid rgba(255,255,255,.10);border-radius:8px;padding:.75rem;}
+.b5-num-card label{font-size:11px;color:#9090b0;text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:4px;font-family:'DM Mono',monospace;}
+.b5-num-card input{font-size:16px;font-weight:500;width:100%;border:none;background:transparent;color:#f0f0f8;outline:none;font-family:'DM Mono',monospace;}
+.b5-metrics-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:1rem 0;}
+.b5-btn-pri{background:#7c6fe0;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background 120ms ease;display:inline-flex;align-items:center;gap:5px;}
+.b5-btn-pri:hover{background:#6a5ed0;}
+.b5-btn-sec{background:#12121a;color:#f0f0f8;border:1px solid rgba(255,255,255,.10);padding:7px 14px;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;}
+.b5-post-item{background:#12121a;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:.85rem 1rem;margin-bottom:7px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:background 120ms ease;}
+.b5-post-item:hover{background:rgba(255,255,255,.04);}
+.b5-badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;flex-shrink:0;}
+.b5-b-reel{background:rgba(124,111,224,.15);color:#7c6fe0;}
+.b5-b-post{background:rgba(61,157,232,.15);color:#3d9de8;}
+.b5-b-carrusel{background:rgba(29,184,122,.15);color:#1db87a;}
+.b5-b-historia{background:rgba(212,83,126,.15);color:#D4537E;}
+.b5-item-cap{font-size:13px;color:#f0f0f8;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.b5-item-views{font-size:13px;font-weight:500;color:#7c6fe0;flex-shrink:0;font-family:'DM Mono',monospace;}
+.b5-item-eng{font-size:12px;color:#9090b0;flex-shrink:0;width:44px;text-align:right;font-family:'DM Mono',monospace;}
+.b5-del-btn{font-size:11px;padding:2px 7px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:transparent;color:#55556a;cursor:pointer;flex-shrink:0;}
+.b5-del-btn:hover{color:#e85555;border-color:#e85555;}
+.b5-detail-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:1rem;}
+.b5-dc{background:rgba(255,255,255,.04);border-radius:8px;padding:.6rem .75rem;}
+.b5-dc-lbl{font-size:10px;color:#9090b0;margin-bottom:2px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.04em;}
+.b5-dc-val{font-size:16px;font-weight:500;color:#f0f0f8;font-family:'DM Mono',monospace;}
+.b5-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.b5-ccard{background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:1rem 1.25rem;}
+.b5-ctitle{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:#9090b0;margin-bottom:.25rem;font-family:'DM Mono',monospace;}
+.b5-csub{font-size:11px;color:#55556a;margin-bottom:.75rem;}
+.b5-legend{display:flex;gap:10px;margin-bottom:8px;font-size:11px;color:#9090b0;flex-wrap:wrap;align-items:center;}
+.b5-lsq{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:3px;}
+.b5-ldash{width:16px;height:2px;border-top:2px dashed #888;display:inline-block;margin-right:3px;vertical-align:middle;}
+.b5-scatter-wrap{position:relative;}
+.b5-tip{position:absolute;background:#16161f;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 14px;font-size:12px;pointer-events:none;z-index:10;min-width:160px;display:none;}
+.b5-tip-title{font-size:13px;font-weight:500;color:#f0f0f8;margin-bottom:5px;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.b5-tip-row{display:flex;justify-content:space-between;gap:14px;margin-bottom:2px;}
+.b5-tip-lbl{color:#9090b0;}.b5-tip-val{font-weight:500;color:#f0f0f8;}
+.b5-top5-item{background:#12121a;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:.85rem 1rem;margin-bottom:7px;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.b5-top5-item:hover{background:rgba(255,255,255,.04);}
+.b5-rank{font-size:12px;color:#55556a;width:18px;flex-shrink:0;font-family:'DM Mono',monospace;}
+.b5-ai-panel{background:#12121a;border:1px solid rgba(255,255,255,.10);border-radius:12px;padding:1.25rem;margin-top:1rem;display:none;}
+.b5-ai-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#7c6fe0;font-weight:500;margin-bottom:.5rem;font-family:'DM Mono',monospace;}
+.b5-ai-txt{font-size:13px;color:#f0f0f8;line-height:1.7;white-space:pre-wrap;}
+.b5-apikey{font-size:13px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;width:100%;max-width:380px;margin-bottom:.75rem;font-family:'DM Mono',monospace;}
+.b5-spinner{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:b5spin .7s linear infinite;vertical-align:middle;margin-right:5px;}
+@keyframes b5spin{to{transform:rotate(360deg);}}
+.b5-copy-block{margin-top:1rem;display:none;}
+.b5-copy-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#9090b0;font-weight:500;margin-bottom:4px;font-family:'DM Mono',monospace;}
+.b5-copy-text{font-size:13px;color:#f0f0f8;background:rgba(255,255,255,.04);border-radius:8px;padding:.75rem 1rem;line-height:1.6;}
+.b5-seg-hist-item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.b5-empty{text-align:center;padding:2rem;color:#55556a;font-size:13px;}
+</style>
+ 
+<!-- HEADER -->
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:24px;">
+  <div>
+    <h1 class="b5-title">Content Performance</h1>
+    <p class="b5-desc">Instagram · Análisis manual de publicaciones · Seguidores</p>
+  </div>
+  <button class="b5-btn-sec" onclick="b5ExportAll()">↓ Exportar datos</button>
+</div>
+ 
+<div id="b5-toast" class="b5-toast"></div>
+ 
+<!-- TABS -->
+<div class="b5-tabs">
+  <button class="b5-tab on" onclick="b5GoPage('dashboard',this)">Dashboard</button>
+  <button class="b5-tab"    onclick="b5GoPage('agregar',this)">+ Agregar post</button>
+  <button class="b5-tab"    onclick="b5GoPage('seguidores',this)">+ Seguidores</button>
+  <button class="b5-tab"    onclick="b5GoPage('posts',this)">Mis posts</button>
+  <button class="b5-tab"    onclick="b5GoPage('individual',this)">Análisis individual</button>
+</div>
+ 
+<!-- PAGE: DASHBOARD -->
+<div id="b5-pg-dashboard" class="b5-page on">
+  <div id="b5-empty-dash" style="background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:2.5rem;text-align:center;margin-bottom:16px;">
+    <p style="font-size:13px;color:#9090b0;margin-bottom:.75rem;">Todavía no hay posts. Empezá agregando tu primera publicación.</p>
+    <button class="b5-btn-pri" onclick="b5GoPage('agregar',document.querySelectorAll('.b5-tab')[1])">+ Agregar primer post</button>
+  </div>
+  <div id="b5-dash-content" style="display:none;">
+    <div class="b5-metrics" id="b5-summary-cards"></div>
+    <div class="b5-chart-row">
+      <div class="b5-ccard">
+        <div class="b5-ctitle">Crecimiento del perfil</div>
+        <div class="b5-csub">Seguidores nuevos por día</div>
+        <div style="position:relative;width:100%;height:200px;"><canvas id="b5-growth-chart"></canvas></div>
+      </div>
+      <div class="b5-ccard">
+        <div class="b5-ctitle">Views por reel</div>
+        <div class="b5-csub">Cada punto = un reel · click para detalles · línea = promedio</div>
+        <div class="b5-legend">
+          <span><span class="b5-lsq" style="background:rgba(175,169,236,.7)"></span>Normal</span>
+          <span><span class="b5-lsq" style="background:#5DCAA5"></span>×3+</span>
+          <span><span class="b5-lsq" style="background:#EF9F27"></span>×5+</span>
+          <span><span class="b5-lsq" style="background:#FAC775;width:12px;height:12px;"></span>×8+ outlier</span>
+          <span><span class="b5-ldash"></span>promedio</span>
         </div>
-        <div class="coming-soon-card">
-          <div class="cs-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/>
-            </svg>
-          </div>
-          <div class="cs-title">Content Performance</div>
-          <div class="cs-desc">Posts · Views por reel · Crecimiento · Trial Reels · Scoring de retención</div>
-          <div class="cs-badge">Bloque 5</div>
+        <div class="b5-scatter-wrap">
+          <canvas id="b5-scatter-chart" style="width:100%;height:165px;"></canvas>
+          <div id="b5-scatter-tip" class="b5-tip"></div>
         </div>
+      </div>
+    </div>
+    <div class="b5-chart-row">
+      <div class="b5-ccard">
+        <div class="b5-ctitle">Desglose de interacciones</div>
+        <div style="position:relative;width:100%;height:200px;"><canvas id="b5-eng-chart"></canvas></div>
+      </div>
+      <div class="b5-ccard">
+        <div class="b5-ctitle">Origen de audiencia (promedio)</div>
+        <div style="position:relative;width:100%;height:200px;"><canvas id="b5-aud-chart"></canvas></div>
+      </div>
+    </div>
+    <div class="b5-card">
+      <div class="b5-card-hdr"><span class="b5-card-title">Top 5 por views</span></div>
+      <div style="padding:12px 16px;" id="b5-top5"></div>
+    </div>
+    <div class="b5-card">
+      <div class="b5-card-hdr" style="border-bottom:none;">
+        <span class="b5-card-title">Análisis IA <span style="font-size:9px;color:#55556a;text-transform:none;letter-spacing:0;font-weight:400;">· API key de Anthropic</span></span>
+      </div>
+      <div style="padding:0 20px 20px;">
+        <input type="password" class="b5-apikey" id="b5-apikey" placeholder="sk-ant-...">
+        <button class="b5-btn-pri" id="b5-ai-btn" onclick="b5AnalyzeAll()">Analizar posts con IA</button>
+        <div class="b5-ai-panel" id="b5-ai-panel"><div class="b5-ai-lbl">Insights de Claude</div><div class="b5-ai-txt" id="b5-ai-txt"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- PAGE: AGREGAR POST -->
+<div id="b5-pg-agregar" class="b5-page">
+  <div class="b5-card">
+    <div class="b5-card-hdr"><span class="b5-card-title">Información básica</span></div>
+    <div style="padding:16px 20px;">
+      <div class="b5-form-grid" style="margin-bottom:10px;">
+        <div class="b5-fg"><label>Tipo</label><select id="b5-f-tipo"><option>Reel</option><option>Post</option><option>Carrusel</option><option>Historia</option></select></div>
+        <div class="b5-fg"><label>Fecha</label><input type="date" id="b5-f-fecha"></div>
+        <div class="b5-fg full"><label>Caption / Descripción</label><textarea id="b5-f-caption" placeholder="Texto de la publicación..."></textarea></div>
+        <div class="b5-fg full"><label>Copy del video / imagen</label><textarea id="b5-f-copy" placeholder="Texto que aparece en el video o imagen..." style="min-height:70px;"></textarea></div>
+      </div>
+    </div>
+  </div>
+  <div class="b5-card">
+    <div class="b5-card-hdr"><span class="b5-card-title">Métricas</span></div>
+    <div style="padding:16px 20px;">
+      <div class="b5-metrics-form">
+        <div class="b5-num-card"><label>Views</label><input type="number" id="b5-f-views" placeholder="0" min="0"></div>
+        <div class="b5-num-card"><label>Likes</label><input type="number" id="b5-f-likes" placeholder="0" min="0"></div>
+        <div class="b5-num-card"><label>Comentarios</label><input type="number" id="b5-f-com" placeholder="0" min="0"></div>
+        <div class="b5-num-card"><label>Guardados</label><input type="number" id="b5-f-guard" placeholder="0" min="0"></div>
+        <div class="b5-num-card"><label>Compartidos</label><input type="number" id="b5-f-comp" placeholder="0" min="0"></div>
+        <div class="b5-num-card"><label>% desde seguidores</label><input type="number" id="b5-f-seg" placeholder="50" min="0" max="100"></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:10px;">
+        <button class="b5-btn-pri" onclick="b5SavePost()">Guardar post</button>
+        <button class="b5-btn-sec" onclick="b5ClearPostForm()">Limpiar</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- PAGE: SEGUIDORES -->
+<div id="b5-pg-seguidores" class="b5-page">
+  <div class="b5-card">
+    <div class="b5-card-hdr"><span class="b5-card-title">Registrar seguidores nuevos</span></div>
+    <div style="padding:16px 20px;">
+      <div class="b5-form-grid" style="max-width:400px;margin-bottom:1rem;">
+        <div class="b5-fg"><label>Fecha</label><input type="date" id="b5-fs-fecha"></div>
+        <div class="b5-fg"><label>Seguidores nuevos</label><input type="number" id="b5-fs-num" placeholder="0" min="0"></div>
+      </div>
+      <button class="b5-btn-pri" onclick="b5SaveSeg()">Guardar</button>
+    </div>
+  </div>
+  <div class="b5-card" id="b5-seg-hist-card" style="display:none;">
+    <div class="b5-card-hdr"><span class="b5-card-title">Historial</span></div>
+    <div style="padding:12px 16px;" id="b5-seg-hist"></div>
+  </div>
+</div>
+ 
+<!-- PAGE: MIS POSTS -->
+<div id="b5-pg-posts" class="b5-page">
+  <div class="b5-card">
+    <div class="b5-card-hdr"><span class="b5-card-title">Todas las publicaciones</span></div>
+    <div style="padding:12px 16px;" id="b5-all-posts"><div class="b5-empty">No hay posts registrados.</div></div>
+  </div>
+</div>
+ 
+<!-- PAGE: INDIVIDUAL -->
+<div id="b5-pg-individual" class="b5-page">
+  <div class="b5-card">
+    <div class="b5-card-hdr"><span class="b5-card-title">Análisis individual</span></div>
+    <div style="padding:16px 20px;">
+      <select id="b5-post-sel" style="font-size:13px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;width:100%;margin-bottom:1rem;font-family:'DM Sans',sans-serif;" onchange="b5ShowInd()">
+        <option value="">— elegí un post —</option>
+      </select>
+      <div id="b5-ind-detail" style="display:none;">
+        <div id="b5-ind-hdr" style="margin-bottom:1rem;"></div>
+        <div class="b5-copy-block" id="b5-copy-block">
+          <div class="b5-copy-lbl">Copy del video</div>
+          <div class="b5-copy-text" id="b5-copy-text"></div>
+        </div>
+        <div class="b5-detail-grid" id="b5-detail-grid"></div>
+        <div style="position:relative;width:100%;height:200px;margin-top:1rem;"><canvas id="b5-ind-chart"></canvas></div>
+        <div style="margin-top:1.25rem;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#9090b0;font-weight:500;margin-bottom:.5rem;font-family:'DM Mono',monospace;">Análisis IA</div>
+          <input type="password" class="b5-apikey" id="b5-apikey2" placeholder="sk-ant-...">
+          <button class="b5-btn-pri" onclick="b5AnalyzeInd()">Analizar con IA</button>
+          <div class="b5-ai-panel" id="b5-ai-ind"><div class="b5-ai-lbl">Insights de Claude</div><div class="b5-ai-txt" id="b5-ai-ind-txt"></div></div>
+        </div>
+      </div>
+      <div id="b5-no-sel" style="font-size:13px;color:#9090b0;">Elegí un post del selector para ver su análisis.</div>
+    </div>
+  </div>
+</div>
+ 
+<script>
+(function(){
+'use strict';
+ 
+var b5Posts=[],b5Segs=[],b5CI={},b5IndCI=null;
+var gridC='rgba(255,255,255,0.06)',tickC='#55556a';
+var today=new Date().toISOString().split('T')[0];
+document.getElementById('b5-f-fecha').value=today;
+document.getElementById('b5-fs-fecha').value=today;
+ 
+function toast(m){var t=document.getElementById('b5-toast');t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none';},2200);}
+ 
+window.b5GoPage=function(id,btn){
+  document.querySelectorAll('.b5-page').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.b5-tab').forEach(function(b){b.classList.remove('on');});
+  var pg=document.getElementById('b5-pg-'+id);if(pg)pg.classList.add('on');
+  if(btn)btn.classList.add('on');
+};
+ 
+function waitChart(cb){
+  if(window.Chart){cb();}
+  else{var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';s.onload=cb;document.head.appendChild(s);}
+}
+ 
+/* ---- POSTS ---- */
+window.b5SavePost=function(){
+  var views=parseInt(document.getElementById('b5-f-views').value)||0;
+  var likes=parseInt(document.getElementById('b5-f-likes').value)||0;
+  var com=parseInt(document.getElementById('b5-f-com').value)||0;
+  var guard=parseInt(document.getElementById('b5-f-guard').value)||0;
+  var comp=parseInt(document.getElementById('b5-f-comp').value)||0;
+  var seg=parseInt(document.getElementById('b5-f-seg').value)||50;
+  var eng=views>0?parseFloat(((likes+com+guard+comp)/views*100).toFixed(2)):0;
+  b5Posts.push({id:Date.now(),tipo:document.getElementById('b5-f-tipo').value,fecha:document.getElementById('b5-f-fecha').value,caption:document.getElementById('b5-f-caption').value||'(sin caption)',copy:document.getElementById('b5-f-copy').value||'',views:views,likes:likes,com:com,guard:guard,comp:comp,seg:seg,noseg:100-seg,eng:eng});
+  b5ClearPostForm();toast('Post guardado.');
+  refreshDash();refreshPostsList();refreshSel();
+  b5GoPage('dashboard',document.querySelectorAll('.b5-tab')[0]);
+};
+ 
+window.b5ClearPostForm=function(){
+  ['b5-f-caption','b5-f-copy','b5-f-views','b5-f-likes','b5-f-com','b5-f-guard','b5-f-comp','b5-f-seg'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('b5-f-tipo').value='Reel';
+  document.getElementById('b5-f-fecha').value=today;
+};
+ 
+window.b5DeletePost=function(id){
+  b5Posts=b5Posts.filter(function(p){return p.id!==id;});
+  refreshDash();refreshPostsList();refreshSel();
+};
+ 
+/* ---- SEGUIDORES ---- */
+window.b5SaveSeg=function(){
+  var f=document.getElementById('b5-fs-fecha').value;
+  var n=parseInt(document.getElementById('b5-fs-num').value)||0;
+  if(!f)return;
+  var ex=b5Segs.findIndex(function(s){return s.fecha===f;});
+  if(ex>=0)b5Segs[ex].n=n;else b5Segs.push({fecha:f,n:n});
+  b5Segs.sort(function(a,b){return new Date(a.fecha)-new Date(b.fecha);});
+  document.getElementById('b5-fs-num').value='';
+  toast('Guardado.');refreshSegHist();refreshDash();
+};
+ 
+window.b5DelSeg=function(f){b5Segs=b5Segs.filter(function(s){return s.fecha!==f;});refreshSegHist();refreshDash();};
+ 
+function refreshSegHist(){
+  var card=document.getElementById('b5-seg-hist-card');
+  var list=document.getElementById('b5-seg-hist');
+  if(!b5Segs.length){card.style.display='none';return;}
+  card.style.display='block';
+  list.innerHTML=b5Segs.slice().reverse().map(function(s){
+    return '<div class="b5-seg-hist-item"><span style="font-size:13px;color:#9090b0;width:90px;font-family:\'DM Mono\',monospace;">'+s.fecha.slice(5)+'</span><span style="font-size:14px;font-weight:500;color:#1db87a;font-family:\'DM Mono\',monospace;">+'+s.n+'</span><span style="font-size:12px;color:#55556a;flex:1;">seguidores nuevos</span><button class="b5-del-btn" onclick="b5DelSeg(\''+s.fecha+'\')">✕</button></div>';
+  }).join('');
+}
+ 
+/* ---- DASHBOARD ---- */
+function refreshDash(){
+  var empty=document.getElementById('b5-empty-dash');
+  var content=document.getElementById('b5-dash-content');
+  if(!b5Posts.length){empty.style.display='block';content.style.display='none';return;}
+  empty.style.display='none';content.style.display='block';
+  var avgV=Math.round(b5Posts.reduce(function(s,p){return s+p.views;},0)/b5Posts.length);
+  var avgE=(b5Posts.reduce(function(s,p){return s+p.eng;},0)/b5Posts.length).toFixed(2);
+  var totSeg=b5Segs.reduce(function(s,d){return s+d.n;},0);
+  document.getElementById('b5-summary-cards').innerHTML=
+    '<div class="b5-mc"><div class="b5-mc-lbl"><span class="b5-dot p"></span>Total posts</div><div class="b5-mc-val p">'+b5Posts.length+'</div></div>'+
+    '<div class="b5-mc"><div class="b5-mc-lbl"><span class="b5-dot p"></span>Promedio views</div><div class="b5-mc-val p">'+avgV.toLocaleString('es-AR')+'</div></div>'+
+    '<div class="b5-mc"><div class="b5-mc-lbl"><span class="b5-dot g"></span>Engagement rate</div><div class="b5-mc-val g">'+avgE+'%</div></div>'+
+    '<div class="b5-mc"><div class="b5-mc-lbl"><span class="b5-dot a"></span>Seguidores nuevos</div><div class="b5-mc-val a">'+totSeg.toLocaleString('es-AR')+'</div></div>';
+  waitChart(function(){buildGrowth();buildScatter();buildEngBreak();buildAudience();buildTop5();});
+}
+ 
+function buildGrowth(){
+  if(b5CI.growth){b5CI.growth.destroy();b5CI.growth=null;}
+  var ctx=document.getElementById('b5-growth-chart');
+  if(!b5Segs.length){ctx.getContext('2d').clearRect(0,0,ctx.width,ctx.height);return;}
+  b5CI.growth=new Chart(ctx,{type:'line',data:{labels:b5Segs.map(function(s){return s.fecha.slice(5);}),datasets:[{data:b5Segs.map(function(s){return s.n;}),borderColor:'#1db87a',backgroundColor:'rgba(29,184,122,.08)',fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'#1db87a'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return '+'+c.parsed.y+' seguidores';}}}},scales:{x:{grid:{color:gridC},ticks:{color:tickC,font:{size:10},maxRotation:30}},y:{grid:{color:gridC},ticks:{color:tickC,font:{size:11}},min:0}}}});
+}
+ 
+function scCol(v,avg){var r=avg>0?v/avg:1;if(r>=8)return{c:'#FAC775',s:14};if(r>=5)return{c:'#EF9F27',s:12};if(r>=3)return{c:'#5DCAA5',s:10};return{c:'rgba(175,169,236,0.7)',s:7};}
+ 
+function buildScatter(){
+  if(b5CI.scatter){b5CI.scatter.destroy();b5CI.scatter=null;}
+  var ctx=document.getElementById('b5-scatter-chart');
+  var reels=b5Posts.filter(function(p){return p.tipo==='Reel';});
+  if(!reels.length){ctx.getContext('2d').clearRect(0,0,ctx.width,ctx.height);return;}
+  var sorted=reels.slice().sort(function(a,b){return new Date(a.fecha)-new Date(b.fecha);});
+  var avg=sorted.reduce(function(s,p){return s+p.views;},0)/sorted.length;
+  b5CI.scatter=new Chart(ctx,{type:'scatter',data:{datasets:[
+    {data:sorted.map(function(p,i){return{x:i,y:p.views};}),pointBackgroundColor:sorted.map(function(p){return scCol(p.views,avg).c;}),pointRadius:sorted.map(function(p){return scCol(p.views,avg).s;}),pointHoverRadius:sorted.map(function(p){return scCol(p.views,avg).s+2;})},
+    {data:sorted.map(function(_,i){return{x:i,y:avg};}),type:'line',borderColor:'rgba(255,255,255,0.3)',borderDash:[5,4],borderWidth:1.5,pointRadius:0,fill:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},
+    scales:{x:{grid:{color:gridC},ticks:{color:tickC,font:{size:10},callback:function(v){var p=sorted[v];return p?p.fecha.slice(5):'';},autoSkip:true},min:-.5,max:sorted.length-.5},y:{grid:{color:gridC},ticks:{color:tickC,font:{size:10},callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}},min:0}},
+    onClick:function(evt){
+      var pts=b5CI.scatter.getElementsAtEventForMode(evt,'nearest',{intersect:true},true);
+      if(!pts.length){document.getElementById('b5-scatter-tip').style.display='none';return;}
+      var p=sorted[pts[0].index];
+      var tip=document.getElementById('b5-scatter-tip');
+      tip.innerHTML='<div class="b5-tip-title">'+p.caption.slice(0,35)+(p.caption.length>35?'...':'')+'</div><div class="b5-tip-row"><span class="b5-tip-lbl">Views</span><span class="b5-tip-val">'+p.views.toLocaleString('es-AR')+'</span></div><div class="b5-tip-row"><span class="b5-tip-lbl">Engagement</span><span class="b5-tip-val">'+p.eng+'%</span></div><div class="b5-tip-row"><span class="b5-tip-lbl">Guardados</span><span class="b5-tip-val">'+p.guard+'</span></div><div class="b5-tip-row"><span class="b5-tip-lbl">Fecha</span><span class="b5-tip-val">'+p.fecha+'</span></div>';
+      var wr=ctx.parentElement.getBoundingClientRect();var l=evt.clientX-wr.left+10,t=evt.clientY-wr.top-20;
+      if(l+180>wr.width)l=evt.clientX-wr.left-190;
+      tip.style.left=l+'px';tip.style.top=t+'px';tip.style.display='block';
+    }}});
+  ctx.addEventListener('mousemove',function(e){var pts=b5CI.scatter.getElementsAtEventForMode(e,'nearest',{intersect:true},true);ctx.style.cursor=pts.length?'pointer':'default';});
+}
+ 
+function buildEngBreak(){
+  if(b5CI.eng){b5CI.eng.destroy();b5CI.eng=null;}
+  var tL=b5Posts.reduce(function(s,p){return s+p.likes;},0);
+  var tC=b5Posts.reduce(function(s,p){return s+p.com;},0);
+  var tG=b5Posts.reduce(function(s,p){return s+p.guard;},0);
+  var tCo=b5Posts.reduce(function(s,p){return s+p.comp;},0);
+  b5CI.eng=new Chart(document.getElementById('b5-eng-chart'),{type:'doughnut',data:{labels:['Likes ('+tL.toLocaleString()+')','Comentarios ('+tC.toLocaleString()+')','Guardados ('+tG.toLocaleString()+')','Compartidos ('+tCo.toLocaleString()+')'],datasets:[{data:[tL,tC,tG,tCo],backgroundColor:['#D4537E','#7c6fe0','#e8a830','#1db87a'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},color:tickC,boxWidth:10,padding:8}}}}});
+}
+ 
+function buildAudience(){
+  if(b5CI.aud){b5CI.aud.destroy();b5CI.aud=null;}
+  var avg=Math.round(b5Posts.reduce(function(s,p){return s+p.seg;},0)/b5Posts.length);
+  b5CI.aud=new Chart(document.getElementById('b5-aud-chart'),{type:'doughnut',data:{labels:['Seguidores ('+avg+'%)','No seguidores ('+(100-avg)+'%)'],datasets:[{data:[avg,100-avg],backgroundColor:['#7c6fe0','#AFA9EC'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},color:tickC,boxWidth:10,padding:8}}}}});
+}
+ 
+function buildTop5(){
+  var top=b5Posts.slice().sort(function(a,b){return b.views-a.views;}).slice(0,5);
+  document.getElementById('b5-top5').innerHTML=top.map(function(p,i){
+    var cls='b5-b-'+p.tipo.toLowerCase();
+    return '<div class="b5-top5-item" onclick="b5GoInd('+p.id+')"><span class="b5-rank">#'+(i+1)+'</span><span class="b5-badge '+cls+'">'+p.tipo+'</span><span class="b5-item-cap">'+p.caption+'</span><span class="b5-item-views">'+p.views.toLocaleString('es-AR')+'</span><span class="b5-item-eng">'+p.eng+'%</span></div>';
+  }).join('');
+}
+ 
+/* ---- POSTS LIST ---- */
+function refreshPostsList(){
+  var el=document.getElementById('b5-all-posts');
+  if(!b5Posts.length){el.innerHTML='<div class="b5-empty">No hay posts registrados.</div>';return;}
+  el.innerHTML=b5Posts.slice().sort(function(a,b){return new Date(b.fecha)-new Date(a.fecha);}).map(function(p){
+    var cls='b5-b-'+p.tipo.toLowerCase();
+    return '<div class="b5-post-item"><span class="b5-badge '+cls+'">'+p.tipo+'</span><span style="font-size:12px;color:#55556a;flex-shrink:0;font-family:\'DM Mono\',monospace;">'+p.fecha+'</span><span class="b5-item-cap">'+p.caption+'</span><span class="b5-item-views">'+p.views.toLocaleString('es-AR')+'</span><span class="b5-item-eng">'+p.eng+'%</span><button class="b5-del-btn" onclick="b5DeletePost('+p.id+')">✕</button></div>';
+  }).join('');
+}
+ 
+function refreshSel(){
+  var sel=document.getElementById('b5-post-sel');var val=sel.value;
+  sel.innerHTML='<option value="">— elegí un post —</option>'+b5Posts.slice().sort(function(a,b){return new Date(b.fecha)-new Date(a.fecha);}).map(function(p){return '<option value="'+p.id+'">'+p.tipo+' · '+p.fecha+' · '+p.caption.slice(0,28)+'</option>';}).join('');
+  if(val)sel.value=val;
+}
+ 
+window.b5GoInd=function(id){refreshSel();document.getElementById('b5-post-sel').value=id;b5GoPage('individual',document.querySelectorAll('.b5-tab')[4]);b5ShowInd();};
+ 
+window.b5ShowInd=function(){
+  var id=parseInt(document.getElementById('b5-post-sel').value);
+  var det=document.getElementById('b5-ind-detail');var nos=document.getElementById('b5-no-sel');
+  if(!id){det.style.display='none';nos.style.display='block';return;}
+  var p=b5Posts.find(function(x){return x.id===id;});if(!p)return;
+  det.style.display='block';nos.style.display='none';
+  var cls='b5-b-'+p.tipo.toLowerCase();
+  document.getElementById('b5-ind-hdr').innerHTML='<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;"><span class="b5-badge '+cls+'">'+p.tipo+'</span><span style="font-size:13px;color:#9090b0;font-family:\'DM Mono\',monospace;">'+p.fecha+'</span><span style="font-size:13px;font-weight:500;color:#f0f0f8;">'+p.caption+'</span></div>';
+  var cb=document.getElementById('b5-copy-block');
+  if(p.copy){cb.style.display='block';document.getElementById('b5-copy-text').textContent=p.copy;}else cb.style.display='none';
+  document.getElementById('b5-detail-grid').innerHTML=
+    '<div class="b5-dc"><div class="b5-dc-lbl">Views</div><div class="b5-dc-val" style="color:#7c6fe0">'+p.views.toLocaleString('es-AR')+'</div></div>'+
+    '<div class="b5-dc"><div class="b5-dc-lbl">Engagement</div><div class="b5-dc-val" style="color:#1db87a">'+p.eng+'%</div></div>'+
+    '<div class="b5-dc"><div class="b5-dc-lbl">Likes</div><div class="b5-dc-val" style="color:#D4537E">'+p.likes.toLocaleString('es-AR')+'</div></div>'+
+    '<div class="b5-dc"><div class="b5-dc-lbl">Comentarios</div><div class="b5-dc-val">'+p.com.toLocaleString('es-AR')+'</div></div>'+
+    '<div class="b5-dc"><div class="b5-dc-lbl">Guardados</div><div class="b5-dc-val" style="color:#e8a830">'+p.guard.toLocaleString('es-AR')+'</div></div>'+
+    '<div class="b5-dc"><div class="b5-dc-lbl">Compartidos</div><div class="b5-dc-val">'+p.comp.toLocaleString('es-AR')+'</div></div>'+
+    '<div class="b5-dc"><div class="b5-dc-lbl">% seguidores</div><div class="b5-dc-val">'+p.seg+'%</div></div>'+
+    '<div class="b5-dc"><div class="b5-dc-lbl">% no seguidores</div><div class="b5-dc-val">'+p.noseg+'%</div></div>';
+  waitChart(function(){
+    if(b5IndCI){b5IndCI.destroy();b5IndCI=null;}
+    b5IndCI=new Chart(document.getElementById('b5-ind-chart'),{type:'bar',data:{labels:['Likes','Comentarios','Guardados','Compartidos'],datasets:[{data:[p.likes,p.com,p.guard,p.comp],backgroundColor:['#D4537E','#7c6fe0','#e8a830','#1db87a'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridC},ticks:{color:tickC}},y:{grid:{color:gridC},ticks:{color:tickC}}}}});
+  });
+  document.getElementById('b5-ai-ind').style.display='none';
+};
+ 
+/* ---- AI ---- */
+async function callAI(key,prompt,maxTok){
+  var r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTok||800,messages:[{role:'user',content:prompt}]})});
+  var d=await r.json();return(d.content&&d.content[0]&&d.content[0].text)||'Sin respuesta.';
+}
+ 
+window.b5AnalyzeAll=async function(){
+  var key=(document.getElementById('b5-apikey').value||'').trim();
+  if(!key){toast('Ingresá tu API key.');return;}if(!b5Posts.length){toast('No hay posts.');return;}
+  var btn=document.getElementById('b5-ai-btn');var panel=document.getElementById('b5-ai-panel');var txt=document.getElementById('b5-ai-txt');
+  btn.innerHTML='<span class="b5-spinner"></span>Analizando...';btn.disabled=true;panel.style.display='block';txt.textContent='Procesando...';
+  var data='Posts:'+b5Posts.length+' | PromV:'+Math.round(b5Posts.reduce(function(s,p){return s+p.views;},0)/b5Posts.length)+' | EngProm:'+(b5Posts.reduce(function(s,p){return s+p.eng;},0)/b5Posts.length).toFixed(2)+'%\n'+b5Posts.map(function(p){return p.tipo+' '+p.fecha+': '+p.views+'v '+p.eng+'%eng G:'+p.guard+' copy:"'+(p.copy||'').slice(0,60)+'"';}).join('\n');
+  try{txt.textContent=await callAI(key,'Eres experto en Instagram. Analiza en español:\n'+data+'\n\n1) Qué tipo y copy funciona mejor, 2) patrones de engagement, 3) 3 acciones concretas para mejorar.');}
+  catch(e){txt.textContent='Error al conectar con la API.';}
+  btn.innerHTML='Analizar posts con IA';btn.disabled=false;
+};
+ 
+window.b5AnalyzeInd=async function(){
+  var key=(document.getElementById('b5-apikey2').value||document.getElementById('b5-apikey').value||'').trim();
+  if(!key){toast('Ingresá tu API key.');return;}
+  var id=parseInt(document.getElementById('b5-post-sel').value);var p=b5Posts.find(function(x){return x.id===id;});if(!p)return;
+  var panel=document.getElementById('b5-ai-ind');var txt=document.getElementById('b5-ai-ind-txt');
+  panel.style.display='block';txt.textContent='Analizando...';
+  var info='Tipo:'+p.tipo+' Fecha:'+p.fecha+'\nCaption:'+p.caption+'\nCopy:'+p.copy+'\nViews:'+p.views+' Likes:'+p.likes+' Com:'+p.com+' Guard:'+p.guard+' Comp:'+p.comp+'\nEng:'+p.eng+'% Seg:'+p.seg+'% NoSeg:'+p.noseg+'%';
+  try{txt.textContent=await callAI(key,'Analiza este post de Instagram en español:\n'+info+'\n\n1) Por qué funcionó bien o mal, 2) análisis del copy, 3) recomendaciones para el próximo. Score 0-10.',600);}
+  catch(e){txt.textContent='Error al conectar con la API.';}
+};
+ 
+/* ---- EXPORT ---- */
+window.b5ExportAll=function(){
+  if(!b5Posts.length){toast('No hay datos para exportar.');return;}
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify({posts:b5Posts,seguidores:b5Segs,exportado:new Date().toISOString()},null,2)],{type:'application/json'}));
+  a.download='content_performance_'+today+'.json';a.click();
+};
+ 
+document.addEventListener('click',function(e){
+  var tip=document.getElementById('b5-scatter-tip');
+  if(tip&&!tip.contains(e.target)&&e.target.id!=='b5-scatter-chart')tip.style.display='none';
+});
+ 
+})();
+</script>
       </section>
  
       <!-- SECTION: DAILY TASKS -->
