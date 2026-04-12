@@ -302,16 +302,240 @@
           <h1 class="section-title">Datos & Conversiones</h1>
           <p class="section-desc">UTMs · Funnel de conversión · Leads y compradores</p>
         </div>
-        <div class="coming-soon-card">
-          <div class="cs-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
-            </svg>
-          </div>
-          <div class="cs-title">Datos & Conversiones</div>
-          <div class="cs-desc">Funnel completo · Tasa visita → lead · Tasa lead → comprador · CPL GP · CPW · % WhatsApp</div>
-          <div class="cs-badge">Bloque 2</div>
+        <div class="export-bar">
+    <div>
+      <div class="elabel">Exportar reporte de conversiones</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <div class="btn-group">
+          <button>Hoy</button><button class="active">7d</button><button>14d</button><button>30d</button>
         </div>
+        <input type="date" value="2026-03-07">
+        <input type="date" value="2026-04-06">
+        <button class="btn-export" id="exportBtn">⬇ Exportar reporte</button>
+      </div>
+    </div>
+    <div id="export-toast">Archivo camino_del_cliente.xlsx generado</div>
+  </div>
+
+  <div class="metrics-top">
+    <div class="mc"><div class="mc-label"><span class="dot" style="background:#378ADD"></span>Impresiones</div><div class="mc-val v-blue">379.754</div></div>
+    <div class="mc"><div class="mc-label"><span class="dot" style="background:#7F77DD"></span>Visitas a la landing</div><div class="mc-val v-purple">71.905</div></div>
+    <div class="mc"><div class="mc-label"><span class="dot" style="background:#7F77DD"></span>Leads registrados</div><div class="mc-val v-purple">14.123</div></div>
+    <div class="mc"><div class="mc-label"><span class="dot" style="background:#1D9E75"></span>Compradores</div><div class="mc-val v-green">2</div></div>
+  </div>
+
+  <div class="metrics-mid">
+    <div class="mc">
+      <div class="mc-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin-bottom:6px;">Tasa visita → lead</div>
+      <div class="mc-val v-purple">19,64%</div>
+      <div class="mc-sub">Conversión real de la landing</div>
+    </div>
+    <div class="mc">
+      <div class="mc-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin-bottom:6px;">Tasa lead → comprador</div>
+      <div class="mc-val v-green">0,01%</div>
+      <div class="mc-sub">De registrados a clientes</div>
+    </div>
+    <div class="mc">
+      <div class="mc-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin-bottom:6px;">CPL GP</div>
+      <div class="mc-val v-amber">$0,44</div>
+      <div class="mc-sub">Costo por lead GreatPages</div>
+    </div>
+    <div class="mc">
+      <div class="mc-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin-bottom:6px;">CPW</div>
+      <div class="mc-val v-teal">$0,19</div>
+      <div class="mc-sub">Costo por lead WhatsApp</div>
+    </div>
+    <div class="mc">
+      <div class="mc-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin-bottom:6px;">% WhatsApp</div>
+      <div class="mc-val v-teal">30,0%</div>
+      <div class="mc-sub">Leads que llegan por WA</div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="sec-title">Camino del cliente</div>
+    <div id="funnelContainer"><div class="funnel-row">
+    <div class="funnel-label">Impresiones</div>
+    <div class="funnel-bar-wrap">
+      <div class="funnel-bar" style="width:100.0%;background:#534AB7;color:#CECBF6;">
+        379.754
+      </div>
+    </div>
+    <div class="funnel-num" style="color:#534AB7">
+      379.754
+    </div></div><div class="funnel-row">
+    <div class="funnel-label">Clics</div>
+    <div class="funnel-bar-wrap">
+      <div class="funnel-bar" style="width:1.6%;background:#BA7517;color:#FAC775;">
+        5.892
+      </div>
+    </div>
+    <div class="funnel-num" style="color:#BA7517">
+      5.892
+    </div></div><div class="funnel-row">
+    <div class="funnel-label">Visitas</div>
+    <div class="funnel-bar-wrap">
+      <div class="funnel-bar" style="width:18.9%;background:#854F0B;color:#EF9F27;">
+        71.905
+      </div>
+    </div>
+    <div class="funnel-num" style="color:#854F0B">
+      71.905
+    </div></div><div class="funnel-row">
+    <div class="funnel-label">Leads GP</div>
+    <div class="funnel-bar-wrap">
+      <div class="funnel-bar" style="width:3.7%;background:#185FA5;color:#B5D4F4;">
+        14.123
+      </div>
+    </div>
+    <div class="funnel-num" style="color:#185FA5">
+      14.123
+    </div></div><div class="funnel-row">
+    <div class="funnel-label">WhatsApp</div>
+    <div class="funnel-bar-wrap">
+      <div class="funnel-bar" style="width:1.1%;background:#0F6E56;color:#9FE1CB;">
+        4.240
+      </div>
+    </div>
+    <div class="funnel-num" style="color:#0F6E56">
+      4.240
+    </div></div><div class="funnel-row">
+    <div class="funnel-label">Asistencia</div>
+    <div class="funnel-bar-wrap">
+      <div class="funnel-bar" style="width:0.8%;background:#185FA5;color:#B5D4F4;">
+        3.068
+      </div>
+    </div>
+    <div class="funnel-num" style="color:#185FA5">
+      3.068
+    </div></div><div class="funnel-row">
+    <div class="funnel-label">Ventas</div>
+    <div class="funnel-bar-wrap">
+      <div class="funnel-bar" style="width:0.8%;background:#A32D2D;color:#F7C1C1;">
+        2
+      </div>
+    </div>
+    <div class="funnel-num" style="color:#A32D2D">
+      2
+    </div></div></div>
+    <div class="summary-grid">
+      <div class="sum-card"><div class="sum-label">Total leads GP</div><div class="sum-val v-purple">14.123</div></div>
+      <div class="sum-card"><div class="sum-label">Total ventas</div><div class="sum-val v-green">2</div></div>
+      <div class="sum-card"><div class="sum-label">% Asist / leads</div><div class="sum-val v-amber">19,6%</div></div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="sec-title">Leads recientes</div>
+    <table class="leads-table">
+      <thead>
+        <tr>
+          <th style="width:18%">Nombre</th>
+          <th style="width:24%">Email</th>
+          <th style="width:20%">Campaña</th>
+          <th style="width:16%">Anuncio</th>
+          <th style="width:12%">Comprador</th>
+          <th style="width:12%">Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:500">Lucía Martínez</td>
+          <td style="color:#7F77DD">lucia@email.com</td>
+          <td>[VH] Captación LF</td><td>[VH] AD 01</td>
+          <td><span class="badge badge-no">No</span></td>
+          <td style="color:var(--color-text-secondary)">06-04-2026</td>
+        </tr>
+        <tr>
+          <td style="font-weight:500">Tomás Rodríguez</td>
+          <td style="color:#7F77DD">tomas@email.com</td>
+          <td>[VH] Remarketing</td><td>[VH] Rem 01</td>
+          <td><span class="badge badge-yes">Sí</span></td>
+          <td style="color:var(--color-text-secondary)">05-04-2026</td>
+        </tr>
+        <tr>
+          <td style="font-weight:500">Valeria García</td>
+          <td style="color:#7F77DD">valeria@email.com</td>
+          <td>[VH] Test Ads</td><td>[VH] Test 01</td>
+          <td><span class="badge badge-no">No</span></td>
+          <td style="color:var(--color-text-secondary)">05-04-2026</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-card">
+    <div class="sec-title">Compradores por anuncio (UTM_content)</div>
+    <div class="comp-bars">
+      <div class="comp-row">
+        <div class="comp-lbl">Sin campaña · Sin anuncio</div>
+        <div class="comp-bar-wrap"><div class="comp-bar" style="width:50%"><span>1</span></div></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-lbl">[VH] Test Ads 1 · PRG Feria</div>
+        <div class="comp-bar-wrap"><div class="comp-bar" style="width:50%"><span>1</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="sec-title">Cargar compradores</div>
+    <div class="upload-hint">Con comas: <strong>Nombre Apellido, email@ejemplo.com, YYYY-MM-DD</strong>. La fecha es opcional.</div>
+    <textarea id="buyerInput">Juan Pérez, juan@email.com, 2026-01-15
+María García, maria@email.com, 2026-01-20</textarea>
+    <div class="actions-row">
+      <button class="btn-primary">Buscar coincidencias</button>
+      <button class="btn-secondary">↑ Subir CSV</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const funnelData = [
+  { label: 'Impresiones', value: 379754, color: '#534AB7', textColor: '#CECBF6' },
+  { label: 'Clics',       value: 5892,   color: '#BA7517', textColor: '#FAC775' },
+  { label: 'Visitas',     value: 71905,  color: '#854F0B', textColor: '#EF9F27' },
+  { label: 'Leads GP',    value: 14123,  color: '#185FA5', textColor: '#B5D4F4' },
+  { label: 'WhatsApp',    value: 4240,   color: '#0F6E56', textColor: '#9FE1CB' },
+  { label: 'Asistencia',  value: 3068,   color: '#185FA5', textColor: '#B5D4F4' },
+  { label: 'Ventas',      value: 2,      color: '#A32D2D', textColor: '#F7C1C1' },
+];
+
+const maxVal = funnelData[0].value;
+const container = document.getElementById('funnelContainer');
+funnelData.forEach(row => {
+  const pct = Math.max((row.value / maxVal) * 100, 0.8);
+  const div = document.createElement('div');
+  div.className = 'funnel-row';
+  div.innerHTML = `
+    <div class="funnel-label">${row.label}</div>
+    <div class="funnel-bar-wrap">
+      <div class="funnel-bar" style="width:${pct.toFixed(1)}%;background:${row.color};color:${row.textColor};">
+        ${row.value.toLocaleString('es-AR')}
+      </div>
+    </div>
+    <div class="funnel-num" style="color:${row.textColor === '#FAC775' ? '#BA7517' : row.color}">
+      ${row.value.toLocaleString('es-AR')}
+    </div>`;
+  container.appendChild(div);
+});
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+  const ws_data = [
+    ['Etapa', 'Valor'],
+    ...funnelData.map(r => [r.label, r.value])
+  ];
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet(ws_data);
+  ws['!cols'] = [{ wch: 20 }, { wch: 14 }];
+  XLSX.utils.book_append_sheet(wb, ws, 'Camino del cliente');
+  XLSX.writeFile(wb, 'camino_del_cliente.xlsx');
+  const toast = document.getElementById('export-toast');
+  toast.style.display = 'block';
+  setTimeout(() => toast.style.display = 'none', 3000);
+});
+</script>
       </section>
  
       <!-- SECTION: WEBINAR PERFORMANCE -->
