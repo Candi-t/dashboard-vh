@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard VH — Vendedores Humanos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">Dashboard VH</span>
+        <span class="brand-sub">VENDEDORES HUMANOS</span>
+      </div>
+    </div>
+ 
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <span class="nav-group-label">Analytics</span>
+        <a href="#" class="nav-item active" data-section="ads" onclick="navigate('ads', this)">
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </span>
+          <span>Rendimiento Ads</span>
+          <span class="nav-dot"></span>
+        </a>
+        <a href="#" class="nav-item" data-section="conversiones" onclick="navigate('conversiones', this)">
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+            </svg>
+          </span>
+          <span>Datos & Conversiones</span>
+        </a>
+        <a href="#" class="nav-item" data-section="webinar" onclick="navigate('webinar', this)">
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+          </span>
+          <span>Webinar Performance</span>
+        </a>
+      </div>
+ 
+      <div class="nav-group">
+        <span class="nav-group-label">Intelligence</span>
+        <a href="#" class="nav-item" data-section="avatar" onclick="navigate('avatar', this)">
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+            </svg>
+          </span>
+          <span>Avatar & Insights</span>
+        </a>
+        <a href="#" class="nav-item" data-section="content" onclick="navigate('content', this)">
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/>
+            </svg>
+          </span>
+          <span>Content Performance</span>
+        </a>
+      </div>
+ 
+      <div class="nav-group">
+        <span class="nav-group-label">Operations</span>
+        <a href="#" class="nav-item" data-section="tasks" onclick="navigate('tasks', this)">
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </span>
+          <span>Daily Tasks</span>
+        </a>
+      </div>
+    </nav>
+ 
+    <div class="sidebar-footer">
+      <div class="sidebar-status">
+        <span class="status-dot"></span>
+        <span class="status-text">Sistema activo</span>
+      </div>
+    </div>
+  </aside>
+ 
+  <!-- MAIN AREA -->
+  <div class="main-area">
+ 
+    <!-- TOPBAR -->
+    <header class="topbar" id="topbar">
+      <div class="topbar-breadcrumb">
+        <span class="breadcrumb-section" id="breadcrumb-section">Rendimiento Ads</span>
+        <span class="breadcrumb-sep">·</span>
+        <span class="breadcrumb-sub" id="breadcrumb-sub">Performance · Tiempo real</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn-search" onclick="toggleSearch()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <span>Buscar</span>
+        </button>
+        <button class="btn-export" onclick="exportSection()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>Exportar</span>
+        </button>
+      </div>
+    </header>
+ 
+    <!-- CONTENT AREA -->
+    <main class="content" id="content">
+ 
+      <!-- SECTION: RENDIMIENTO ADS -->
+      <section class="section active" id="section-ads">
+        <div class="section-header">
+          <h1 class="section-title">Rendimiento Ads</h1>
+          <p class="section-desc">Meta Ads · Seguimiento en tiempo real de campañas</p>
+        </div>
+ 
+        <!-- Filtros -->
+        <div class="filter-bar">
+          <div class="filter-group">
+            <span class="filter-label">FILTROS</span>
+            <div class="filter-controls">
+              <select class="filter-select">
+                <option>Hoy</option><option>7d</option><option>14d</option><option>30d</option>
+              </select>
+              <div class="seg-buttons">
+                <button class="seg-btn active">Por Anuncio</button>
+                <button class="seg-btn">Por Conjunto</button>
+                <button class="seg-btn">Por Campaña</button>
+              </div>
+              <select class="filter-select wide">
+                <option>Todas las campañas</option>
+                <option>[VH] Captación LF</option>
+                <option>[VH] Remarketing</option>
+              </select>
+              <select class="filter-select wide">
+                <option>Todos los conjuntos</option>
+                <option>Conjunto A</option>
+                <option>Conjunto B</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">EXPORTAR REPORTE</span>
+            <div class="filter-controls">
+              <div class="seg-buttons">
+                <button class="seg-btn">Hoy</button>
+                <button class="seg-btn active">7d</button>
+                <button class="seg-btn">14d</button>
+                <button class="seg-btn">30d</button>
+              </div>
+              <input type="date" class="filter-date" value="2026-03-07">
+              <input type="date" class="filter-date" value="2026-04-06">
+              <button class="btn-download">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Bajar Reporte
+              </button>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- Métricas top -->
+        <div class="metrics-grid cols-5">
+          <div class="metric-card">
+            <div class="metric-label"><span class="dot green"></span>Gasto</div>
+            <div class="metric-value green">$826,36</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label"><span class="dot blue"></span>Impresiones</div>
+            <div class="metric-value blue">379.754</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label"><span class="dot purple"></span>Clics</div>
+            <div class="metric-value purple">5.892</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label"><span class="dot purple"></span>Leads Meta</div>
+            <div class="metric-value purple">1.159</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label"><span class="dot amber"></span>CTR</div>
+            <div class="metric-value amber">1,14%</div>
+          </div>
+        </div>
+ 
+        <div class="metrics-grid cols-4">
+          <div class="metric-card">
+            <div class="metric-label"><span class="dot blue"></span>CPM</div>
+            <div class="metric-value blue">$2,18</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label"><span class="dot amber"></span>CPC</div>
+            <div class="metric-value amber">$0,19</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label"><span class="dot green"></span>CPL Meta</div>
+            <div class="metric-value green">$0,71</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label"><span class="dot purple"></span>Costo por visita</div>
+            <div class="metric-value purple">$0,22</div>
+          </div>
+        </div>
+ 
+        <!-- Tabla detalle -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Detalle por anuncio</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nombre</th><th>Gasto</th><th>Impresiones</th><th>Clics</th>
+                  <th>Frec.</th><th>Leads Meta</th><th>CTR</th><th>CPM</th>
+                  <th>CPC</th><th>CPL Meta</th><th>C/Visita</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="td-name">[VH] AD Vendedor 01</td>
+                  <td>$17,49</td><td>7.687</td><td>412</td><td>1,1</td>
+                  <td class="td-purple">28</td><td class="td-amber">0,82%</td>
+                  <td>$2,28</td><td>$0,28</td><td class="td-green">$0,62</td><td>$0,30</td>
+                </tr>
+                <tr>
+                  <td class="td-name">[VH] AD Vendedor 02</td>
+                  <td>$22,32</td><td>7.496</td><td>380</td><td>1,1</td>
+                  <td class="td-purple">21</td><td class="td-amber">0,87%</td>
+                  <td>$2,98</td><td>$0,34</td><td>$1,06</td><td>$0,38</td>
+                </tr>
+                <tr>
+                  <td class="td-name">[VH] Remarketing 01</td>
+                  <td>$34,10</td><td>12.300</td><td>890</td><td>1,2</td>
+                  <td class="td-purple">48</td><td class="td-amber">1,20%</td>
+                  <td>$2,77</td><td>$0,22</td><td class="td-green">$0,71</td><td>$0,28</td>
+                </tr>
+                <tr>
+                  <td class="td-name">[VH] Captación LF 01</td>
+                  <td>$41,80</td><td>18.900</td><td>1.240</td><td>1,1</td>
+                  <td class="td-purple">62</td><td class="td-amber">1,05%</td>
+                  <td>$2,21</td><td>$0,17</td><td class="td-green">$0,67</td><td>$0,20</td>
+                </tr>
+                <tr>
+                  <td class="td-name">[VH] Test Ads 01</td>
+                  <td>$9,20</td><td>4.200</td><td>310</td><td>1,0</td>
+                  <td class="td-purple">12</td><td class="td-amber">0,94%</td>
+                  <td>$2,19</td><td>$0,21</td><td>$0,77</td><td>$0,25</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+ 
+        <!-- Top 3 -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Top 3 anuncios ganadores</span>
+          </div>
+          <div class="top3-grid">
+            <div class="top3-card winner">
+              <div class="top3-rank gold">#1 — Mejor CPL Meta</div>
+              <div class="top3-name">[VH] Captación LF 01</div>
+              <div class="top3-stats">
+                <span class="top3-stat green">$0,67 CPL</span>
+                <span class="top3-stat purple">62 leads</span>
+                <span class="top3-stat amber">1,05% CTR</span>
+                <span class="top3-stat">$41,80 gasto</span>
+              </div>
+            </div>
+            <div class="top3-card">
+              <div class="top3-rank silver">#2 — Mejor CTR</div>
+              <div class="top3-name">[VH] Remarketing 01</div>
+              <div class="top3-stats">
+                <span class="top3-stat green">$0,71 CPL</span>
+                <span class="top3-stat purple">48 leads</span>
+                <span class="top3-stat amber">1,20% CTR</span>
+                <span class="top3-stat">$34,10 gasto</span>
+              </div>
+            </div>
+            <div class="top3-card">
+              <div class="top3-rank bronze">#3 — Mejor CPC</div>
+              <div class="top3-name">[VH] AD Vendedor 01</div>
+              <div class="top3-stats">
+                <span class="top3-stat green">$0,62 CPL</span>
+                <span class="top3-stat purple">28 leads</span>
+                <span class="top3-stat amber">0,82% CTR</span>
+                <span class="top3-stat">$17,49 gasto</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+ 
+      <!-- SECTION: DATOS & CONVERSIONES -->
+      <section class="section" id="section-conversiones">
+        <div class="section-header">
+          <h1 class="section-title">Datos & Conversiones</h1>
+          <p class="section-desc">UTMs · Funnel de conversión · Leads y compradores</p>
+        </div>
+        <div class="coming-soon-card">
+          <div class="cs-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+            </svg>
+          </div>
+          <div class="cs-title">Datos & Conversiones</div>
+          <div class="cs-desc">Funnel completo · Tasa visita → lead · Tasa lead → comprador · CPL GP · CPW · % WhatsApp</div>
+          <div class="cs-badge">Bloque 2</div>
+        </div>
+      </section>
+ 
+      <!-- SECTION: WEBINAR PERFORMANCE -->
+      <section class="section" id="section-webinar">
+        <div class="section-header">
+          <h1 class="section-title">Webinar Performance</h1>
+          <p class="section-desc">Live Funnels · Comparativa de lanzamientos · Tabla de clases</p>
+        </div>
+        <div class="coming-soon-card">
+          <div class="cs-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+          </div>
+          <div class="cs-title">Webinar Performance</div>
+          <div class="cs-desc">LF comparativos · Leads GP · Ventas · ROAS · Retención de clases · Trial reels</div>
+          <div class="cs-badge">Bloque 3</div>
+        </div>
+      </section>
+ 
+      <!-- SECTION: AVATAR & INSIGHTS -->
+      <section class="section" id="section-avatar">
+        <div class="section-header">
+          <h1 class="section-title">Avatar & Insights</h1>
+          <p class="section-desc">Perfil demográfico · Psicología · Vocabulario · Sub-avatares</p>
+        </div>
+        <div class="coming-soon-card">
+          <div class="cs-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+            </svg>
+          </div>
+          <div class="cs-title">Avatar & Insights</div>
+          <div class="cs-desc">45 perfiles analizados · Dolores · Objeciones · Frases poderosas · Sub-avatares</div>
+          <div class="cs-badge">Bloque 4</div>
+        </div>
+      </section>
+ 
+      <!-- SECTION: CONTENT PERFORMANCE -->
+      <section class="section" id="section-content">
+        <div class="section-header">
+          <h1 class="section-title">Content Performance</h1>
+          <p class="section-desc">Instagram · Análisis manual · Trial Reels</p>
+        </div>
+        <div class="coming-soon-card">
+          <div class="cs-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/>
+            </svg>
+          </div>
+          <div class="cs-title">Content Performance</div>
+          <div class="cs-desc">Posts · Views por reel · Crecimiento · Trial Reels · Scoring de retención</div>
+          <div class="cs-badge">Bloque 5</div>
+        </div>
+      </section>
+ 
+      <!-- SECTION: DAILY TASKS -->
+      <section class="section" id="section-tasks">
+        <div class="section-header">
+          <h1 class="section-title">Daily Tasks</h1>
+          <p class="section-desc">Embudo de captación · Alertas · Split de presupuesto · Calendario</p>
+        </div>
+        <div class="coming-soon-card">
+          <div class="cs-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <div class="cs-title">Daily Tasks — Embudo de captación</div>
+          <div class="cs-desc">Seguimiento diario · Alertas de incongruencia · Split de presupuesto · Calendario de contenido</div>
+          <div class="cs-badge">Bloque 6</div>
+        </div>
+      </section>
+ 
+    </main>
+  </div>
+ 
+  <script src="script.js"></script>
+</body>
+</html>
+ 
