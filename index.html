@@ -2600,20 +2600,805 @@ document.addEventListener('click',function(e){
  
       <!-- SECTION: DAILY TASKS -->
       <section class="section" id="section-tasks">
-        <div class="section-header">
-          <h1 class="section-title">Daily Tasks</h1>
-          <p class="section-desc">Embudo de captación · Alertas · Split de presupuesto · Calendario</p>
-        </div>
-        <div class="coming-soon-card">
-          <div class="cs-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-            </svg>
+<style>
+/* ======================================================
+   BLOQUE 6 — DAILY TASKS  (prefijo b6-)
+   ====================================================== */
+.b6-title{font-size:24px;font-weight:600;color:#f0f0f8;letter-spacing:-.3px;margin-bottom:4px;}
+.b6-desc{font-size:13px;color:#9090b0;}
+ 
+/* tabs */
+.b6-tabs{display:flex;gap:4px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.b6-tab{font-size:13px;padding:6px 14px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#0a0a0f;color:#9090b0;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 120ms;}
+.b6-tab.on{background:#7c6fe0;color:#fff;border-color:#7c6fe0;}
+.b6-tab:hover:not(.on){background:rgba(255,255,255,.05);color:#f0f0f8;}
+.b6-page{display:none;}.b6-page.on{display:block;}
+ 
+/* shared card */
+.b6-card{background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.b6-card-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;gap:8px;}
+.b6-card-title{font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#9090b0;letter-spacing:.1em;text-transform:uppercase;}
+.b6-card-body{padding:16px 20px;}
+ 
+/* buttons */
+.b6-btn-pri{background:#7c6fe0;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background 120ms;display:inline-flex;align-items:center;gap:5px;}
+.b6-btn-pri:hover{background:#6a5ed0;}
+.b6-btn-sec{background:#12121a;color:#f0f0f8;border:1px solid rgba(255,255,255,.10);padding:7px 14px;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;}
+.b6-toast{background:#085041;color:#9FE1CB;font-size:13px;padding:7px 14px;border-radius:8px;margin-bottom:1rem;display:none;}
+.b6-spinner{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:b6spin .7s linear infinite;vertical-align:middle;margin-right:5px;}
+@keyframes b6spin{to{transform:rotate(360deg);}}
+ 
+/* ---- EMBUDO styles ---- */
+.b6-import-banner{background:#12121a;border:1px solid rgba(255,255,255,.10);border-radius:8px;padding:.65rem 1rem;margin-bottom:1rem;font-size:12px;color:#9090b0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.b6-pill-b1{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:rgba(124,111,224,.15);color:#7c6fe0;}
+.b6-pill-b2{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:rgba(29,184,122,.15);color:#1db87a;}
+.b6-form-row{display:grid;grid-template-columns:80px repeat(7,1fr);gap:6px;margin-bottom:6px;align-items:center;}
+.b6-form-row.hdr{margin-bottom:4px;}
+.b6-col-hdr{font-size:9px;text-transform:uppercase;letter-spacing:.04em;color:#55556a;text-align:center;font-family:'DM Mono',monospace;}
+.b6-form-row input{font-size:13px;padding:5px 7px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;width:100%;text-align:right;font-family:'DM Mono',monospace;}
+.b6-from-b1{background:rgba(124,111,224,.12)!important;border-color:rgba(124,111,224,.3)!important;color:#c8c2f8!important;}
+.b6-from-b2{background:rgba(29,184,122,.08)!important;border-color:rgba(29,184,122,.25)!important;color:#8eecc7!important;}
+.b6-add-row-btn{font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;cursor:pointer;margin-top:6px;}
+ 
+/* metric cards for embudo totals */
+.b6-mc-grid{display:grid;gap:10px;margin-bottom:16px;}
+.b6-mc-grid.g4{grid-template-columns:repeat(4,minmax(0,1fr));}
+.b6-mc{background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px 16px;}
+.b6-mc-lbl{font-size:10px;font-family:'DM Mono',monospace;color:#55556a;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+.b6-mc-val{font-size:20px;font-weight:500;font-family:'DM Mono',monospace;color:#f0f0f8;line-height:1;}
+.b6-mc-val.p{color:#7c6fe0;}.b6-mc-val.g{color:#1db87a;}.b6-mc-val.a{color:#e8a830;}.b6-mc-val.b{color:#3d9de8;}
+.b6-mc-sub{font-size:11px;color:#55556a;margin-top:3px;}
+ 
+/* alerts */
+.b6-alert-area{margin-bottom:1rem;}
+.b6-alert{border-radius:10px;padding:.9rem 1.25rem;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px;}
+.b6-alert.danger{background:#FCEBEB;border:1px solid #F09595;}
+.b6-alert.warning{background:#FAEEDA;border:1px solid #FAC775;}
+.b6-alert.ok{background:#EAF3DE;border:1px solid #C0DD97;}
+.b6-alert-icon{width:16px;height:16px;flex-shrink:0;margin-top:2px;}
+.b6-alert-title{font-size:13px;font-weight:500;margin-bottom:3px;}
+.b6-alert-title.danger{color:#A32D2D;}.b6-alert-title.warning{color:#633806;}.b6-alert-title.ok{color:#27500A;}
+.b6-alert-desc{font-size:12px;line-height:1.5;}
+.b6-alert-desc.danger{color:#791F1F;}.b6-alert-desc.warning{color:#854F0B;}.b6-alert-desc.ok{color:#3B6D11;}
+ 
+/* embudo table */
+.b6-twrap{overflow-x:auto;}
+.b6-table{width:100%;border-collapse:collapse;font-size:12px;}
+.b6-table thead th{padding:9px 12px;text-align:right;font-size:9px;font-family:'DM Mono',monospace;font-weight:500;color:#55556a;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);white-space:nowrap;}
+.b6-table thead th:first-child{text-align:left;}
+.b6-table tbody td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.06);color:#9090b0;font-family:'DM Mono',monospace;font-size:12px;white-space:nowrap;text-align:right;}
+.b6-table tbody td:first-child{text-align:left;font-weight:500;color:#f0f0f8;}
+.b6-table tbody tr:last-child td{border-bottom:none;}
+.b6-table tbody tr:hover td{background:rgba(255,255,255,.025);color:#f0f0f8;}
+.b6-table tbody tr.b6-total td{background:rgba(255,255,255,.04);font-weight:500;border-top:1px solid rgba(255,255,255,.10);}
+.b6-cell-ok{color:#1db87a!important;font-weight:500!important;}
+.b6-cell-warn{color:#e8a830!important;font-weight:500!important;}
+.b6-cell-bad{color:#e85555!important;font-weight:500!important;}
+.b6-cell-p{color:#7c6fe0!important;font-weight:500!important;}
+ 
+/* charts */
+.b6-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.b6-ccard{background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:1rem 1.25rem;}
+.b6-ctitle{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:#9090b0;margin-bottom:.75rem;font-family:'DM Mono',monospace;}
+ 
+/* ---- SPLIT PRESUPUESTO styles ---- */
+.b6-form-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:1rem;}
+.b6-fg{display:flex;flex-direction:column;gap:5px;}
+.b6-fg label{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;}
+.b6-fg input{font-size:14px;padding:8px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;font-family:'DM Sans',sans-serif;}
+.b6-note{background:#12121a;border:1px solid rgba(255,255,255,.10);border-radius:8px;padding:.7rem 1rem;font-size:12px;color:#9090b0;line-height:1.6;margin-bottom:1rem;}
+.b6-note strong{color:#f0f0f8;font-weight:500;}
+.b6-summary-split{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.25rem;}
+.b6-phase-block{border-radius:12px;overflow:hidden;margin-bottom:1rem;border:1px solid rgba(255,255,255,.06);}
+.b6-phase-hdr{padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.b6-phase-hdr.p1{background:rgba(124,111,224,.12);}
+.b6-phase-hdr.p2{background:rgba(29,184,122,.08);}
+.b6-phase-hdr.p3{background:rgba(232,168,48,.08);}
+.b6-ph-title{font-size:14px;font-weight:500;}
+.b6-ph-title.p1{color:#AFA9EC;}.b6-ph-title.p2{color:#5DCAA5;}.b6-ph-title.p3{color:#FAC775;}
+.b6-ph-stats{display:flex;gap:14px;flex-wrap:wrap;}
+.b6-ph-stat{font-size:12px;}
+.b6-ph-stat.p1{color:#7c6fe0;}.b6-ph-stat.p2{color:#1db87a;}.b6-ph-stat.p3{color:#e8a830;}
+.b6-ph-stat strong{font-weight:500;}
+.b6-badge-test{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;background:rgba(124,111,224,.15);color:#7c6fe0;}
+.b6-badge-scale{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;background:rgba(29,184,122,.15);color:#1db87a;}
+.b6-badge-dscale{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;background:rgba(232,168,48,.15);color:#e8a830;}
+.b6-legend{display:flex;gap:10px;font-size:11px;color:#9090b0;margin-bottom:8px;flex-wrap:wrap;}
+.b6-lsq{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:3px;}
+ 
+/* ---- CALENDARIO styles ---- */
+.b6-upload-zone{border:1.5px dashed rgba(255,255,255,.10);border-radius:12px;padding:1.25rem;text-align:center;cursor:pointer;margin-bottom:1rem;transition:background 120ms;}
+.b6-upload-zone:hover{background:rgba(255,255,255,.03);}
+.b6-upload-zone input{display:none;}
+.b6-cal-freq-row{display:flex;align-items:center;gap:12px;margin-bottom:1rem;flex-wrap:wrap;}
+.b6-freq-input{font-size:16px;font-weight:500;width:60px;padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;text-align:center;font-family:'DM Mono',monospace;}
+.b6-recs-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:1.25rem;}
+.b6-rec-col{border-radius:12px;overflow:hidden;}
+.b6-rec-col-hdr{padding:.6rem 1rem;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;}
+.b6-rec-col-hdr.urgente{background:#FCEBEB;color:#A32D2D;}
+.b6-rec-col-hdr.importante{background:#FAEEDA;color:#633806;}
+.b6-rec-col-hdr.sugerencia{background:#EAF3DE;color:#27500A;}
+.b6-rec-item{background:#12121a;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:.75rem;margin:.5rem;font-size:12px;color:#f0f0f8;line-height:1.5;}
+.b6-rec-item strong{font-weight:500;display:block;margin-bottom:2px;}
+.b6-pilar-pill{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:4px;}
+.b6-pp-valor{background:rgba(124,111,224,.15);color:#7c6fe0;}
+.b6-pp-social{background:rgba(29,184,122,.15);color:#1db87a;}
+.b6-pp-transf{background:rgba(61,157,232,.15);color:#3d9de8;}
+.b6-pp-oferta{background:rgba(232,168,48,.15);color:#e8a830;}
+.b6-cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
+.b6-cal-nav button{background:#12121a;border:1px solid rgba(255,255,255,.10);width:32px;height:32px;border-radius:8px;cursor:pointer;color:#9090b0;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.b6-cal-nav button:hover{background:rgba(255,255,255,.05);}
+.b6-cal-week-lbl{font-size:14px;font-weight:500;color:#f0f0f8;}
+.b6-cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;}
+.b6-cal-day{background:#12121a;border:1px solid rgba(255,255,255,.06);border-radius:8px;min-height:80px;padding:.5rem;}
+.b6-cal-day-name{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:#55556a;margin-bottom:4px;text-align:center;font-family:'DM Mono',monospace;}
+.b6-cal-day-num{font-size:12px;color:#55556a;text-align:center;margin-bottom:5px;font-family:'DM Mono',monospace;}
+.b6-cal-post{font-size:11px;font-weight:500;padding:4px 6px;border-radius:6px;text-align:center;cursor:pointer;line-height:1.4;margin-bottom:3px;}
+.b6-cal-post.valor{background:rgba(124,111,224,.15);color:#7c6fe0;}
+.b6-cal-post.social{background:rgba(29,184,122,.15);color:#1db87a;}
+.b6-cal-post.transf{background:rgba(61,157,232,.15);color:#3d9de8;}
+.b6-cal-post.oferta{background:rgba(232,168,48,.15);color:#e8a830;}
+.b6-cal-empty{color:#55556a;font-size:12px;text-align:center;margin-top:1rem;}
+.b6-day-detail{background:#12121a;border:1px solid rgba(255,255,255,.10);border-radius:10px;padding:1rem 1.25rem;margin-top:.75rem;display:none;}
+.b6-dd-title{font-size:14px;font-weight:500;color:#f0f0f8;margin-bottom:.5rem;}
+.b6-dd-body{font-size:13px;color:#9090b0;line-height:1.6;}
+.b6-donut-row{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;margin-bottom:1.25rem;}
+.b6-pilar-legend{display:flex;flex-direction:column;gap:8px;}
+.b6-leg-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#f0f0f8;}
+.b6-leg-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.b6-leg-pct{font-weight:500;margin-left:auto;font-family:'DM Mono',monospace;}
+.b6-ai-panel{background:#12121a;border:1px solid rgba(255,255,255,.10);border-radius:12px;padding:1.25rem;margin-top:1rem;display:none;}
+.b6-ai-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#7c6fe0;font-weight:500;margin-bottom:.5rem;font-family:'DM Mono',monospace;}
+.b6-ai-txt{font-size:13px;color:#f0f0f8;line-height:1.7;white-space:pre-wrap;}
+.b6-apikey{font-size:13px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;width:100%;max-width:380px;margin-bottom:.75rem;font-family:'DM Mono',monospace;}
+</style>
+ 
+<!-- ===== HEADER ===== -->
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:24px;">
+  <div>
+    <h1 class="b6-title">Daily Tasks</h1>
+    <p class="b6-desc">Embudo de captación · Split de presupuesto · Calendario de contenido</p>
+  </div>
+</div>
+ 
+<div id="b6-toast" class="b6-toast"></div>
+ 
+<!-- TABS -->
+<div class="b6-tabs">
+  <button class="b6-tab on" onclick="b6GoPage('embudo',this)">Embudo de captación</button>
+  <button class="b6-tab"    onclick="b6GoPage('split',this)">Split de presupuesto</button>
+  <button class="b6-tab"    onclick="b6GoPage('calendario',this)">Calendario</button>
+</div>
+ 
+<!-- ================================================================
+     PAGE 1: EMBUDO DE CAPTACIÓN
+     ================================================================ -->
+<div id="b6-pg-embudo" class="b6-page on">
+  <div class="b6-card">
+    <div class="b6-card-hdr">
+      <span class="b6-card-title">Ingresar datos del día</span>
+      <span style="font-size:11px;color:#55556a;">Campos en <span style="color:#7c6fe0">violeta</span> → Bloque 1 · en <span style="color:#1db87a">verde</span> → Bloque 2</span>
+    </div>
+    <div class="b6-card-body">
+      <div class="b6-import-banner">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7c6fe0" stroke-width="2" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span style="font-weight:500;color:#f0f0f8;">Bloque 1:</span>
+        <span class="b6-pill-b1">Impresiones</span><span class="b6-pill-b1">Clics</span><span class="b6-pill-b1">Leads Meta</span><span class="b6-pill-b1">Importe</span>
+        <span style="color:#55556a;margin:0 4px;">·</span>
+        <span style="font-weight:500;color:#f0f0f8;">Bloque 2:</span>
+        <span class="b6-pill-b2">Visitas</span><span class="b6-pill-b2">Leads GP</span><span class="b6-pill-b2">WhatsApp</span>
+      </div>
+ 
+      <div class="b6-form-row hdr">
+        <div class="b6-col-hdr">Fecha</div>
+        <div class="b6-col-hdr">Impresiones<br><span style="color:#7c6fe0">B1</span></div>
+        <div class="b6-col-hdr">Clics<br><span style="color:#7c6fe0">B1</span></div>
+        <div class="b6-col-hdr">Visitas pág.<br><span style="color:#1db87a">B2</span></div>
+        <div class="b6-col-hdr">Leads Meta<br><span style="color:#7c6fe0">B1</span></div>
+        <div class="b6-col-hdr">Leads GP<br><span style="color:#1db87a">B2</span></div>
+        <div class="b6-col-hdr">WhatsApp<br><span style="color:#1db87a">B2</span></div>
+        <div class="b6-col-hdr">Importe $<br><span style="color:#7c6fe0">B1</span></div>
+      </div>
+      <div id="b6-input-rows"></div>
+      <button class="b6-add-row-btn" onclick="b6AddInputRow()">+ Agregar fila</button>
+      <div style="display:flex;gap:10px;margin-top:1rem;">
+        <button class="b6-btn-pri" onclick="b6SaveAll()">Guardar y analizar</button>
+        <button class="b6-btn-sec" onclick="b6ClearInputRows()">Limpiar filas</button>
+      </div>
+    </div>
+  </div>
+ 
+  <div id="b6-embudo-results" style="display:none;">
+    <div id="b6-alert-area" class="b6-alert-area"></div>
+    <div class="b6-mc-grid g4" id="b6-totals-grid"></div>
+    <div class="b6-card">
+      <div class="b6-card-hdr">
+        <span class="b6-card-title">Embudo diario detallado</span>
+        <button class="b6-btn-sec" onclick="b6ExportCSV()">↓ CSV</button>
+      </div>
+      <div class="b6-twrap">
+        <table class="b6-table">
+          <thead><tr>
+            <th style="text-align:left">Fecha</th>
+            <th>Imp.</th><th>Clics</th><th>Visitas</th><th>Leads M.</th><th>Leads GP</th><th>WhatsApp</th><th>Importe</th>
+            <th>CTR</th><th>Connect %</th><th>Reg. Meta</th><th>Reg. GP</th><th>% WA</th>
+            <th>CPL GP</th><th>CPW</th><th>CPL Meta</th><th>CPV</th><th>CPC</th><th>CPM</th>
+          </tr></thead>
+          <tbody id="b6-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="b6-chart-row">
+      <div class="b6-ccard">
+        <div class="b6-ctitle">Volumen diario del embudo</div>
+        <div style="position:relative;width:100%;height:220px;"><canvas id="b6-funnel-chart"></canvas></div>
+      </div>
+      <div class="b6-ccard">
+        <div class="b6-ctitle">Tasas de conversión diarias</div>
+        <div style="position:relative;width:100%;height:220px;"><canvas id="b6-rates-chart"></canvas></div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ================================================================
+     PAGE 2: SPLIT DE PRESUPUESTO
+     ================================================================ -->
+<div id="b6-pg-split" class="b6-page">
+  <div class="b6-card">
+    <div class="b6-card-hdr"><span class="b6-card-title">Parámetros de la campaña</span></div>
+    <div class="b6-card-body">
+      <div class="b6-form-grid-3">
+        <div class="b6-fg"><label>Días totales de captación</label><input type="number" id="b6-sp-dias" placeholder="22" min="5" max="60"></div>
+        <div class="b6-fg"><label>Presupuesto total (USD)</label><input type="number" id="b6-sp-budget" placeholder="45000" min="100" step="0.01"></div>
+        <div class="b6-fg"><label>Fecha inicio captación</label><input type="date" id="b6-sp-fecha"></div>
+      </div>
+      <div class="b6-note">
+        <strong>Parámetros:</strong> Fase 1 (Test) = primeros 1–2 días, ~$8–10 USD por conjunto · Fase 2 (Escala) = 80% del presupuesto, curva creciente con pico a 2/3 de la fase · Fase 3 (Desescala) = 20% restante, reducción progresiva.
+      </div>
+      <button class="b6-btn-pri" onclick="b6CalcSplit()">Calcular split</button>
+      <button class="b6-btn-sec" style="margin-left:8px;" onclick="b6ResetSplit()">Limpiar</button>
+    </div>
+  </div>
+ 
+  <div id="b6-split-results" style="display:none;">
+    <div class="b6-summary-split" id="b6-split-summary"></div>
+    <div class="b6-ccard" style="margin-bottom:16px;">
+      <div class="b6-ctitle">Curva de inversión diaria</div>
+      <div class="b6-legend">
+        <span><span class="b6-lsq" style="background:#AFA9EC"></span>Fase 1 — Test</span>
+        <span><span class="b6-lsq" style="background:#1db87a"></span>Fase 2 — Escala</span>
+        <span><span class="b6-lsq" style="background:#e8a830"></span>Fase 3 — Desescala</span>
+      </div>
+      <div style="position:relative;width:100%;height:260px;"><canvas id="b6-curve-chart"></canvas></div>
+    </div>
+    <div id="b6-phases-container"></div>
+    <div class="b6-card">
+      <div class="b6-card-hdr"><span class="b6-card-title">Tabla día a día</span></div>
+      <div class="b6-twrap">
+        <table class="b6-table">
+          <thead><tr>
+            <th style="text-align:left">Día</th><th>Fecha</th><th>Fase</th>
+            <th>$ / día</th><th>Acumulado</th><th>% del total</th><th>% acum.</th>
+          </tr></thead>
+          <tbody id="b6-daily-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ================================================================
+     PAGE 3: CALENDARIO DE CONTENIDO
+     ================================================================ -->
+<div id="b6-pg-calendario" class="b6-page">
+  <div class="b6-card">
+    <div class="b6-card-hdr"><span class="b6-card-title">Configuración</span></div>
+    <div class="b6-card-body">
+      <div class="b6-form-grid-3" style="margin-bottom:1rem;">
+        <div class="b6-fg"><label>Fecha inicio semana</label><input type="date" id="b6-cal-fecha"></div>
+        <div class="b6-fg"><label>Nicho / producto</label><input type="text" id="b6-cal-nicho" placeholder="Ej: Curso de ventas online"></div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <label style="font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;">Publicaciones / semana</label>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <input type="number" class="b6-freq-input" id="b6-cal-freq" value="4" min="1" max="7">
+            <span style="font-size:13px;color:#9090b0;">publicaciones</span>
           </div>
-          <div class="cs-title">Daily Tasks — Embudo de captación</div>
-          <div class="cs-desc">Seguimiento diario · Alertas de incongruencia · Split de presupuesto · Calendario de contenido</div>
-          <div class="cs-badge">Bloque 6</div>
         </div>
+      </div>
+      <label class="b6-upload-zone">
+        <input type="file" id="b6-cal-pdf" accept=".pdf" onchange="b6HandleCalPdf(event)">
+        <div style="font-size:20px;color:#55556a;margin-bottom:.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <div style="font-size:14px;font-weight:500;color:#f0f0f8;margin-bottom:3px;">Subir estudio de alumnos / leads (.pdf)</div>
+        <div style="font-size:12px;color:#9090b0;">Se extraen dolores y objetivos para personalizar el calendario</div>
+      </label>
+      <div id="b6-pdf-status" style="font-size:12px;color:#9090b0;display:none;margin-bottom:.75rem;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <input type="password" class="b6-apikey" id="b6-cal-apikey" placeholder="sk-ant-... (API key de Anthropic)" style="max-width:320px;margin-bottom:0;">
+        <button class="b6-btn-pri" id="b6-cal-gen-btn" onclick="b6GenCalendar()">Generar con IA</button>
+        <button class="b6-btn-sec" onclick="b6GenCalendarLocal()">Generar sin IA</button>
+      </div>
+    </div>
+  </div>
+ 
+  <div id="b6-cal-results" style="display:none;">
+    <!-- Donut distribución -->
+    <div class="b6-card">
+      <div class="b6-card-hdr"><span class="b6-card-title">Distribución por pilares</span></div>
+      <div class="b6-card-body">
+        <div class="b6-donut-row">
+          <div style="position:relative;width:180px;height:180px;flex-shrink:0;"><canvas id="b6-pilares-chart"></canvas></div>
+          <div class="b6-pilar-legend" id="b6-pilar-legend"></div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Recomendaciones -->
+    <div class="b6-card">
+      <div class="b6-card-hdr"><span class="b6-card-title">Recomendaciones de contenido</span></div>
+      <div class="b6-card-body">
+        <div class="b6-recs-grid" id="b6-recs-grid"></div>
+      </div>
+    </div>
+ 
+    <!-- Calendario semanal -->
+    <div class="b6-card">
+      <div class="b6-card-hdr"><span class="b6-card-title">Calendario semanal</span></div>
+      <div class="b6-card-body">
+        <div class="b6-cal-nav">
+          <button onclick="b6NavWeek(-1)">‹</button>
+          <span class="b6-cal-week-lbl" id="b6-week-label"></span>
+          <button onclick="b6NavWeek(1)">›</button>
+        </div>
+        <div class="b6-cal-grid" id="b6-cal-grid"></div>
+        <div class="b6-day-detail" id="b6-day-detail">
+          <div class="b6-dd-title" id="b6-dd-title"></div>
+          <div class="b6-dd-body" id="b6-dd-body"></div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- AI leads -->
+    <div class="b6-card">
+      <div class="b6-card-hdr"><span class="b6-card-title">Análisis de calidad de leads</span></div>
+      <div class="b6-card-body">
+        <button class="b6-btn-pri" id="b6-leads-ai-btn" onclick="b6AnalyzeLeads()">Analizar leads con IA</button>
+        <div class="b6-ai-panel" id="b6-leads-ai-panel"><div class="b6-ai-lbl">Análisis de Claude</div><div class="b6-ai-txt" id="b6-leads-ai-txt"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<script>
+(function(){
+'use strict';
+ 
+/* ===== SHARED ===== */
+var b6CI={};
+var gridC='rgba(255,255,255,0.06)',tickC='#55556a';
+var today=new Date().toISOString().split('T')[0];
+ 
+function b6Toast(m){var t=document.getElementById('b6-toast');t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none';},2300);}
+ 
+window.b6GoPage=function(id,btn){
+  document.querySelectorAll('.b6-page').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.b6-tab').forEach(function(b){b.classList.remove('on');});
+  var pg=document.getElementById('b6-pg-'+id);if(pg)pg.classList.add('on');
+  if(btn)btn.classList.add('on');
+};
+ 
+function waitChart(cb){
+  if(window.Chart){cb();}
+  else{var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';s.onload=cb;document.head.appendChild(s);}
+}
+ 
+/* ===== EMBUDO ===== */
+var b6Rows=[];
+ 
+window.b6AddInputRow=function(d,imp,cli,vis,lm,lgp,wa,g){
+  var c=document.getElementById('b6-input-rows');
+  var div=document.createElement('div');div.className='b6-form-row';
+  div.innerHTML=
+    '<input type="date" value="'+(d||today)+'" class="b6-r-fecha">'+
+    '<input type="number" placeholder="0" value="'+(imp||'')+'" class="b6-r-imp b6-from-b1" min="0">'+
+    '<input type="number" placeholder="0" value="'+(cli||'')+'" class="b6-r-cli b6-from-b1" min="0">'+
+    '<input type="number" placeholder="0" value="'+(vis||'')+'" class="b6-r-vis b6-from-b2" min="0">'+
+    '<input type="number" placeholder="0" value="'+(lm||'')+'"  class="b6-r-lm  b6-from-b1" min="0">'+
+    '<input type="number" placeholder="0" value="'+(lgp||'')+'" class="b6-r-lgp b6-from-b2" min="0">'+
+    '<input type="number" placeholder="0" value="'+(wa||'')+'"  class="b6-r-wa  b6-from-b2" min="0">'+
+    '<input type="number" placeholder="0.00" value="'+(g||'')+'" step="0.01" class="b6-r-gasto b6-from-b1" min="0">';
+  c.appendChild(div);
+};
+ 
+window.b6ClearInputRows=function(){document.getElementById('b6-input-rows').innerHTML='';b6AddInputRow();};
+ 
+b6AddInputRow();
+ 
+window.b6SaveAll=function(){
+  var els=document.querySelectorAll('#b6-input-rows .b6-form-row');
+  b6Rows=[];
+  els.forEach(function(el){
+    var fecha=el.querySelector('.b6-r-fecha').value;
+    var imp=parseFloat(el.querySelector('.b6-r-imp').value)||0;
+    var cli=parseFloat(el.querySelector('.b6-r-cli').value)||0;
+    var vis=parseFloat(el.querySelector('.b6-r-vis').value)||0;
+    var lm=parseFloat(el.querySelector('.b6-r-lm').value)||0;
+    var lgp=parseFloat(el.querySelector('.b6-r-lgp').value)||0;
+    var wa=parseFloat(el.querySelector('.b6-r-wa').value)||0;
+    var gasto=parseFloat(el.querySelector('.b6-r-gasto').value)||0;
+    if(!fecha||(imp===0&&cli===0))return;
+    b6Rows.push({fecha:fecha,imp:imp,cli:cli,vis:vis,lm:lm,lgp:lgp,wa:wa,gasto:gasto,
+      ctr:imp>0?cli/imp*100:0,
+      connect:cli>0?vis/cli*100:0,
+      regMeta:vis>0?lm/vis*100:0,
+      regGP:vis>0?lgp/vis*100:0,
+      pctWA:lgp>0?wa/lgp*100:0,
+      cplGP:lgp>0?gasto/lgp:0,
+      cpw:wa>0?gasto/wa:0,
+      cplMeta:lm>0?gasto/lm:0,
+      cpv:vis>0?gasto/vis:0,
+      cpc:cli>0?gasto/cli:0,
+      cpm:imp>0?gasto/imp*1000:0
+    });
+  });
+  if(!b6Rows.length){b6Toast('Ingresá al menos una fila con datos.');return;}
+  b6Rows.sort(function(a,b){return new Date(a.fecha)-new Date(b.fecha);});
+  document.getElementById('b6-embudo-results').style.display='block';
+  b6RenderTotals();b6RenderTable();b6RenderAlerts();b6RenderEmbdoCharts();
+  b6Toast('Datos guardados y analizados.');
+  document.getElementById('b6-embudo-results').scrollIntoView({behavior:'smooth'});
+};
+ 
+function b6Fmt(v,type){
+  if(type==='$')return '$'+v.toFixed(2);
+  if(type==='%')return v.toFixed(1)+'%';
+  if(type==='n')return Math.round(v).toLocaleString('es-AR');
+  return v.toFixed(2);
+}
+ 
+/* thresholds: {warn, ok, inv} inv=true means lower is better */
+var b6Thresh={
+  ctr:{warn:.8,ok:1.5,inv:false},
+  connect:{warn:80,ok:90,inv:false},
+  regMeta:{warn:10,ok:20,inv:false},
+  regGP:{warn:30,ok:40,inv:false},
+  pctWA:{warn:80,ok:90,inv:false},
+  cplGP:{warn:1,ok:.6,inv:true},
+  cpw:{warn:1,ok:.5,inv:true},
+  cplMeta:{warn:2,ok:1,inv:true}
+};
+ 
+function b6CellCls(v,k){
+  var t=b6Thresh[k];if(!t)return'';
+  if(t.inv)return v<=t.ok?'b6-cell-ok':v<=t.warn?'b6-cell-warn':'b6-cell-bad';
+  return v>=t.ok?'b6-cell-ok':v>=t.warn?'b6-cell-warn':'b6-cell-bad';
+}
+ 
+function b6RenderTotals(){
+  var tI=b6Rows.reduce(function(s,r){return s+r.imp;},0);
+  var tLGP=b6Rows.reduce(function(s,r){return s+r.lgp;},0);
+  var tWA=b6Rows.reduce(function(s,r){return s+r.wa;},0);
+  var tG=b6Rows.reduce(function(s,r){return s+r.gasto;},0);
+  var avgCTR=b6Rows.reduce(function(s,r){return s+r.ctr;},0)/b6Rows.length;
+  var pWA=tLGP>0?tWA/tLGP*100:0;
+  var cplGP=tLGP>0?tG/tLGP:0;var cpw=tWA>0?tG/tWA:0;
+  document.getElementById('b6-totals-grid').innerHTML=
+    '<div class="b6-mc"><div class="b6-mc-lbl">Total impresiones</div><div class="b6-mc-val b">'+tI.toLocaleString('es-AR')+'</div><div class="b6-mc-sub">acumulado</div></div>'+
+    '<div class="b6-mc"><div class="b6-mc-lbl">Total leads GP</div><div class="b6-mc-val g">'+tLGP.toLocaleString('es-AR')+'</div><div class="b6-mc-sub">CPL GP: $'+cplGP.toFixed(2)+'</div></div>'+
+    '<div class="b6-mc"><div class="b6-mc-lbl">Total WhatsApp</div><div class="b6-mc-val p">'+tWA.toLocaleString('es-AR')+'</div><div class="b6-mc-sub">CPW: $'+cpw.toFixed(2)+' · % WA: '+pWA.toFixed(1)+'%</div></div>'+
+    '<div class="b6-mc"><div class="b6-mc-lbl">Importe total</div><div class="b6-mc-val a">$'+tG.toFixed(2)+'</div><div class="b6-mc-sub">CTR prom: '+avgCTR.toFixed(2)+'%</div></div>';
+}
+ 
+function b6RenderTable(){
+  var tot={imp:0,cli:0,vis:0,lm:0,lgp:0,wa:0,gasto:0};
+  b6Rows.forEach(function(r){tot.imp+=r.imp;tot.cli+=r.cli;tot.vis+=r.vis;tot.lm+=r.lm;tot.lgp+=r.lgp;tot.wa+=r.wa;tot.gasto+=r.gasto;});
+  var tCTR=tot.imp>0?tot.cli/tot.imp*100:0;
+  var tConn=tot.cli>0?tot.vis/tot.cli*100:0;
+  var tRM=tot.vis>0?tot.lm/tot.vis*100:0;
+  var tRG=tot.vis>0?tot.lgp/tot.vis*100:0;
+  var tWA=tot.lgp>0?tot.wa/tot.lgp*100:0;
+  var tCPLGP=tot.lgp>0?tot.gasto/tot.lgp:0;
+  var tCPW=tot.wa>0?tot.gasto/tot.wa:0;
+  var tCPLM=tot.lm>0?tot.gasto/tot.lm:0;
+  var tCPV=tot.vis>0?tot.gasto/tot.vis:0;
+  var tCPC=tot.cli>0?tot.gasto/tot.cli:0;
+  var tCPM=tot.imp>0?tot.gasto/tot.imp*1000:0;
+ 
+  var html=b6Rows.map(function(r){
+    return '<tr><td>'+r.fecha.slice(5)+'</td>'+
+    '<td>'+b6Fmt(r.imp,'n')+'</td><td>'+b6Fmt(r.cli,'n')+'</td><td>'+b6Fmt(r.vis,'n')+'</td>'+
+    '<td>'+b6Fmt(r.lm,'n')+'</td><td class="b6-cell-p">'+b6Fmt(r.lgp,'n')+'</td><td class="b6-cell-p">'+b6Fmt(r.wa,'n')+'</td>'+
+    '<td>'+b6Fmt(r.gasto,'$')+'</td>'+
+    '<td class="'+b6CellCls(r.ctr,'ctr')+'">'+b6Fmt(r.ctr,'%')+'</td>'+
+    '<td class="'+b6CellCls(r.connect,'connect')+'">'+b6Fmt(r.connect,'%')+'</td>'+
+    '<td class="'+b6CellCls(r.regMeta,'regMeta')+'">'+b6Fmt(r.regMeta,'%')+'</td>'+
+    '<td class="'+b6CellCls(r.regGP,'regGP')+'">'+b6Fmt(r.regGP,'%')+'</td>'+
+    '<td class="'+b6CellCls(r.pctWA,'pctWA')+'">'+b6Fmt(r.pctWA,'%')+'</td>'+
+    '<td class="'+b6CellCls(r.cplGP,'cplGP')+'">'+b6Fmt(r.cplGP,'$')+'</td>'+
+    '<td class="'+b6CellCls(r.cpw,'cpw')+'">'+b6Fmt(r.cpw,'$')+'</td>'+
+    '<td class="'+b6CellCls(r.cplMeta,'cplMeta')+'">'+b6Fmt(r.cplMeta,'$')+'</td>'+
+    '<td>'+b6Fmt(r.cpv,'$')+'</td><td>'+b6Fmt(r.cpc,'$')+'</td><td>'+b6Fmt(r.cpm,'$')+'</td>'+
+    '</tr>';
+  }).join('');
+ 
+  html+='<tr class="b6-total"><td>TOTAL</td>'+
+    '<td>'+b6Fmt(tot.imp,'n')+'</td><td>'+b6Fmt(tot.cli,'n')+'</td><td>'+b6Fmt(tot.vis,'n')+'</td>'+
+    '<td>'+b6Fmt(tot.lm,'n')+'</td><td>'+b6Fmt(tot.lgp,'n')+'</td><td>'+b6Fmt(tot.wa,'n')+'</td>'+
+    '<td>'+b6Fmt(tot.gasto,'$')+'</td>'+
+    '<td class="'+b6CellCls(tCTR,'ctr')+'">'+b6Fmt(tCTR,'%')+'</td>'+
+    '<td class="'+b6CellCls(tConn,'connect')+'">'+b6Fmt(tConn,'%')+'</td>'+
+    '<td class="'+b6CellCls(tRM,'regMeta')+'">'+b6Fmt(tRM,'%')+'</td>'+
+    '<td class="'+b6CellCls(tRG,'regGP')+'">'+b6Fmt(tRG,'%')+'</td>'+
+    '<td class="'+b6CellCls(tWA,'pctWA')+'">'+b6Fmt(tWA,'%')+'</td>'+
+    '<td class="'+b6CellCls(tCPLGP,'cplGP')+'">'+b6Fmt(tCPLGP,'$')+'</td>'+
+    '<td class="'+b6CellCls(tCPW,'cpw')+'">'+b6Fmt(tCPW,'$')+'</td>'+
+    '<td class="'+b6CellCls(tCPLM,'cplMeta')+'">'+b6Fmt(tCPLM,'$')+'</td>'+
+    '<td>'+b6Fmt(tCPV,'$')+'</td><td>'+b6Fmt(tCPC,'$')+'</td><td>'+b6Fmt(tCPM,'$')+'</td>'+
+  '</tr>';
+  document.getElementById('b6-table-body').innerHTML=html;
+}
+ 
+function b6RenderAlerts(){
+  var alerts=[];
+  b6Rows.forEach(function(r){
+    var d=r.fecha.slice(5);
+    if(r.vis>r.cli&&r.cli>0) alerts.push({lv:'danger',title:d+' — Más visitas que clics registrados',desc:'Hay más visitas a la página que clics en los anuncios. Posible tráfico orgánico sin trackear o error en pixel/UTMs. Revisar que todas las campañas tengan UTMs correctas y que el pixel de Meta esté activo en la landing.'});
+    if(r.connect<80&&r.cli>20) alerts.push({lv:'danger',title:d+' — Connect rate bajo ('+r.connect.toFixed(1)+'% · umbral: 80%)',desc:'Menos del 80% de los clics llega a la página. Revisar velocidad de carga, posibles errores 404 o URL incorrecta en los anuncios.'});
+    if(r.pctWA<80&&r.lgp>10) alerts.push({lv:'danger',title:d+' — % WhatsApp bajo ('+r.pctWA.toFixed(1)+'% · umbral: 80%)',desc:'Menos del 80% de los leads GP ingresan al grupo de WhatsApp. Revisar que el botón y link de WA en la página de confirmación estén funcionando correctamente.'});
+    if(r.regGP<30&&r.vis>30) alerts.push({lv:'warning',title:d+' — % Registro GP bajo ('+r.regGP.toFixed(1)+'% · umbral: 30%)',desc:'Menos del 30% de las visitas se registran. Revisar el formulario, CTA y copy de la landing. Puede indicar tráfico no calificado o propuesta de valor poco clara.'});
+    if(r.cplGP>1&&r.lgp>5) alerts.push({lv:'warning',title:d+' — CPL GP alto ($'+r.cplGP.toFixed(2)+' · umbral: $1)',desc:'El costo por lead supera $1. Revisar la tasa de conversión de la landing y la optimización de las campañas.'});
+    if(r.ctr<.8&&r.imp>5000) alerts.push({lv:'warning',title:d+' — CTR bajo ('+r.ctr.toFixed(2)+'%)',desc:'CTR menor a 0.8%. Revisar creatividades, hook visual y copy. Considerar rotar contenidos.'});
+  });
+  var allOk=b6Rows.every(function(r){return r.connect>=80&&r.regGP>=30&&r.pctWA>=80&&r.cplGP<=1&&r.ctr>=.8;});
+  if(allOk&&b6Rows.length) alerts.unshift({lv:'ok',title:'Todo el embudo dentro de parámetros',desc:'No se detectaron incongruencias. Connect rate, % Registro GP, % WhatsApp, CTR y CPL GP dentro de los umbrales configurados.'});
+  var icons={danger:'<svg class="b6-alert-icon" viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',warning:'<svg class="b6-alert-icon" viewBox="0 0 24 24" fill="none" stroke="#633806" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',ok:'<svg class="b6-alert-icon" viewBox="0 0 24 24" fill="none" stroke="#3B6D11" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>'};
+  document.getElementById('b6-alert-area').innerHTML=alerts.map(function(a){return '<div class="b6-alert '+a.lv+'">'+icons[a.lv]+'<div><div class="b6-alert-title '+a.lv+'">'+a.title+'</div><div class="b6-alert-desc '+a.lv+'">'+a.desc+'</div></div></div>';}).join('');
+}
+ 
+function b6RenderEmbdoCharts(){
+  var labels=b6Rows.map(function(r){return r.fecha.slice(5);});
+  waitChart(function(){
+    if(b6CI.funnel){b6CI.funnel.destroy();b6CI.funnel=null;}
+    b6CI.funnel=new Chart(document.getElementById('b6-funnel-chart'),{type:'line',data:{labels:labels,datasets:[
+      {label:'Impresiones',data:b6Rows.map(function(r){return r.imp;}),borderColor:'#AFA9EC',backgroundColor:'transparent',pointRadius:3,tension:.3},
+      {label:'Visitas',data:b6Rows.map(function(r){return r.vis;}),borderColor:'#3d9de8',backgroundColor:'transparent',pointRadius:3,tension:.3},
+      {label:'Leads GP',data:b6Rows.map(function(r){return r.lgp;}),borderColor:'#1db87a',backgroundColor:'transparent',pointRadius:4,tension:.3,borderWidth:2},
+      {label:'WhatsApp',data:b6Rows.map(function(r){return r.wa;}),borderColor:'#7c6fe0',backgroundColor:'transparent',pointRadius:4,tension:.3,borderWidth:2}
+    ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},color:tickC,boxWidth:10,padding:8}}},scales:{x:{grid:{color:gridC},ticks:{color:tickC,font:{size:11}}},y:{grid:{color:gridC},ticks:{color:tickC,font:{size:11}}}}}});
+ 
+    if(b6CI.rates){b6CI.rates.destroy();b6CI.rates=null;}
+    b6CI.rates=new Chart(document.getElementById('b6-rates-chart'),{type:'line',data:{labels:labels,datasets:[
+      {label:'Connect %',data:b6Rows.map(function(r){return parseFloat(r.connect.toFixed(1));}),borderColor:'#3d9de8',pointRadius:3,tension:.3,backgroundColor:'transparent'},
+      {label:'% Reg. GP',data:b6Rows.map(function(r){return parseFloat(r.regGP.toFixed(1));}),borderColor:'#1db87a',pointRadius:3,tension:.3,backgroundColor:'transparent'},
+      {label:'% WhatsApp',data:b6Rows.map(function(r){return parseFloat(r.pctWA.toFixed(1));}),borderColor:'#7c6fe0',pointRadius:3,tension:.3,backgroundColor:'transparent',borderWidth:2},
+      {label:'CTR',data:b6Rows.map(function(r){return parseFloat(r.ctr.toFixed(2));}),borderColor:'#e85555',pointRadius:3,tension:.3,backgroundColor:'transparent',borderDash:[4,3]}
+    ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},color:tickC,boxWidth:10,padding:8}},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+c.parsed.y+'%';}}}},scales:{x:{grid:{color:gridC},ticks:{color:tickC,font:{size:11}}},y:{grid:{color:gridC},ticks:{color:tickC,font:{size:11},callback:function(v){return v+'%';}}}}}});
+  });
+}
+ 
+window.b6ExportCSV=function(){
+  if(!b6Rows.length){b6Toast('No hay datos.');return;}
+  var h=['Fecha','Imp','Clics','Visitas','Leads M','Leads GP','WhatsApp','Importe','CTR%','Connect%','RegMeta%','RegGP%','WA%','CPL GP','CPW','CPL Meta','CPV','CPC','CPM'];
+  var csv=[h.join(',')].concat(b6Rows.map(function(r){return[r.fecha,r.imp,r.cli,r.vis,r.lm,r.lgp,r.wa,r.gasto.toFixed(2),r.ctr.toFixed(2),r.connect.toFixed(1),r.regMeta.toFixed(1),r.regGP.toFixed(1),r.pctWA.toFixed(1),r.cplGP.toFixed(2),r.cpw.toFixed(2),r.cplMeta.toFixed(2),r.cpv.toFixed(2),r.cpc.toFixed(2),r.cpm.toFixed(2)].join(',');})).join('\n');
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='embudo_'+today+'.csv';a.click();
+};
+ 
+/* ===== SPLIT PRESUPUESTO ===== */
+document.getElementById('b6-sp-fecha').value=today;
+ 
+window.b6ResetSplit=function(){document.getElementById('b6-sp-dias').value='';document.getElementById('b6-sp-budget').value='';document.getElementById('b6-sp-fecha').value=today;document.getElementById('b6-split-results').style.display='none';};
+ 
+function b6AddDate(str,n){var d=new Date(str);d.setDate(d.getDate()+n);return d;}
+function b6FmtDate(d){return d.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit'});}
+ 
+window.b6CalcSplit=function(){
+  var dias=parseInt(document.getElementById('b6-sp-dias').value);
+  var budget=parseFloat(document.getElementById('b6-sp-budget').value);
+  var fechaStr=document.getElementById('b6-sp-fecha').value;
+  if(!dias||dias<5||!budget||budget<=0){b6Toast('Completá todos los campos. Mínimo 5 días.');return;}
+ 
+  var dTest=dias<=7?1:2;
+  var dScale=Math.round((dias-dTest)*0.75);
+  var dDscale=dias-dTest-dScale;
+ 
+  var budgetTest=Math.min(budget*.08,dTest*10);
+  var budgetScale2=budget*.80-budgetTest;
+  var budgetDscale=budget-budgetTest-budgetScale2;
+ 
+  var daily=[];
+  for(var i=0;i<dTest;i++) daily.push({day:i+1,fase:1,amt:parseFloat((budgetTest/dTest).toFixed(2))});
+ 
+  var sw=[];
+  for(var i=0;i<dScale;i++){var pos=i/(dScale-1||1);var w=pos<.67?.3+pos*1.2:1.3-(pos-.67)*1.5;sw.push(Math.max(w,.15));}
+  var tsw=sw.reduce(function(a,b){return a+b;},0);
+  for(var i=0;i<dScale;i++) daily.push({day:dTest+i+1,fase:2,amt:parseFloat((budgetScale2*sw[i]/tsw).toFixed(2))});
+ 
+  var dw=[];
+  for(var i=0;i<dDscale;i++){var w=1-i/(dDscale||1)*.7;dw.push(Math.max(w,.1));}
+  var tdw=dw.reduce(function(a,b){return a+b;},0);
+  for(var i=0;i<dDscale;i++) daily.push({day:dTest+dScale+i+1,fase:3,amt:parseFloat((budgetDscale*dw[i]/tdw).toFixed(2))});
+ 
+  var totalCalc=daily.reduce(function(s,d){return s+d.amt;},0);
+  var factor=budget/totalCalc;
+  var acum=0;
+  daily.forEach(function(d){d.amt=parseFloat((d.amt*factor).toFixed(2));acum+=d.amt;d.acum=parseFloat(acum.toFixed(2));d.pct=parseFloat((d.amt/budget*100).toFixed(1));d.pctAcum=parseFloat((d.acum/budget*100).toFixed(1));d.fecha=b6FmtDate(b6AddDate(fechaStr,d.day-1));});
+ 
+  var phAmt=[1,2,3].map(function(f){return daily.filter(function(d){return d.fase===f;}).reduce(function(s,d){return s+d.amt;},0);});
+ 
+  document.getElementById('b6-split-results').style.display='block';
+ 
+  document.getElementById('b6-split-summary').innerHTML=
+    '<div class="b6-mc"><div class="b6-mc-lbl">Presupuesto total</div><div class="b6-mc-val">$'+budget.toLocaleString('es-AR',{minimumFractionDigits:2})+'</div><div class="b6-mc-sub">'+dias+' días</div></div>'+
+    '<div class="b6-mc"><div class="b6-mc-lbl">Fase 1 — Test</div><div class="b6-mc-val p">$'+phAmt[0].toFixed(2)+'</div><div class="b6-mc-sub">'+dTest+' día'+(dTest>1?'s':'')+' · '+(phAmt[0]/budget*100).toFixed(1)+'%</div></div>'+
+    '<div class="b6-mc"><div class="b6-mc-lbl">Fase 2 — Escala</div><div class="b6-mc-val g">$'+phAmt[1].toFixed(2)+'</div><div class="b6-mc-sub">'+dScale+' días · '+(phAmt[1]/budget*100).toFixed(1)+'%</div></div>'+
+    '<div class="b6-mc"><div class="b6-mc-lbl">Fase 3 — Desescala</div><div class="b6-mc-val a">$'+phAmt[2].toFixed(2)+'</div><div class="b6-mc-sub">'+dDscale+' días · '+(phAmt[2]/budget*100).toFixed(1)+'%</div></div>';
+ 
+  waitChart(function(){
+    if(b6CI.curve){b6CI.curve.destroy();b6CI.curve=null;}
+    var colMap={1:'#AFA9EC',2:'#1db87a',3:'#e8a830'};
+    b6CI.curve=new Chart(document.getElementById('b6-curve-chart'),{type:'bar',data:{labels:daily.map(function(d){return 'D'+d.day;}),datasets:[
+      {data:daily.map(function(d){return parseFloat(d.amt.toFixed(2));}),backgroundColor:daily.map(function(d){return colMap[d.fase];}),borderRadius:3,label:'$ / día'},
+      {type:'line',data:daily.map(function(d){return parseFloat(d.amt.toFixed(2));}),borderColor:'rgba(255,255,255,0.3)',borderDash:[4,3],borderWidth:1.5,pointRadius:0,fill:false,label:'Curva'}
+    ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.dataset.label==='Curva'?null:'$'+c.parsed.y.toFixed(2);}}}},scales:{x:{grid:{color:gridC},ticks:{color:tickC,font:{size:10},autoSkip:true,maxTicksLimit:15}},y:{grid:{color:gridC},ticks:{color:tickC,font:{size:11},callback:function(v){return '$'+v.toFixed(0);}}}}}});
+  });
+ 
+  var phaseDefs=[{id:1,cls:'p1',name:'Fase 1 — Test',badgeCls:'b6-badge-test',days:dTest,phCol:'#7c6fe0'},{id:2,cls:'p2',name:'Fase 2 — Escala',badgeCls:'b6-badge-scale',days:dScale,phCol:'#1db87a'},{id:3,cls:'p3',name:'Fase 3 — Desescala',badgeCls:'b6-badge-dscale',days:dDscale,phCol:'#e8a830'}];
+  document.getElementById('b6-phases-container').innerHTML=phaseDefs.map(function(ph,idx){
+    var fDays=daily.filter(function(d){return d.fase===ph.id;});
+    var fAmt=phAmt[idx];var fPct=(fAmt/budget*100).toFixed(1);
+    var avg=(fAmt/fDays.length).toFixed(2);
+    var pico=ph.id===2?fDays.reduce(function(mx,d){return d.amt>mx.amt?d:mx;},fDays[0]):null;
+    return '<div class="b6-phase-block"><div class="b6-phase-hdr '+ph.cls+'"><div><div class="b6-ph-title '+ph.cls+'">'+ph.name+'</div><div style="font-size:12px;color:#9090b0;margin-top:2px;">Días '+fDays[0].day+(fDays.length>1?'–'+fDays[fDays.length-1].day:'')+' · '+fDays[0].fecha+(fDays.length>1?' al '+fDays[fDays.length-1].fecha:'')+'</div></div><div class="b6-ph-stats"><div class="b6-ph-stat '+ph.cls+'"><strong>$'+fAmt.toFixed(2)+'</strong> total</div><div class="b6-ph-stat '+ph.cls+'"><strong>'+fPct+'%</strong></div><div class="b6-ph-stat '+ph.cls+'"><strong>'+fDays.length+'</strong> días</div><div class="b6-ph-stat '+ph.cls+'"><strong>$'+avg+'</strong> prom/día</div>'+(pico?'<div class="b6-ph-stat '+ph.cls+'">Pico: <strong>$'+pico.amt.toFixed(2)+'</strong> (D'+pico.day+')</div>':'')+'</div></div>'+
+    '<table class="b6-table"><thead><tr><th style="text-align:left">Día</th><th>Fecha</th><th>$ / día</th><th>% total</th><th>% acum.</th></tr></thead><tbody>'+
+    fDays.map(function(d){return '<tr><td><span class="'+ph.badgeCls+'">'+d.day+'</span></td><td>'+d.fecha+'</td><td style="text-align:right;font-weight:500;color:'+ph.phCol+'">$'+d.amt.toFixed(2)+'</td><td style="text-align:right">'+d.pct+'%</td><td style="text-align:right;color:#55556a">'+d.pctAcum+'%</td></tr>';}).join('')+
+    '<tr class="b6-total"><td colspan="2">Total fase '+ph.id+'</td><td style="text-align:right">$'+fAmt.toFixed(2)+'</td><td style="text-align:right">'+fPct+'%</td><td></td></tr>'+
+    '</tbody></table></div>';
+  }).join('');
+ 
+  document.getElementById('b6-daily-table').innerHTML=
+    daily.map(function(d){var colMap={1:'#7c6fe0',2:'#1db87a',3:'#e8a830'};var nMap={1:'Test',2:'Escala',3:'Desescala'};var bMap={1:'b6-badge-test',2:'b6-badge-scale',3:'b6-badge-dscale'};return'<tr><td><span class="'+bMap[d.fase]+'">'+d.day+'</span></td><td>'+d.fecha+'</td><td style="color:'+colMap[d.fase]+';font-size:11px;font-weight:500;">'+nMap[d.fase]+'</td><td style="text-align:right;font-weight:500;color:'+colMap[d.fase]+'">$'+d.amt.toFixed(2)+'</td><td style="text-align:right">$'+d.acum.toFixed(2)+'</td><td style="text-align:right">'+d.pct+'%</td><td style="text-align:right;color:#55556a">'+d.pctAcum+'%</td></tr>';}).join('')+
+    '<tr class="b6-total"><td colspan="3">Total</td><td style="text-align:right">$'+budget.toFixed(2)+'</td><td style="text-align:right">$'+budget.toFixed(2)+'</td><td style="text-align:right">100%</td><td style="text-align:right">100%</td></tr>';
+ 
+  document.getElementById('b6-split-results').scrollIntoView({behavior:'smooth'});
+};
+ 
+/* ===== CALENDARIO ===== */
+var b6CalStartDate=null,b6CalOffset=0,b6CalData=[],b6CalPdfCtx='',b6CalPilares=[];
+ 
+document.getElementById('b6-cal-fecha').value=b6GetMonday(new Date());
+ 
+function b6GetMonday(d){var day=d.getDay();var diff=day===0?-6:1-day;var m=new Date(d);m.setDate(d.getDate()+diff);return m.toISOString().split('T')[0];}
+ 
+function b6FmtDateLong(d){return d.toLocaleDateString('es-AR',{day:'2-digit',month:'long'});}
+function b6FmtDateSh(d){return d.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit'});}
+ 
+var DIAS=['LUN','MAR','MIÉ','JUE','VIE','SÁB','DOM'];
+var PILARES=[{id:'valor',label:'Aportar valor',col:'#7c6fe0'},{id:'social',label:'Prueba social',col:'#1db87a'},{id:'transf',label:'Transformación',col:'#3d9de8'},{id:'oferta',label:'Oferta / CTA',col:'#e8a830'}];
+var PILARES_DEF=[{id:'valor',pct:35,label:'Aportar valor'},{id:'social',pct:35,label:'Prueba social'},{id:'transf',pct:20,label:'Transformación'},{id:'oferta',pct:10,label:'Oferta / CTA'}];
+var TMPLS={valor:['Por qué tu Instagram no vende','3 errores que frenan tus ventas','Cómo empezar a vender sin seguidores','La verdad sobre el algoritmo','Qué hace diferente a un vendedor humano','Mini guía: primer reel que convierte'],social:['Caso real: alumna que duplicó ventas','Testimonio: de 0 a primeras ventas','Antes y después de trabajar el perfil','Historia de éxito: negocio físico a digital','Resultado de alumno esta semana','Screenshot de cierre de venta real'],transf:['Cómo cambió mi vida vender online','La mentalidad del vendedor exitoso','De empleado a libre: mi historia','No necesitás miles de seguidores','El antes y después de aprender a vender','Carta a quien tiene miedo de invertir'],oferta:['Las inscripciones cierran el viernes','Quedan X lugares disponibles','Precio especial solo esta semana','¿Para quién es el programa?','Cómo funciona el método paso a paso','Garantía y respaldo del programa']};
+var RECS_DEFAULT={urgente:[{titulo:'Publicar prueba social esta semana',pilar:'social',razon:'El 75% de los leads tiene alta desconfianza. Un testimonio real reduce la fricción de compra.'},{titulo:'Reel contra la objeción principal',pilar:'valor',razon:'Neutralizá el "no tengo tiempo" antes del webinar con contenido específico.'}],importante:[{titulo:'Contenido de transformación personal',pilar:'transf',razon:'Los leads con perfil empleado atrapado conectan con historias de cambio de vida.'},{titulo:'Caso de estudio de alumno reciente',pilar:'social',razon:'Los casos específicos por rubro generan mayor identificación.'}],sugerencia:[{titulo:'Serie de 3 reels: el método paso a paso',pilar:'valor',razon:'El contenido en serie aumenta el follow y retención de audiencia nueva.'},{titulo:'Encuesta interactiva en historias',pilar:'valor',razon:'Activa el algoritmo y genera datos de segmentación.'}]};
+ 
+window.b6HandleCalPdf=async function(e){
+  var file=e.target.files[0];if(!file)return;
+  var st=document.getElementById('b6-pdf-status');st.style.display='block';st.textContent='Leyendo PDF...';
+  try{var ab=await file.arrayBuffer();var bytes=new Uint8Array(ab);var str='';bytes.slice(0,8000).forEach(function(b){if(b>31&&b<127)str+=String.fromCharCode(b);});b6CalPdfCtx=str.replace(/[^\x20-\x7E\n]/g,'').replace(/\s+/g,' ').trim().slice(0,2000);st.textContent='PDF cargado: "'+file.name+'" · '+b6CalPdfCtx.length+' caracteres extraídos';}catch(e){st.textContent='Error leyendo el PDF.';b6CalPdfCtx='';}
+};
+ 
+window.b6GenCalendarLocal=function(){
+  var freq=Math.min(Math.max(parseInt(document.getElementById('b6-cal-freq').value)||4,1),7);
+  var startStr=document.getElementById('b6-cal-fecha').value||b6GetMonday(new Date());
+  b6CalStartDate=startStr;b6CalOffset=0;
+  b6CalPilares=PILARES_DEF;
+  var postDays=freq<=4?[0,2,4,5].slice(0,freq):Array.from({length:freq},function(_,i){return i;});
+  var pool=[];PILARES_DEF.forEach(function(p){var c=Math.max(1,Math.round(p.pct/100*freq));for(var i=0;i<c;i++)pool.push(p.id);});
+  while(pool.length<freq)pool.push('valor');pool=pool.slice(0,freq).sort(function(){return Math.random()-.5;});
+  b6CalData=[];var pi=0;
+  for(var di=0;di<7;di++){var date=b6AddDate(startStr,di);if(postDays.includes(di)){var pid=pool[pi]||'valor';var t=TMPLS[pid];b6CalData.push({day:di,date:date,pilar:pid,title:t[Math.floor(Math.random()*t.length)],copy:''});pi++;}else b6CalData.push({day:di,date:date,pilar:null,title:null,copy:''});}
+  b6BuildCalResults(b6CalData,PILARES_DEF,RECS_DEFAULT);
+};
+ 
+window.b6GenCalendar=async function(){
+  var key=(document.getElementById('b6-cal-apikey').value||'').trim();
+  if(!key){b6Toast('Ingresá tu API key o usá "Generar sin IA".');return;}
+  var freq=parseInt(document.getElementById('b6-cal-freq').value)||4;
+  var nicho=document.getElementById('b6-cal-nicho').value||'negocio online';
+  var startStr=document.getElementById('b6-cal-fecha').value||b6GetMonday(new Date());
+  b6CalStartDate=startStr;b6CalOffset=0;
+  var btn=document.getElementById('b6-cal-gen-btn');btn.innerHTML='<span class="b6-spinner"></span>Generando...';btn.disabled=true;
+  var context=b6CalPdfCtx?'\n\nContexto leads:\n'+b6CalPdfCtx.slice(0,1200):'';
+  var prompt='Sos experto en marketing de contenidos para Instagram. Nicho: "'+nicho+'". Frecuencia: '+freq+' publicaciones/semana.'+context+'\n\nRespondé SOLO con JSON válido (sin markdown):\n{"pilares":[{"id":"valor","label":"Aportar valor","pct":35},{"id":"social","label":"Prueba social","pct":35},{"id":"transf","label":"Transformación","pct":20},{"id":"oferta","label":"Oferta / CTA","pct":10}],"posts":[{"dia":0,"pilar":"valor","titulo":"Título","copy":"Gancho"}],"recomendaciones":{"urgente":[{"titulo":"T","pilar":"social","razon":"R"}],"importante":[{"titulo":"T","pilar":"valor","razon":"R"}],"sugerencia":[{"titulo":"T","pilar":"transf","razon":"R"}]}}\nDia 0=lunes, 6=domingo. Solo '+freq+' posts. Porcentajes suman 100. Si hay contexto de leads, personalizá los títulos.';
+  try{
+    var r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,messages:[{role:'user',content:prompt}]})});
+    var d=await r.json();var raw=(d.content&&d.content[0]&&d.content[0].text)||'{}';
+    raw=raw.replace(/```json|```/g,'').trim();var parsed=JSON.parse(raw);
+    var pilares=parsed.pilares||PILARES_DEF;var postsAI=parsed.posts||[];var recs=parsed.recomendaciones||RECS_DEFAULT;
+    b6CalPilares=pilares;
+    var weekData=[];for(var di=0;di<7;di++){var date=b6AddDate(startStr,di);var post=postsAI.find(function(p){return p.dia===di;});weekData.push({day:di,date:date,pilar:post?post.pilar:null,title:post?post.titulo:null,copy:post?post.copy:''});}
+    b6CalData=weekData;b6BuildCalResults(weekData,pilares,recs);
+  }catch(e){b6Toast('Error con la API. Generando sin IA...');b6GenCalendarLocal();}
+  btn.innerHTML='Generar con IA';btn.disabled=false;
+};
+ 
+function b6BuildCalResults(data,pilares,recs){
+  document.getElementById('b6-cal-results').style.display='block';
+  b6BuildPilaresChart(pilares);
+  b6BuildRecs(recs);
+  b6RenderCalendar();
+  document.getElementById('b6-cal-results').scrollIntoView({behavior:'smooth'});
+}
+ 
+function b6BuildPilaresChart(pilares){
+  if(b6CI.pilares){b6CI.pilares.destroy();b6CI.pilares=null;}
+  var cols={valor:'#7c6fe0',social:'#1db87a',transf:'#3d9de8',oferta:'#e8a830'};
+  waitChart(function(){
+    b6CI.pilares=new Chart(document.getElementById('b6-pilares-chart'),{type:'doughnut',data:{labels:pilares.map(function(p){return p.label;}),datasets:[{data:pilares.map(function(p){return p.pct;}),backgroundColor:pilares.map(function(p){return cols[p.id]||'#888';}),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.label+': '+c.parsed+'%';}}}}}});
+  });
+  var colMap={valor:'#7c6fe0',social:'#1db87a',transf:'#3d9de8',oferta:'#e8a830'};
+  document.getElementById('b6-pilar-legend').innerHTML=pilares.map(function(p){return'<div class="b6-leg-item"><span class="b6-leg-dot" style="background:'+colMap[p.id]+'"></span><span>'+p.label+'</span><span class="b6-leg-pct">'+p.pct+'%</span></div>';}).join('');
+}
+ 
+var pilarCls={valor:'valor',social:'social',transf:'transf',oferta:'oferta'};
+var pilarLabel={valor:'Aportar valor',social:'Prueba social',transf:'Transformación',oferta:'Oferta / CTA'};
+var pilarPill={valor:'b6-pp-valor',social:'b6-pp-social',transf:'b6-pp-transf',oferta:'b6-pp-oferta'};
+ 
+function b6BuildRecs(recs){
+  var cols=[{key:'urgente',label:'Urgente',cls:'urgente'},{key:'importante',label:'Importante',cls:'importante'},{key:'sugerencia',label:'Sugerencia',cls:'sugerencia'}];
+  document.getElementById('b6-recs-grid').innerHTML=cols.map(function(col){
+    var items=(recs[col.key]||[]);
+    return'<div class="b6-rec-col"><div class="b6-rec-col-hdr '+col.cls+'">'+col.label+'</div>'+
+      (items.length?items.map(function(r){return'<div class="b6-rec-item"><strong>'+r.titulo+'</strong><div style="font-size:11px;color:#9090b0;margin-top:2px;line-height:1.5;">'+r.razon+'</div><span class="b6-pilar-pill '+(pilarPill[r.pilar]||'b6-pp-valor')+'">'+pilarLabel[r.pilar]+'</span></div>';}).join(''):'<div style="font-size:12px;color:#55556a;padding:.75rem;text-align:center;font-style:italic;">Sin items</div>')+
+    '</div>';
+  }).join('');
+}
+ 
+function b6RenderCalendar(){
+  if(!b6CalStartDate)return;
+  var ws=b6AddDate(b6CalStartDate,b6CalOffset*7);
+  var we=b6AddDate(b6CalStartDate,b6CalOffset*7+6);
+  document.getElementById('b6-week-label').textContent='Semana del '+b6FmtDateLong(ws)+' al '+b6FmtDateLong(we);
+  var grid=document.getElementById('b6-cal-grid');
+  grid.innerHTML=DIAS.map(function(dname,di){
+    var date=b6AddDate(b6CalStartDate,b6CalOffset*7+di);
+    var entry=b6CalData.find(function(e){return new Date(e.date).toDateString()===date.toDateString();});
+    var hasPost=entry&&entry.title;
+    var cls=hasPost?(pilarCls[entry.pilar]||'valor'):'';
+    return'<div class="b6-cal-day"><div class="b6-cal-day-name">'+dname+'</div><div class="b6-cal-day-num">'+date.getDate()+'</div>'+
+      (hasPost?'<div class="b6-cal-post '+cls+'" onclick="b6ShowDayDetail('+di+')">'+entry.title+'</div>':'<div class="b6-cal-empty">—</div>')+
+    '</div>';
+  }).join('');
+  document.getElementById('b6-day-detail').style.display='none';
+}
+ 
+window.b6NavWeek=function(dir){b6CalOffset+=dir;b6RenderCalendar();};
+ 
+window.b6ShowDayDetail=function(di){
+  var date=b6AddDate(b6CalStartDate,b6CalOffset*7+di);
+  var entry=b6CalData.find(function(e){return new Date(e.date).toDateString()===date.toDateString();});
+  if(!entry||!entry.title){document.getElementById('b6-day-detail').style.display='none';return;}
+  document.getElementById('b6-dd-title').textContent=DIAS[di]+' '+b6FmtDateSh(date)+' — '+(pilarLabel[entry.pilar]||entry.pilar);
+  document.getElementById('b6-dd-body').innerHTML='<div style="font-size:14px;font-weight:500;color:#f0f0f8;margin-bottom:6px;">'+entry.title+'</div>'+(entry.copy?'<div style="font-size:13px;color:#9090b0;margin-bottom:8px;">'+entry.copy+'</div>':'')+'<span class="b6-pilar-pill '+(pilarPill[entry.pilar]||'b6-pp-valor')+'">'+pilarLabel[entry.pilar]+'</span>';
+  document.getElementById('b6-day-detail').style.display='block';
+};
+ 
+window.b6AnalyzeLeads=async function(){
+  var key=(document.getElementById('b6-cal-apikey').value||'').trim();
+  if(!key){b6Toast('Ingresá tu API key de Anthropic.');return;}
+  var btn=document.getElementById('b6-leads-ai-btn');var panel=document.getElementById('b6-leads-ai-panel');var txt=document.getElementById('b6-leads-ai-txt');
+  btn.innerHTML='<span class="b6-spinner"></span>Analizando...';btn.disabled=true;
+  panel.style.display='block';txt.textContent='Procesando...';
+  var nicho=document.getElementById('b6-cal-nicho').value||'negocio online';
+  var context=b6CalPdfCtx?'Datos de leads:\n'+b6CalPdfCtx.slice(0,1500):'No se subió contexto de leads.';
+  try{
+    var r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:700,messages:[{role:'user',content:'Sos experto en marketing. Nicho: "'+nicho+'". '+context+'\n\nAnalizá en español:\n1) Perfil dominante del lead\n2) Nivel de readiness de compra\n3) Qué tipo de contenido conecta mejor con sus dolores\n4) 3 recomendaciones concretas para el contenido de la semana'}]})});
+    var d=await r.json();txt.textContent=(d.content&&d.content[0]&&d.content[0].text)||'Sin respuesta.';
+  }catch(e){txt.textContent='Error al conectar con la API.';}
+  btn.innerHTML='Analizar leads con IA';btn.disabled=false;
+};
+ 
+})();
+</script>
       </section>
  
     </main>
