@@ -127,174 +127,505 @@
  
       <!-- SECTION: RENDIMIENTO ADS -->
       <section class="section active" id="section-ads">
-        <div class="section-header">
-          <h1 class="section-title">Rendimiento Ads</h1>
-          <p class="section-desc">Meta Ads · Seguimiento en tiempo real de campañas</p>
-        </div>
+<style>
+/* ---------- Bloque 1 estilos ---------- */
+.b1-filter-bar {
+  background: #16161f;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.b1-filter-group { display: flex; flex-direction: column; gap: 8px; }
+.b1-filter-label {
+  font-size: 9px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  color: #55556a;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.b1-filter-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.b1-select {
+  background: #12121a;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 6px;
+  color: #f0f0f8;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  padding: 6px 10px;
+  cursor: pointer;
+  outline: none;
+  min-width: 90px;
+}
+.b1-select.wide { min-width: 170px; }
+.b1-select:focus { border-color: #7c6fe0; }
+.b1-date {
+  background: #12121a;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 6px;
+  color: #f0f0f8;
+  font-size: 12px;
+  font-family: 'DM Mono', monospace;
+  padding: 6px 10px;
+  outline: none;
+  cursor: pointer;
+}
+.b1-date:focus { border-color: #7c6fe0; }
+.b1-segs {
+  display: flex;
+  background: #12121a;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.b1-seg {
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: #9090b0;
+  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 120ms ease;
+  white-space: nowrap;
+}
+.b1-seg.on { background: #7c6fe0; color: #fff; font-weight: 500; }
+.b1-seg:hover:not(.on) { background: rgba(255,255,255,0.05); color: #f0f0f8; }
+.b1-btn-dl {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 14px;
+  border: none; border-radius: 6px;
+  background: #7c6fe0; color: #fff;
+  font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500;
+  cursor: pointer; transition: background 120ms ease;
+}
+.b1-btn-dl:hover { background: #6a5ed0; }
  
-        <!-- Filtros -->
-        <div class="filter-bar">
-          <div class="filter-group">
-            <span class="filter-label">FILTROS</span>
-            <div class="filter-controls">
-              <select class="filter-select">
-                <option>Hoy</option><option>7d</option><option>14d</option><option>30d</option>
-              </select>
-              <div class="seg-buttons">
-                <button class="seg-btn active">Por Anuncio</button>
-                <button class="seg-btn">Por Conjunto</button>
-                <button class="seg-btn">Por Campaña</button>
-              </div>
-              <select class="filter-select wide">
-                <option>Todas las campañas</option>
-                <option>[VH] Captación LF</option>
-                <option>[VH] Remarketing</option>
-              </select>
-              <select class="filter-select wide">
-                <option>Todos los conjuntos</option>
-                <option>Conjunto A</option>
-                <option>Conjunto B</option>
-              </select>
-            </div>
-          </div>
-          <div class="filter-group">
-            <span class="filter-label">EXPORTAR REPORTE</span>
-            <div class="filter-controls">
-              <div class="seg-buttons">
-                <button class="seg-btn">Hoy</button>
-                <button class="seg-btn active">7d</button>
-                <button class="seg-btn">14d</button>
-                <button class="seg-btn">30d</button>
-              </div>
-              <input type="date" class="filter-date" value="2026-03-07">
-              <input type="date" class="filter-date" value="2026-04-06">
-              <button class="btn-download">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Bajar Reporte
-              </button>
-            </div>
-          </div>
-        </div>
+/* Metric cards */
+.b1-metrics { display: grid; gap: 10px; margin-bottom: 10px; }
+.b1-mc5 { grid-template-columns: repeat(5, minmax(0,1fr)); }
+.b1-mc4 { grid-template-columns: repeat(4, minmax(0,1fr)); margin-bottom: 20px; }
+.b1-mcard {
+  background: #16161f;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 16px 18px;
+  transition: background 120ms ease;
+}
+.b1-mcard:hover { background: #1c1c28; }
+.b1-mlabel {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; font-family: 'DM Mono', monospace;
+  font-weight: 500; color: #55556a;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.b1-dot {
+  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+}
+.b1-dot.g { background:#1db87a; box-shadow:0 0 6px #1db87a; }
+.b1-dot.b { background:#3d9de8; box-shadow:0 0 6px #3d9de8; }
+.b1-dot.p { background:#7c6fe0; box-shadow:0 0 6px #7c6fe0; }
+.b1-dot.a { background:#e8a830; box-shadow:0 0 6px #e8a830; }
+.b1-mval {
+  font-family: 'DM Mono', monospace;
+  font-size: 26px; font-weight: 500;
+  letter-spacing: -0.5px; line-height: 1;
+}
+.b1-mval.g { color:#1db87a; }
+.b1-mval.b { color:#3d9de8; }
+.b1-mval.p { color:#7c6fe0; }
+.b1-mval.a { color:#e8a830; }
  
-        <!-- Métricas top -->
-        <div class="metrics-grid">
-    <div class="mc"><div class="mc-label"><span class="dot" style="background:#1D9E75"></span>Gasto</div><div class="mc-val v-green">$826,36</div></div>
-    <div class="mc"><div class="mc-label"><span class="dot" style="background:#378ADD"></span>Impresiones</div><div class="mc-val v-blue">379.754</div></div>
-    <div class="mc"><div class="mc-label"><span class="dot" style="background:#7F77DD"></span>Clics</div><div class="mc-val v-purple">5.892</div></div>
-    <div class="mc"><div class="mc-label"><span class="dot" style="background:#7F77DD"></span>Leads Meta</div><div class="mc-val v-purple">1.159</div></div>
-    <div class="mc"><div class="mc-label"><span class="dot" style="background:#BA7517"></span>CTR</div><div class="mc-val v-amber">1,14%</div></div>
-  </div>
-  <div class="metrics-grid2">
-    <div class="mc"><div class="mc-label"><span class="dot" style="background:#378ADD"></span>CPM</div><div class="mc-val v-blue">$2,18</div></div>
-    <div class="mc"><div class="mc-label"><span class="dot" style="background:#BA7517"></span>CPC</div><div class="mc-val v-amber">$0,19</div></div>
-    <div class="mc"><div class="mc-label"><span class="dot" style="background:#1D9E75"></span>CPL Meta</div><div class="mc-val v-green">$0,71</div></div>
-    <div class="mc"><div class="mc-label"><span class="dot" style="background:#7F77DD"></span>Costo por visita</div><div class="mc-val v-purple">$0,22</div></div>
-  </div>
-
-  <div class="charts-row">
-    <div class="chart-card">
-      <div class="chart-ttl">Gasto diario</div>
-      <div style="position:relative;width:100%;height:190px;"><canvas id="gastoChart" width="1282" height="380" style="display: block; box-sizing: border-box; height: 190px; width: 641px;"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-ttl">Leads vs CPL por anuncio</div>
-      <div class="legend-row">
-        <span><span class="legend-sq" style="background:#7F77DD"></span>Leads</span>
-        <span><span class="legend-sq" style="background:#1D9E75"></span>CPL Meta ($)</span>
+/* Chart row */
+.b1-chart-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px; margin-bottom: 16px;
+}
+.b1-ccard {
+  background: #16161f;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 16px 20px;
+}
+.b1-ctitle {
+  font-size: 11px; font-family: 'DM Mono', monospace;
+  font-weight: 500; color: #9090b0;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.b1-csub { font-size: 11px; color: #55556a; margin-bottom: 10px; }
+.b1-legend {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-bottom: 8px; font-size: 11px; color: #9090b0;
+  align-items: center;
+}
+.b1-lsq {
+  width: 10px; height: 10px; border-radius: 2px;
+  display: inline-block; margin-right: 3px; flex-shrink: 0;
+}
+.b1-ldash {
+  width: 16px; height: 2px;
+  border-top: 2px dashed #888;
+  display: inline-block; margin-right: 3px;
+  vertical-align: middle; flex-shrink: 0;
+}
+ 
+/* Table */
+.b1-card {
+  background: #16161f;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.b1-card-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.b1-card-title {
+  font-size: 11px; font-family: 'DM Mono', monospace;
+  font-weight: 500; color: #9090b0;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.b1-twrap { overflow-x: auto; }
+.b1-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.b1-table thead th {
+  padding: 10px 14px; text-align: left;
+  font-size: 9px; font-family: 'DM Mono', monospace;
+  font-weight: 500; color: #55556a;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  white-space: nowrap;
+}
+.b1-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: #9090b0;
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  white-space: nowrap;
+}
+.b1-table tbody tr:last-child td { border-bottom: none; }
+.b1-table tbody tr:hover td { background: rgba(255,255,255,0.025); color:#f0f0f8; }
+.b1-tname { color:#f0f0f8 !important; font-family:'DM Sans',sans-serif !important; font-size:13px !important; font-weight:500 !important; }
+.b1-tp { color:#7c6fe0 !important; font-weight:500 !important; }
+.b1-ta { color:#e8a830 !important; font-weight:500 !important; }
+.b1-tg { color:#1db87a !important; font-weight:500 !important; }
+ 
+/* Top 3 */
+.b1-top3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; padding:16px 20px; }
+.b1-t3card {
+  background:#1e1e2a; border:1px solid rgba(255,255,255,0.06);
+  border-radius:10px; padding:14px 16px; transition:border-color 120ms ease;
+}
+.b1-t3card.winner { border-color:rgba(124,111,224,0.35); }
+.b1-t3card:hover { border-color:rgba(255,255,255,0.18); }
+.b1-t3rank { font-size:10px; font-family:'DM Mono',monospace; font-weight:500; letter-spacing:.06em; text-transform:uppercase; margin-bottom:6px; }
+.b1-t3rank.gold   { color:#e8a830; }
+.b1-t3rank.silver { color:#55556a; }
+.b1-t3rank.bronze { color:#c8825a; }
+.b1-t3name { font-size:13px; font-weight:500; color:#f0f0f8; margin-bottom:10px; }
+.b1-t3stats { display:flex; flex-wrap:wrap; gap:6px; }
+.b1-t3s {
+  font-size:11px; font-family:'DM Mono',monospace;
+  padding:2px 8px; border-radius:4px;
+  background:rgba(255,255,255,0.05); color:#9090b0;
+}
+.b1-t3s.g { background:rgba(29,184,122,0.15); color:#1db87a; }
+.b1-t3s.p { background:rgba(124,111,224,0.15); color:#7c6fe0; }
+.b1-t3s.a { background:rgba(232,168,48,0.15); color:#e8a830; }
+ 
+/* Scatter tooltip */
+.b1-scatter-wrap { position:relative; }
+.b1-tip {
+  position:absolute; background:#16161f;
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:12px; padding:10px 14px;
+  font-size:12px; pointer-events:none; z-index:10; min-width:160px; display:none;
+}
+.b1-tip-title { font-size:13px; font-weight:500; color:#f0f0f8; margin-bottom:5px; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.b1-tip-row { display:flex; justify-content:space-between; gap:14px; margin-bottom:2px; }
+.b1-tip-lbl { color:#9090b0; } .b1-tip-val { font-weight:500; color:#f0f0f8; }
+</style>
+ 
+<div class="section-header">
+  <h1 class="section-title">Rendimiento Ads</h1>
+  <p class="section-desc">Meta Ads · Seguimiento en tiempo real de campañas</p>
+</div>
+ 
+<!-- Filter bar -->
+<div class="b1-filter-bar">
+  <div class="b1-filter-group">
+    <span class="b1-filter-label">Filtros</span>
+    <div class="b1-filter-controls">
+      <select class="b1-select" id="b1-period">
+        <option>Hoy</option><option>Ayer</option><option selected>Esta semana</option><option>Este mes</option>
+      </select>
+      <div class="b1-segs" id="b1-view-group">
+        <button class="b1-seg on">Por Anuncio</button>
+        <button class="b1-seg">Por Conjunto</button>
+        <button class="b1-seg">Por Campaña</button>
       </div>
-      <div style="position:relative;width:100%;height:168px;"><canvas id="leadsCplChart" width="1282" height="336" style="display: block; box-sizing: border-box; height: 168px; width: 641px;"></canvas></div>
+      <select class="b1-select wide">
+        <option>Todas las campañas</option>
+        <option>[VH] Captación LF</option>
+        <option>[VH] Remarketing</option>
+        <option>[VH] Vendedores</option>
+      </select>
+      <select class="b1-select wide">
+        <option>Todos los conjuntos</option>
+        <option>Conjunto A</option><option>Conjunto B</option>
+      </select>
     </div>
   </div>
+  <div class="b1-filter-group">
+    <span class="b1-filter-label">Exportar reporte</span>
+    <div class="b1-filter-controls">
+      <div class="b1-segs" id="b1-range-group">
+        <button class="b1-seg">Hoy</button>
+        <button class="b1-seg on">7d</button>
+        <button class="b1-seg">14d</button>
+        <button class="b1-seg">30d</button>
+      </div>
+      <input type="date" class="b1-date" value="2026-03-07">
+      <input type="date" class="b1-date" value="2026-04-06">
+      <button class="b1-btn-dl">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Bajar Reporte
+      </button>
+    </div>
+  </div>
+</div>
  
-        <!-- Tabla detalle -->
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">Detalle por anuncio</span>
-          </div>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Nombre</th><th>Gasto</th><th>Impresiones</th><th>Clics</th>
-                  <th>Frec.</th><th>Leads Meta</th><th>CTR</th><th>CPM</th>
-                  <th>CPC</th><th>CPL Meta</th><th>C/Visita</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="td-name">[VH] AD Vendedor 01</td>
-                  <td>$17,49</td><td>7.687</td><td>412</td><td>1,1</td>
-                  <td class="td-purple">28</td><td class="td-amber">0,82%</td>
-                  <td>$2,28</td><td>$0,28</td><td class="td-green">$0,62</td><td>$0,30</td>
-                </tr>
-                <tr>
-                  <td class="td-name">[VH] AD Vendedor 02</td>
-                  <td>$22,32</td><td>7.496</td><td>380</td><td>1,1</td>
-                  <td class="td-purple">21</td><td class="td-amber">0,87%</td>
-                  <td>$2,98</td><td>$0,34</td><td>$1,06</td><td>$0,38</td>
-                </tr>
-                <tr>
-                  <td class="td-name">[VH] Remarketing 01</td>
-                  <td>$34,10</td><td>12.300</td><td>890</td><td>1,2</td>
-                  <td class="td-purple">48</td><td class="td-amber">1,20%</td>
-                  <td>$2,77</td><td>$0,22</td><td class="td-green">$0,71</td><td>$0,28</td>
-                </tr>
-                <tr>
-                  <td class="td-name">[VH] Captación LF 01</td>
-                  <td>$41,80</td><td>18.900</td><td>1.240</td><td>1,1</td>
-                  <td class="td-purple">62</td><td class="td-amber">1,05%</td>
-                  <td>$2,21</td><td>$0,17</td><td class="td-green">$0,67</td><td>$0,20</td>
-                </tr>
-                <tr>
-                  <td class="td-name">[VH] Test Ads 01</td>
-                  <td>$9,20</td><td>4.200</td><td>310</td><td>1,0</td>
-                  <td class="td-purple">12</td><td class="td-amber">0,94%</td>
-                  <td>$2,19</td><td>$0,21</td><td>$0,77</td><td>$0,25</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+<!-- Metrics row 1 -->
+<div class="b1-metrics b1-mc5">
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot g"></span>Gasto</div><div class="b1-mval g">$826,36</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot b"></span>Impresiones</div><div class="b1-mval b">379.754</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot p"></span>Clics</div><div class="b1-mval p">5.892</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot p"></span>Leads Meta</div><div class="b1-mval p">1.159</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot a"></span>CTR</div><div class="b1-mval a">1,14%</div></div>
+</div>
  
-        <!-- Top 3 -->
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">Top 3 anuncios ganadores</span>
-          </div>
-          <div class="top3-grid">
-            <div class="top3-card winner">
-              <div class="top3-rank gold">#1 — Mejor CPL Meta</div>
-              <div class="top3-name">[VH] Captación LF 01</div>
-              <div class="top3-stats">
-                <span class="top3-stat green">$0,67 CPL</span>
-                <span class="top3-stat purple">62 leads</span>
-                <span class="top3-stat amber">1,05% CTR</span>
-                <span class="top3-stat">$41,80 gasto</span>
-              </div>
-            </div>
-            <div class="top3-card">
-              <div class="top3-rank silver">#2 — Mejor CTR</div>
-              <div class="top3-name">[VH] Remarketing 01</div>
-              <div class="top3-stats">
-                <span class="top3-stat green">$0,71 CPL</span>
-                <span class="top3-stat purple">48 leads</span>
-                <span class="top3-stat amber">1,20% CTR</span>
-                <span class="top3-stat">$34,10 gasto</span>
-              </div>
-            </div>
-            <div class="top3-card">
-              <div class="top3-rank bronze">#3 — Mejor CPC</div>
-              <div class="top3-name">[VH] AD Vendedor 01</div>
-              <div class="top3-stats">
-                <span class="top3-stat green">$0,62 CPL</span>
-                <span class="top3-stat purple">28 leads</span>
-                <span class="top3-stat amber">0,82% CTR</span>
-                <span class="top3-stat">$17,49 gasto</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+<!-- Metrics row 2 -->
+<div class="b1-metrics b1-mc4">
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot b"></span>CPM</div><div class="b1-mval b">$2,18</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot a"></span>CPC</div><div class="b1-mval a">$0,19</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot g"></span>CPL Meta</div><div class="b1-mval g">$0,71</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot p"></span>Costo por visita</div><div class="b1-mval p">$0,22</div></div>
+</div>
+ 
+<!-- Charts -->
+<div class="b1-chart-row">
+  <div class="b1-ccard">
+    <div class="b1-ctitle">Gasto diario</div>
+    <div class="b1-csub">Inversión acumulada por día</div>
+    <div style="position:relative;width:100%;height:200px;"><canvas id="b1-gasto-chart"></canvas></div>
+  </div>
+  <div class="b1-ccard">
+    <div class="b1-ctitle">Leads vs CPL por anuncio</div>
+    <div class="b1-legend">
+      <span><span class="b1-lsq" style="background:#7c6fe0"></span>Leads</span>
+      <span><span class="b1-lsq" style="background:#1db87a"></span>CPL Meta ($)</span>
+    </div>
+    <div class="b1-scatter-wrap">
+      <canvas id="b1-leads-chart" style="width:100%;height:190px;"></canvas>
+      <div id="b1-scatter-tip" class="b1-tip"></div>
+    </div>
+  </div>
+</div>
+ 
+<!-- Tabla detalle por anuncio -->
+<div class="b1-card">
+  <div class="b1-card-hdr"><span class="b1-card-title">Detalle por anuncio</span></div>
+  <div class="b1-twrap">
+    <table class="b1-table">
+      <thead>
+        <tr>
+          <th>Nombre</th><th>Gasto</th><th>Impresiones</th><th>Clics</th>
+          <th>Frec.</th><th>Leads Meta</th><th>CTR</th><th>CPM</th>
+          <th>CPC</th><th>CPL Meta</th><th>C/Visita</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="b1-tname">[VH] AD Vendedor 01</td><td>$17,49</td><td>7.687</td><td>412</td><td>1,1</td><td class="b1-tp">28</td><td class="b1-ta">0,82%</td><td>$2,28</td><td>$0,28</td><td class="b1-tg">$0,62</td><td>$0,30</td></tr>
+        <tr><td class="b1-tname">[VH] AD Vendedor 02</td><td>$22,32</td><td>7.496</td><td>380</td><td>1,1</td><td class="b1-tp">21</td><td class="b1-ta">0,87%</td><td>$2,98</td><td>$0,34</td><td>$1,06</td><td>$0,38</td></tr>
+        <tr><td class="b1-tname">[VH] Remarketing 01</td><td>$34,10</td><td>12.300</td><td>890</td><td>1,2</td><td class="b1-tp">48</td><td class="b1-ta">1,20%</td><td>$2,77</td><td>$0,22</td><td class="b1-tg">$0,71</td><td>$0,28</td></tr>
+        <tr><td class="b1-tname">[VH] Captación LF 01</td><td>$41,80</td><td>18.900</td><td>1.240</td><td>1,1</td><td class="b1-tp">62</td><td class="b1-ta">1,05%</td><td>$2,21</td><td>$0,17</td><td class="b1-tg">$0,67</td><td>$0,20</td></tr>
+        <tr><td class="b1-tname">[VH] Test Ads 01</td><td>$9,20</td><td>4.200</td><td>310</td><td>1,0</td><td class="b1-tp">12</td><td class="b1-ta">0,94%</td><td>$2,19</td><td>$0,21</td><td>$0,77</td><td>$0,25</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+ 
+<!-- Top 3 -->
+<div class="b1-card">
+  <div class="b1-card-hdr"><span class="b1-card-title">Top 3 anuncios ganadores</span></div>
+  <div class="b1-top3">
+    <div class="b1-t3card winner">
+      <div class="b1-t3rank gold">#1 — Mejor CPL Meta</div>
+      <div class="b1-t3name">[VH] Captación LF 01</div>
+      <div class="b1-t3stats">
+        <span class="b1-t3s g">$0,67 CPL</span><span class="b1-t3s p">62 leads</span>
+        <span class="b1-t3s a">1,05% CTR</span><span class="b1-t3s">$41,80</span>
+      </div>
+    </div>
+    <div class="b1-t3card">
+      <div class="b1-t3rank silver">#2 — Mejor CTR</div>
+      <div class="b1-t3name">[VH] Remarketing 01</div>
+      <div class="b1-t3stats">
+        <span class="b1-t3s g">$0,71 CPL</span><span class="b1-t3s p">48 leads</span>
+        <span class="b1-t3s a">1,20% CTR</span><span class="b1-t3s">$34,10</span>
+      </div>
+    </div>
+    <div class="b1-t3card">
+      <div class="b1-t3rank bronze">#3 — Mejor CPC</div>
+      <div class="b1-t3name">[VH] AD Vendedor 01</div>
+      <div class="b1-t3stats">
+        <span class="b1-t3s g">$0,62 CPL</span><span class="b1-t3s p">28 leads</span>
+        <span class="b1-t3s a">0,82% CTR</span><span class="b1-t3s">$17,49</span>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<script>
+(function() {
+  // Segment toggle helper
+  document.querySelectorAll('.b1-segs').forEach(function(grp) {
+    grp.addEventListener('click', function(e) {
+      var btn = e.target.closest('.b1-seg');
+      if (!btn) return;
+      grp.querySelectorAll('.b1-seg').forEach(function(b) { b.classList.remove('on'); });
+      btn.classList.add('on');
+    });
+  });
+ 
+  // Wait for Chart.js
+  function waitChart(cb) {
+    if (window.Chart) { cb(); }
+    else {
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';
+      s.onload = cb;
+      document.head.appendChild(s);
+    }
+  }
+ 
+  waitChart(function() {
+    var isDark = true;
+    var grid  = 'rgba(255,255,255,0.06)';
+    var tick  = '#55556a';
+ 
+    // --- Gasto diario (línea verde) ---
+    new Chart(document.getElementById('b1-gasto-chart'), {
+      type: 'line',
+      data: {
+        labels: ['L','M','X','J','V','S','D'],
+        datasets: [{
+          data: [95, 118, 102, 130, 145, 110, 126],
+          borderColor: '#1db87a',
+          backgroundColor: 'rgba(29,184,122,0.08)',
+          fill: true, tension: 0.4,
+          pointRadius: 3, pointBackgroundColor: '#1db87a'
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: grid }, ticks: { color: tick, font: { size: 11 } } },
+          y: { grid: { color: grid }, ticks: { color: tick, font: { size: 11 }, callback: function(v){ return '$'+v; } } }
+        }
+      }
+    });
+ 
+    // --- Leads vs CPL (barras + línea) ---
+    var adsData = [
+      { label: 'Vendedor 01', leads: 28, cpl: 0.62 },
+      { label: 'Vendedor 02', leads: 21, cpl: 1.06 },
+      { label: 'Remarketing', leads: 48, cpl: 0.71 },
+      { label: 'Captación LF', leads: 62, cpl: 0.67 },
+      { label: 'Test Ads',    leads: 12, cpl: 0.77 }
+    ];
+ 
+    var leadsChart = new Chart(document.getElementById('b1-leads-chart'), {
+      type: 'bar',
+      data: {
+        labels: adsData.map(function(d){ return d.label; }),
+        datasets: [
+          {
+            label: 'Leads',
+            data: adsData.map(function(d){ return d.leads; }),
+            backgroundColor: '#7c6fe0',
+            yAxisID: 'yL', order: 2, borderRadius: 3
+          },
+          {
+            label: 'CPL Meta',
+            data: adsData.map(function(d){ return d.cpl; }),
+            type: 'line',
+            borderColor: '#1db87a',
+            backgroundColor: 'transparent',
+            pointBackgroundColor: '#1db87a',
+            pointRadius: 5, tension: 0.3,
+            yAxisID: 'yC', order: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                return ctx.dataset.yAxisID === 'yC'
+                  ? ' CPL: $' + ctx.parsed.y.toFixed(2)
+                  : ' Leads: ' + ctx.parsed.y;
+              }
+            }
+          }
+        },
+        scales: {
+          x: { grid: { color: grid }, ticks: { color: tick, font: { size: 10 }, autoSkip: false, maxRotation: 25 } },
+          yL: { position: 'left', grid: { color: grid }, ticks: { color: '#7c6fe0', font: { size: 11 } } },
+          yC: { position: 'right', min: 0, max: 1.4, grid: { drawOnChartArea: false }, ticks: { color: '#1db87a', font: { size: 11 }, callback: function(v){ return '$'+v.toFixed(2); } } }
+        },
+        onClick: function(evt) {
+          var pts = leadsChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+          if (!pts.length) { document.getElementById('b1-scatter-tip').style.display = 'none'; return; }
+          var d   = adsData[pts[0].index];
+          var tip = document.getElementById('b1-scatter-tip');
+          tip.innerHTML =
+            '<div class="b1-tip-title">' + d.label + '</div>' +
+            '<div class="b1-tip-row"><span class="b1-tip-lbl">Leads</span><span class="b1-tip-val">' + d.leads + '</span></div>' +
+            '<div class="b1-tip-row"><span class="b1-tip-lbl">CPL</span><span class="b1-tip-val">$' + d.cpl.toFixed(2) + '</span></div>';
+          var wr = document.getElementById('b1-leads-chart').parentElement.getBoundingClientRect();
+          var l  = evt.clientX - wr.left + 10;
+          var t  = evt.clientY - wr.top  - 20;
+          if (l + 180 > wr.width) l = evt.clientX - wr.left - 190;
+          tip.style.left = l + 'px';
+          tip.style.top  = t + 'px';
+          tip.style.display = 'block';
+        }
+      }
+    });
+ 
+    document.addEventListener('click', function(e) {
+      var tip = document.getElementById('b1-scatter-tip');
+      if (tip && !tip.contains(e.target) && e.target.id !== 'b1-leads-chart') {
+        tip.style.display = 'none';
+      }
+    });
+  });
+})();
+</script>
  
       <!-- SECTION: DATOS & CONVERSIONES -->
       <section class="section" id="section-conversiones">
