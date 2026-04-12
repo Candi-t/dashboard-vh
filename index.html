@@ -630,20 +630,621 @@
  
       <!-- SECTION: DATOS & CONVERSIONES -->
       <section class="section" id="section-conversiones">
-        <div class="section-header">
-          <h1 class="section-title">Datos & Conversiones</h1>
-          <p class="section-desc">UTMs · Funnel de conversión · Leads y compradores</p>
-        </div>
-        <div class="coming-soon-card">
-          <div class="cs-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/>
-            </svg>
-          </div>
-          <div class="cs-title">Content Performance</div>
-          <div class="cs-desc">Posts · Views por reel · Crecimiento · Trial Reels · Scoring de retención</div>
-          <div class="cs-badge">Bloque 5</div>
-        </div>
+        <style>
+/* ======================================================
+   BLOQUE 2 — Datos & Conversiones  (prefijo b2-)
+   ====================================================== */
+.b2-title{font-size:24px;font-weight:600;color:#f0f0f8;letter-spacing:-.3px;margin-bottom:4px;}
+.b2-desc{font-size:13px;color:#9090b0;}
+.b2-toast{background:#085041;color:#9FE1CB;font-size:13px;padding:7px 14px;border-radius:8px;margin-bottom:1rem;display:none;}
+.b2-spinner{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:b2spin .7s linear infinite;vertical-align:middle;margin-right:5px;}
+@keyframes b2spin{to{transform:rotate(360deg);}}
+ 
+/* buttons */
+.b2-btn-pri{background:#7c6fe0;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background 120ms;display:inline-flex;align-items:center;gap:5px;}
+.b2-btn-pri:hover{background:#6a5ed0;}
+.b2-btn-sec{background:#12121a;color:#f0f0f8;border:1px solid rgba(255,255,255,.10);padding:7px 14px;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;}
+ 
+/* card */
+.b2-card{background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.b2-card-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;gap:8px;}
+.b2-card-title{font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#9090b0;letter-spacing:.1em;text-transform:uppercase;}
+.b2-card-body{padding:16px 20px;}
+ 
+/* metric cards */
+.b2-mc-grid{display:grid;gap:10px;margin-bottom:20px;}
+.b2-mc-grid.g5{grid-template-columns:repeat(5,minmax(0,1fr));}
+.b2-mc-grid.g4{grid-template-columns:repeat(4,minmax(0,1fr));}
+.b2-mc-grid.g3{grid-template-columns:repeat(3,minmax(0,1fr));}
+.b2-mc{background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px 16px;transition:background 120ms;}
+.b2-mc:hover{background:#1c1c28;}
+.b2-mc-lbl{display:flex;align-items:center;gap:6px;font-size:10px;font-family:'DM Mono',monospace;font-weight:500;color:#55556a;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px;}
+.b2-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.b2-dot.p{background:#7c6fe0;box-shadow:0 0 6px #7c6fe0;}
+.b2-dot.g{background:#1db87a;box-shadow:0 0 6px #1db87a;}
+.b2-dot.b{background:#3d9de8;box-shadow:0 0 6px #3d9de8;}
+.b2-dot.a{background:#e8a830;box-shadow:0 0 6px #e8a830;}
+.b2-dot.t{background:#2ac4a0;box-shadow:0 0 6px #2ac4a0;}
+.b2-mc-val{font-family:'DM Mono',monospace;font-size:24px;font-weight:500;letter-spacing:-.5px;line-height:1;}
+.b2-mc-val.p{color:#7c6fe0;} .b2-mc-val.g{color:#1db87a;} .b2-mc-val.b{color:#3d9de8;}
+.b2-mc-val.a{color:#e8a830;} .b2-mc-val.t{color:#2ac4a0;}
+.b2-mc-sub{font-size:11px;color:#55556a;margin-top:3px;}
+ 
+/* import banner */
+.b2-import-banner{background:#12121a;border:1px solid rgba(255,255,255,.10);border-radius:8px;padding:.65rem 1rem;margin-bottom:1.25rem;font-size:12px;color:#9090b0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.b2-pill-b1{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:rgba(124,111,224,.15);color:#7c6fe0;}
+.b2-pill-own{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:rgba(29,184,122,.15);color:#1db87a;}
+ 
+/* funnel bar chart */
+.b2-funnel-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.b2-funnel-label{font-size:13px;color:#f0f0f8;width:150px;flex-shrink:0;font-weight:500;}
+.b2-funnel-track{flex:1;height:22px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden;position:relative;}
+.b2-funnel-fill{height:100%;border-radius:4px;transition:width .5s ease;}
+.b2-funnel-count{font-size:12px;font-family:'DM Mono',monospace;font-weight:500;width:70px;text-align:right;flex-shrink:0;}
+.b2-funnel-pct{font-size:11px;color:#55556a;width:40px;text-align:right;flex-shrink:0;}
+.b2-funnel-arrow{font-size:10px;color:#55556a;width:20px;text-align:center;flex-shrink:0;}
+ 
+/* table */
+.b2-twrap{overflow-x:auto;}
+.b2-table{width:100%;border-collapse:collapse;font-size:12px;}
+.b2-table thead th{padding:9px 12px;text-align:left;font-size:9px;font-family:'DM Mono',monospace;font-weight:500;color:#55556a;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);white-space:nowrap;}
+.b2-table thead th.right{text-align:right;}
+.b2-table tbody td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.06);color:#9090b0;font-family:'DM Mono',monospace;font-size:12px;white-space:nowrap;}
+.b2-table tbody td.right{text-align:right;}
+.b2-table tbody tr:last-child td{border-bottom:none;}
+.b2-table tbody tr:hover td{background:rgba(255,255,255,.025);color:#f0f0f8;}
+.b2-tname{color:#f0f0f8!important;font-family:'DM Sans',sans-serif!important;font-size:13px!important;font-weight:500!important;}
+.b2-tg{color:#1db87a!important;font-weight:500!important;}
+.b2-tp{color:#7c6fe0!important;font-weight:500!important;}
+.b2-ta{color:#e8a830!important;font-weight:500!important;}
+.b2-tb{color:#3d9de8!important;font-weight:500!important;}
+ 
+/* two-col layout */
+.b2-two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+ 
+/* insight box */
+.b2-insight{border-left:3px solid #7c6fe0;background:rgba(124,111,224,.06);border-radius:0 8px 8px 0;padding:.75rem 1rem;margin-top:1rem;}
+.b2-insight-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#7c6fe0;font-weight:500;margin-bottom:4px;font-family:'DM Mono',monospace;}
+.b2-insight-txt{font-size:13px;color:#f0f0f8;line-height:1.6;}
+ 
+/* cargar compradores */
+.b2-textarea{width:100%;font-size:12px;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;font-family:'DM Mono',monospace;resize:vertical;min-height:90px;line-height:1.6;}
+.b2-match-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.b2-match-row:last-child{border-bottom:none;}
+.b2-match-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.b2-match-ok{background:rgba(29,184,122,.2);}
+.b2-match-no{background:rgba(232,85,85,.15);}
+.b2-match-name{font-size:13px;color:#f0f0f8;flex:1;}
+.b2-match-badge{font-size:11px;padding:2px 8px;border-radius:20px;flex-shrink:0;}
+.b2-mb-ok{background:rgba(29,184,122,.15);color:#1db87a;}
+.b2-mb-no{background:rgba(232,85,85,.12);color:#e85555;}
+.b2-match-detail{font-size:11px;color:#9090b0;}
+ 
+/* input row for manual data */
+.b2-input-row{display:grid;grid-template-columns:120px 1fr 1fr;gap:8px;align-items:center;margin-bottom:6px;}
+.b2-input-row label{font-size:11px;color:#9090b0;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.04em;}
+.b2-input-row input{font-size:13px;padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;font-family:'DM Mono',monospace;text-align:right;}
+.b2-from-b1{background:rgba(124,111,224,.08)!important;border-color:rgba(124,111,224,.25)!important;color:#c8c2f8!important;}
+ 
+/* chart row */
+.b2-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.b2-ccard{background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:1rem 1.25rem;}
+.b2-ctitle{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:#9090b0;margin-bottom:.75rem;font-family:'DM Mono',monospace;}
+ 
+/* AI panel */
+.b2-ai-panel{background:#12121a;border:1px solid rgba(255,255,255,.10);border-radius:12px;padding:1.25rem;margin-top:1rem;display:none;}
+.b2-ai-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#7c6fe0;font-weight:500;margin-bottom:.5rem;font-family:'DM Mono',monospace;}
+.b2-ai-txt{font-size:13px;color:#f0f0f8;line-height:1.7;white-space:pre-wrap;}
+.b2-apikey{font-size:13px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;width:100%;max-width:380px;margin-bottom:.75rem;font-family:'DM Mono',monospace;}
+</style>
+ 
+<!-- ===== HEADER ===== -->
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:24px;">
+  <div>
+    <h1 class="b2-title">Datos & Conversiones</h1>
+    <p class="b2-desc">Funnel completo · UTMs · Leads GP · Compradores · WhatsApp</p>
+  </div>
+  <button class="b2-btn-pri" id="b2-export-btn" onclick="b2ExportXLSX()">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Exportar reporte
+  </button>
+</div>
+ 
+<div id="b2-toast" class="b2-toast"></div>
+ 
+<!-- ===== IMPORT BANNER ===== -->
+<div class="b2-import-banner">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7c6fe0" stroke-width="2" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  <span style="font-weight:500;color:#f0f0f8;">Campos de Bloque 1:</span>
+  <span class="b2-pill-b1">Impresiones</span>
+  <span class="b2-pill-b1">Clics</span>
+  <span class="b2-pill-b1">Leads Meta</span>
+  <span class="b2-pill-b1">Importe gastado</span>
+  <span style="color:#55556a;margin:0 4px;">·</span>
+  <span style="font-weight:500;color:#f0f0f8;">Campos propios Bloque 2:</span>
+  <span class="b2-pill-own">Visitas página</span>
+  <span class="b2-pill-own">Leads GP</span>
+  <span class="b2-pill-own">WhatsApp</span>
+</div>
+ 
+<!-- ===== FORM INGRESO DE DATOS ===== -->
+<div class="b2-card">
+  <div class="b2-card-hdr">
+    <span class="b2-card-title">Ingresar datos del período</span>
+    <span style="font-size:11px;color:#55556a;">Campos en <span style="color:#7c6fe0;font-weight:500;">violeta</span> vienen del Bloque 1</span>
+  </div>
+  <div class="b2-card-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <!-- Bloque 1 data -->
+      <div>
+        <div style="font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#7c6fe0;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem;">Del Bloque 1</div>
+        <div class="b2-input-row"><label>Impresiones</label><input type="number" id="b2-imp" class="b2-from-b1" placeholder="379754" min="0" oninput="b2Recalc()"><span style="font-size:11px;color:#55556a;font-family:'DM Mono',monospace;">B1</span></div>
+        <div class="b2-input-row"><label>Clics</label><input type="number" id="b2-cli" class="b2-from-b1" placeholder="5892" min="0" oninput="b2Recalc()"><span style="font-size:11px;color:#55556a;font-family:'DM Mono',monospace;">B1</span></div>
+        <div class="b2-input-row"><label>Leads Meta</label><input type="number" id="b2-lm" class="b2-from-b1" placeholder="1159" min="0" oninput="b2Recalc()"><span style="font-size:11px;color:#55556a;font-family:'DM Mono',monospace;">B1</span></div>
+        <div class="b2-input-row"><label>Importe $</label><input type="number" id="b2-gasto" class="b2-from-b1" placeholder="826.36" min="0" step="0.01" oninput="b2Recalc()"><span style="font-size:11px;color:#55556a;font-family:'DM Mono',monospace;">B1</span></div>
+      </div>
+      <!-- Bloque 2 own data -->
+      <div>
+        <div style="font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#1db87a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem;">Datos propios Bloque 2</div>
+        <div class="b2-input-row"><label>Visitas pág.</label><input type="number" id="b2-vis" placeholder="0" min="0" oninput="b2Recalc()"><span></span></div>
+        <div class="b2-input-row"><label>Leads GP</label><input type="number" id="b2-lgp" placeholder="0" min="0" oninput="b2Recalc()"><span></span></div>
+        <div class="b2-input-row"><label>WhatsApp</label><input type="number" id="b2-wa" placeholder="0" min="0" oninput="b2Recalc()"><span></span></div>
+        <div class="b2-input-row"><label>Ventas</label><input type="number" id="b2-ventas" placeholder="0" min="0" oninput="b2Recalc()"><span></span></div>
+      </div>
+    </div>
+    <div style="margin-top:1rem;">
+      <button class="b2-btn-pri" onclick="b2Recalc()">Calcular métricas</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- ===== METRIC CARDS ===== -->
+<div class="b2-mc-grid g5" id="b2-mc-top">
+  <div class="b2-mc"><div class="b2-mc-lbl"><span class="b2-dot b"></span>Impresiones</div><div class="b2-mc-val b" id="b2-v-imp">—</div></div>
+  <div class="b2-mc"><div class="b2-mc-lbl"><span class="b2-dot b"></span>Visitas landing</div><div class="b2-mc-val b" id="b2-v-vis">—</div></div>
+  <div class="b2-mc"><div class="b2-mc-lbl"><span class="b2-dot g"></span>Leads GP</div><div class="b2-mc-val g" id="b2-v-lgp">—</div></div>
+  <div class="b2-mc"><div class="b2-mc-lbl"><span class="b2-dot t"></span>WhatsApp</div><div class="b2-mc-val t" id="b2-v-wa">—</div></div>
+  <div class="b2-mc"><div class="b2-mc-lbl"><span class="b2-dot a"></span>Compradores</div><div class="b2-mc-val a" id="b2-v-ventas">—</div><div class="b2-mc-sub" id="b2-v-roas"></div></div>
+</div>
+<div class="b2-mc-grid g4" id="b2-mc-rates">
+  <div class="b2-mc"><div class="b2-mc-lbl"><span class="b2-dot b"></span>Tasa visita→lead</div><div class="b2-mc-val b" id="b2-v-tvis">—</div><div class="b2-mc-sub">Reg. GP / visitas</div></div>
+  <div class="b2-mc"><div class="b2-mc-lbl"><span class="b2-dot g"></span>Tasa lead→comprador</div><div class="b2-mc-val g" id="b2-v-tlc">—</div><div class="b2-mc-sub">Ventas / leads GP</div></div>
+  <div class="b2-mc"><div class="b2-mc-lbl"><span class="b2-dot p"></span>CPL GP</div><div class="b2-mc-val p" id="b2-v-cplgp">—</div></div>
+  <div class="b2-mc"><div class="b2-mc-lbl"><span class="b2-dot t"></span>CPW (costo/WhatsApp)</div><div class="b2-mc-val t" id="b2-v-cpw">—</div></div>
+</div>
+ 
+<!-- ===== FUNNEL ===== -->
+<div class="b2-card">
+  <div class="b2-card-hdr"><span class="b2-card-title">Camino del cliente — Funnel de captación</span></div>
+  <div class="b2-card-body" id="b2-funnel-container">
+    <div style="font-size:13px;color:#55556a;text-align:center;padding:1rem;">Ingresá los datos arriba para ver el funnel.</div>
+  </div>
+</div>
+ 
+<!-- ===== CHARTS ===== -->
+<div class="b2-chart-row">
+  <div class="b2-ccard">
+    <div class="b2-ctitle">Distribución del tráfico</div>
+    <div style="position:relative;width:100%;height:220px;"><canvas id="b2-traffic-chart"></canvas></div>
+  </div>
+  <div class="b2-ccard">
+    <div class="b2-ctitle">Costos por etapa del funnel</div>
+    <div style="position:relative;width:100%;height:220px;"><canvas id="b2-costs-chart"></canvas></div>
+  </div>
+</div>
+ 
+<!-- ===== LEADS RECIENTES + COMPRADORES ===== -->
+<div class="b2-two-col">
+  <!-- Leads recientes -->
+  <div class="b2-card">
+    <div class="b2-card-hdr">
+      <span class="b2-card-title">Leads recientes por fuente</span>
+      <button class="b2-btn-sec" style="font-size:12px;padding:5px 10px;" onclick="b2AddLeadRow()">+ Agregar</button>
+    </div>
+    <div class="b2-twrap">
+      <table class="b2-table">
+        <thead><tr>
+          <th>UTM Content</th>
+          <th class="right">Leads GP</th>
+          <th class="right">% del total</th>
+          <th class="right">CPL GP</th>
+        </tr></thead>
+        <tbody id="b2-leads-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Compradores -->
+  <div class="b2-card">
+    <div class="b2-card-hdr">
+      <span class="b2-card-title">Compradores por anuncio</span>
+      <button class="b2-btn-sec" style="font-size:12px;padding:5px 10px;" onclick="b2AddBuyerRow()">+ Agregar</button>
+    </div>
+    <div class="b2-twrap">
+      <table class="b2-table">
+        <thead><tr>
+          <th>UTM Content</th>
+          <th class="right">Compradores</th>
+          <th class="right">Facturación</th>
+          <th class="right">ROAS</th>
+        </tr></thead>
+        <tbody id="b2-buyers-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+ 
+<!-- ===== CARGAR COMPRADORES / MATCH ===== -->
+<div class="b2-card">
+  <div class="b2-card-hdr">
+    <span class="b2-card-title">Cargar compradores — buscar coincidencias con leads</span>
+  </div>
+  <div class="b2-card-body">
+    <p style="font-size:13px;color:#9090b0;margin-bottom:.75rem;">Pegá los nombres de los compradores (uno por línea) para identificar cuáles son leads registrados.</p>
+    <textarea class="b2-textarea" id="b2-buyers-input" placeholder="Juan Pérez&#10;María García&#10;Carlos Rodríguez&#10;..."></textarea>
+    <div style="display:flex;gap:10px;margin-top:.75rem;">
+      <button class="b2-btn-pri" onclick="b2MatchBuyers()">Buscar coincidencias</button>
+      <button class="b2-btn-sec" onclick="b2ClearMatch()">Limpiar</button>
+    </div>
+    <div id="b2-match-results" style="margin-top:1rem;display:none;">
+      <div style="font-size:12px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:#9090b0;margin-bottom:.5rem;" id="b2-match-title"></div>
+      <div id="b2-match-list"></div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ===== INSIGHT + AI ===== -->
+<div class="b2-card">
+  <div class="b2-card-hdr"><span class="b2-card-title">Análisis de conversiones <span style="font-size:9px;font-weight:400;text-transform:none;letter-spacing:0;">· IA</span></span></div>
+  <div class="b2-card-body">
+    <div class="b2-insight">
+      <div class="b2-insight-lbl">Resumen automático del funnel</div>
+      <div class="b2-insight-txt" id="b2-auto-insight">Ingresá los datos del período para ver el análisis automático.</div>
+    </div>
+    <div style="margin-top:1.25rem;">
+      <input type="password" class="b2-apikey" id="b2-apikey" placeholder="sk-ant-... (API key de Anthropic)">
+      <button class="b2-btn-pri" id="b2-ai-btn" onclick="b2AnalyzeAI()">Analizar conversiones con IA</button>
+      <div class="b2-ai-panel" id="b2-ai-panel"><div class="b2-ai-lbl">Insights de Claude</div><div class="b2-ai-txt" id="b2-ai-txt"></div></div>
+    </div>
+  </div>
+</div>
+ 
+<script>
+(function(){
+'use strict';
+ 
+var b2CI={};
+var gridC='rgba(255,255,255,0.06)',tickC='#55556a';
+ 
+function b2Toast(m){var t=document.getElementById('b2-toast');t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none';},2200);}
+ 
+function waitChart(cb){
+  if(window.Chart){cb();}
+  else{var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';s.onload=cb;document.head.appendChild(s);}
+}
+ 
+/* ---- state ---- */
+var b2State={imp:0,cli:0,vis:0,lm:0,lgp:0,wa:0,gasto:0,ventas:0};
+var b2LeadsData=[
+  {utm:'[VH] Captación LF 01',leads:4821,gasto:312.50},
+  {utm:'[VH] Remarketing 01', leads:3204,gasto:198.20},
+  {utm:'[VH] AD Vendedor 01', leads:2891,gasto:176.40},
+  {utm:'[VH] AD Vendedor 02', leads:2107,gasto:148.90},
+  {utm:'[VH] Test Ads 01',    leads:1100,gasto:63.10}
+];
+var b2BuyersData=[
+  {utm:'[VH] Captación LF 01',compradores:8,fact:2800,inv:312.50},
+  {utm:'[VH] Remarketing 01', compradores:5,fact:1750,inv:198.20},
+  {utm:'[VH] AD Vendedor 01', compradores:2,fact:700, inv:176.40},
+  {utm:'[VH] AD Vendedor 02', compradores:1,fact:350, inv:148.90}
+];
+var b2LeadsList=[
+  'Daiana Reinoso','Bruno Lopes','Eliana Torres','Melina Castro','Lorena Taddeo',
+  'Juan Manuel Prieto','Cintia Cardozo','Lucas Pereyra','Macarena Díaz','Santiago Herrera',
+  'Roxana Melis','Agustina Sosa','Gonzalo Pacios','Daniela Reinoso','Alfredo Cánovas'
+];
+ 
+/* ---- RECALC ---- */
+window.b2Recalc=function(){
+  var imp=parseFloat(document.getElementById('b2-imp').value)||0;
+  var cli=parseFloat(document.getElementById('b2-cli').value)||0;
+  var vis=parseFloat(document.getElementById('b2-vis').value)||0;
+  var lm =parseFloat(document.getElementById('b2-lm').value)||0;
+  var lgp=parseFloat(document.getElementById('b2-lgp').value)||0;
+  var wa =parseFloat(document.getElementById('b2-wa').value)||0;
+  var g  =parseFloat(document.getElementById('b2-gasto').value)||0;
+  var vnt=parseFloat(document.getElementById('b2-ventas').value)||0;
+  b2State={imp:imp,cli:cli,vis:vis,lm:lm,lgp:lgp,wa:wa,gasto:g,ventas:vnt};
+ 
+  var tVis=vis>0?lgp/vis*100:0;
+  var tLC =lgp>0?vnt/lgp*100:0;
+  var cplGP=lgp>0?g/lgp:0;
+  var cpw  =wa>0?g/wa:0;
+ 
+  function fmtN(v){return v>0?v.toLocaleString('es-AR'):'—';}
+  function fmtP(v){return v>0?v.toFixed(2)+'%':'—';}
+  function fmtD(v){return v>0?'$'+v.toFixed(2):'—';}
+ 
+  document.getElementById('b2-v-imp').textContent=fmtN(imp);
+  document.getElementById('b2-v-vis').textContent=fmtN(vis);
+  document.getElementById('b2-v-lgp').textContent=fmtN(lgp);
+  document.getElementById('b2-v-wa').textContent=fmtN(wa);
+  document.getElementById('b2-v-ventas').textContent=vnt>0?vnt:'—';
+  document.getElementById('b2-v-tvis').textContent=fmtP(tVis);
+  document.getElementById('b2-v-tlc').textContent=fmtP(tLC);
+  document.getElementById('b2-v-cplgp').textContent=fmtD(cplGP);
+  document.getElementById('b2-v-cpw').textContent=fmtD(cpw);
+ 
+  b2BuildFunnel(imp,cli,vis,lgp,wa,vnt);
+  b2BuildInsight(imp,cli,vis,lgp,wa,vnt,g,tVis,tLC,cplGP,cpw);
+  waitChart(function(){b2BuildTrafficChart(imp,cli,vis);b2BuildCostsChart(g,lgp,wa,vnt);});
+  b2RefreshLeadsTable();
+  b2RefreshBuyersTable();
+};
+ 
+/* ---- FUNNEL ---- */
+function b2BuildFunnel(imp,cli,vis,lgp,wa,vnt){
+  var max=Math.max(imp,cli,vis,lgp,wa,vnt,1);
+  var steps=[
+    {label:'Impresiones',   val:imp,  col:'#3d9de8', pctOf:null},
+    {label:'Clics',         val:cli,  col:'#7c6fe0', pctOf:imp},
+    {label:'Visitas',       val:vis,  col:'#7c6fe0', pctOf:cli},
+    {label:'Leads GP',      val:lgp,  col:'#1db87a', pctOf:vis},
+    {label:'WhatsApp',      val:wa,   col:'#2ac4a0', pctOf:lgp},
+    {label:'Ventas',        val:vnt,  col:'#e8a830', pctOf:lgp}
+  ];
+  var c=document.getElementById('b2-funnel-container');
+  if(imp===0&&vis===0&&lgp===0){c.innerHTML='<div style="font-size:13px;color:#55556a;text-align:center;padding:1rem;">Ingresá los datos arriba para ver el funnel.</div>';return;}
+  c.innerHTML=steps.map(function(s,i){
+    var pct=s.val>0?s.val/max*100:0;
+    var convTxt=s.pctOf&&s.pctOf>0?'('+((s.val/s.pctOf)*100).toFixed(1)+'% conv.)':'';
+    return '<div class="b2-funnel-row">'+
+      (i>0?'<div class="b2-funnel-arrow">↓</div>':'<div class="b2-funnel-arrow"></div>')+
+      '<div class="b2-funnel-label">'+s.label+'</div>'+
+      '<div class="b2-funnel-track"><div class="b2-funnel-fill" style="width:'+pct+'%;background:'+s.col+'"></div></div>'+
+      '<div class="b2-funnel-count" style="color:'+s.col+'">'+b2FmtN(s.val)+'</div>'+
+      '<div class="b2-funnel-pct">'+convTxt+'</div>'+
+    '</div>';
+  }).join('');
+}
+ 
+function b2FmtN(v){return v>0?v.toLocaleString('es-AR'):'—';}
+ 
+/* ---- CHARTS ---- */
+function b2BuildTrafficChart(imp,cli,vis){
+  if(b2CI.traffic){b2CI.traffic.destroy();b2CI.traffic=null;}
+  var ctx=document.getElementById('b2-traffic-chart');
+  if(!imp&&!cli&&!vis){return;}
+  b2CI.traffic=new Chart(ctx,{type:'bar',
+    data:{labels:['Impresiones','Clics','Visitas'],
+      datasets:[{data:[imp,cli,vis],backgroundColor:['#3d9de8','#7c6fe0','#AFA9EC'],borderRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:gridC},ticks:{color:tickC,font:{size:11}}},
+              y:{grid:{color:gridC},ticks:{color:tickC,font:{size:10},callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}}}}}});
+}
+ 
+function b2BuildCostsChart(g,lgp,wa,vnt){
+  if(b2CI.costs){b2CI.costs.destroy();b2CI.costs=null;}
+  var ctx=document.getElementById('b2-costs-chart');
+  var cplGP=lgp>0?g/lgp:0;
+  var cpw  =wa>0?g/wa:0;
+  var cac  =vnt>0?g/vnt:0;
+  if(!cplGP&&!cpw&&!cac){return;}
+  var labels=[],data=[],colors=[];
+  if(cplGP>0){labels.push('CPL GP');data.push(parseFloat(cplGP.toFixed(2)));colors.push('#1db87a');}
+  if(cpw>0)  {labels.push('CPW');   data.push(parseFloat(cpw.toFixed(2)));  colors.push('#2ac4a0');}
+  if(cac>0)  {labels.push('CAC');   data.push(parseFloat(cac.toFixed(2)));  colors.push('#e8a830');}
+  b2CI.costs=new Chart(ctx,{type:'bar',
+    data:{labels:labels,datasets:[{data:data,backgroundColor:colors,borderRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' $'+c.parsed.y.toFixed(2);}}}},
+      scales:{x:{grid:{color:gridC},ticks:{color:tickC,font:{size:12}}},
+              y:{grid:{color:gridC},ticks:{color:tickC,font:{size:11},callback:function(v){return'$'+v;}}}}}});
+}
+ 
+/* ---- LEADS TABLE ---- */
+function b2RefreshLeadsTable(){
+  var totLeads=b2LeadsData.reduce(function(s,r){return s+r.leads;},0);
+  document.getElementById('b2-leads-tbody').innerHTML=b2LeadsData.map(function(r,i){
+    var cplGP=r.leads>0?r.gasto/r.leads:0;
+    var pct=totLeads>0?(r.leads/totLeads*100).toFixed(1):'—';
+    return'<tr><td class="b2-tname">'+r.utm+'</td>'+
+      '<td class="b2-tp right">'+r.leads.toLocaleString('es-AR')+'</td>'+
+      '<td class="right">'+pct+'%</td>'+
+      '<td class="b2-tg right">$'+cplGP.toFixed(2)+'</td>'+
+    '</tr>';
+  }).join('');
+}
+ 
+/* ---- BUYERS TABLE ---- */
+function b2RefreshBuyersTable(){
+  document.getElementById('b2-buyers-tbody').innerHTML=b2BuyersData.map(function(r){
+    var roas=r.inv>0?r.fact/r.inv:0;
+    var rColor=roas>=3?'b2-tg':roas>=1.5?'b2-ta':'';
+    return'<tr><td class="b2-tname">'+r.utm+'</td>'+
+      '<td class="b2-tp right">'+r.compradores+'</td>'+
+      '<td class="right">$'+r.fact.toLocaleString('es-AR')+',00</td>'+
+      '<td class="'+(rColor||'b2-tb')+' right">'+roas.toFixed(2)+'x</td>'+
+    '</tr>';
+  }).join('');
+}
+ 
+/* ---- ADD ROWS ---- */
+window.b2AddLeadRow=function(){
+  var utm=prompt('UTM Content del anuncio:');if(!utm)return;
+  var leads=parseInt(prompt('Cantidad de leads GP:')||'0');
+  var gasto=parseFloat(prompt('Importe gastado ($):')||'0');
+  b2LeadsData.push({utm:utm,leads:leads,gasto:gasto});
+  b2RefreshLeadsTable();
+};
+window.b2AddBuyerRow=function(){
+  var utm=prompt('UTM Content del anuncio:');if(!utm)return;
+  var comp=parseInt(prompt('Compradores:')||'0');
+  var fact=parseFloat(prompt('Facturación total ($):')||'0');
+  var inv=parseFloat(prompt('Inversión ($):')||'0');
+  b2BuyersData.push({utm:utm,compradores:comp,fact:fact,inv:inv});
+  b2RefreshBuyersTable();
+};
+ 
+/* ---- MATCH COMPRADORES ---- */
+window.b2MatchBuyers=function(){
+  var raw=document.getElementById('b2-buyers-input').value.trim();
+  if(!raw){b2Toast('Ingresá al menos un nombre.');return;}
+  var names=raw.split('\n').map(function(n){return n.trim();}).filter(Boolean);
+  var results=names.map(function(name){
+    var matched=b2LeadsList.filter(function(lead){
+      var nl=name.toLowerCase(),ll=lead.toLowerCase();
+      return nl===ll||nl.split(' ').some(function(part){return part.length>2&&ll.includes(part);});
+    });
+    return{name:name,matched:matched};
+  });
+  var found=results.filter(function(r){return r.matched.length>0;});
+  var notFound=results.filter(function(r){return r.matched.length===0;});
+  document.getElementById('b2-match-title').textContent=found.length+' de '+names.length+' encontrados en la base de leads';
+  document.getElementById('b2-match-list').innerHTML=results.map(function(r){
+    var ok=r.matched.length>0;
+    return'<div class="b2-match-row">'+
+      '<div class="b2-match-icon '+(ok?'b2-match-ok':'b2-match-no')+'">'+
+        (ok?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1db87a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>':'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#e85555" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>')+
+      '</div>'+
+      '<div class="b2-match-name">'+r.name+'</div>'+
+      (ok?'<div class="b2-match-detail">→ '+r.matched[0]+'</div>':'')+
+      '<span class="b2-match-badge '+(ok?'b2-mb-ok':'b2-mb-no')+'">'+(ok?'Encontrado':'No encontrado')+'</span>'+
+    '</div>';
+  }).join('');
+  document.getElementById('b2-match-results').style.display='block';
+};
+ 
+window.b2ClearMatch=function(){
+  document.getElementById('b2-buyers-input').value='';
+  document.getElementById('b2-match-results').style.display='none';
+};
+ 
+/* ---- AUTO INSIGHT ---- */
+function b2BuildInsight(imp,cli,vis,lgp,wa,vnt,g,tVis,tLC,cplGP,cpw){
+  if(!imp&&!vis&&!lgp){document.getElementById('b2-auto-insight').textContent='Ingresá los datos del período para ver el análisis automático.';return;}
+  var lines=[];
+  if(tVis>0) lines.push('Tasa de conversión visita → lead GP: '+tVis.toFixed(1)+'% ('+(tVis>=30?'dentro del rango esperado ≥30%.':'por debajo del umbral del 30% — revisar el formulario y CTA de la landing.')+')');
+  if(cplGP>0) lines.push('CPL GP de $'+cplGP.toFixed(2)+' ('+(cplGP<=1?'dentro del umbral ≤$1.':'por encima del umbral — revisar optimización de campaña.')+')');
+  if(wa>0&&lgp>0){var pWA=wa/lgp*100;lines.push('% WhatsApp: '+pWA.toFixed(1)+'% ('+(pWA>=80?'dentro del umbral ≥80%.':'bajo — verificar el botón y link de WhatsApp en la página de confirmación.')+')');  }
+  if(tLC>0) lines.push('Tasa lead → comprador: '+tLC.toFixed(2)+'%.');
+  if(vnt>0&&g>0) lines.push('CAC: $'+(g/vnt).toFixed(2)+' por venta generada.');
+  document.getElementById('b2-auto-insight').textContent=lines.length?lines.join(' '):' Completá los datos para ver el análisis.';
+}
+ 
+/* ---- EXPORT XLSX ---- */
+window.b2ExportXLSX=function(){
+  var btn=document.getElementById('b2-export-btn');
+  btn.innerHTML='<span class="b2-spinner"></span>Generando...';btn.disabled=true;
+ 
+  /* Fallback: exportar CSV si SheetJS no está disponible */
+  function doCSV(){
+    var s=b2State;
+    var tVis=s.vis>0?s.lgp/s.vis*100:0;
+    var cplGP=s.lgp>0?s.gasto/s.lgp:0;
+    var cpw=s.wa>0?s.gasto/s.wa:0;
+    var csv='Métrica,Valor\n'+
+      'Impresiones,'+s.imp+'\nClics,'+s.cli+'\nVisitas página,'+s.vis+
+      '\nLeads Meta,'+s.lm+'\nLeads GP,'+s.lgp+'\nWhatsApp,'+s.wa+
+      '\nImporte gastado,$'+s.gasto.toFixed(2)+'\nVentas,'+s.ventas+
+      '\nTasa visita→lead,'+tVis.toFixed(2)+'%\nCPL GP,$'+cplGP.toFixed(2)+'\nCPW,$'+cpw.toFixed(2);
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+    a.download='datos_conversiones_'+new Date().toISOString().split('T')[0]+'.csv';
+    a.click();
+    btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Exportar reporte';
+    btn.disabled=false;
+    b2Toast('Reporte exportado como CSV.');
+  }
+ 
+  /* Try SheetJS for real xlsx */
+  if(window.XLSX){buildXLSX();}
+  else{
+    var s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+    s.onload=function(){buildXLSX();};
+    s.onerror=function(){doCSV();};
+    document.head.appendChild(s);
+  }
+ 
+  function buildXLSX(){
+    try{
+      var wb=XLSX.utils.book_new();
+      var st=b2State;
+      var tVis=st.vis>0?st.lgp/st.vis*100:0;
+      var tLC=st.lgp>0?st.ventas/st.lgp*100:0;
+      var cplGP=st.lgp>0?st.gasto/st.lgp:0;
+      var cpw=st.wa>0?st.gasto/st.wa:0;
+ 
+      /* Sheet 1: Funnel */
+      var ws1data=[
+        ['Métrica','Valor'],
+        ['Impresiones',st.imp],['Clics',st.cli],['Visitas página',st.vis],
+        ['Leads Meta',st.lm],['Leads GP',st.lgp],['WhatsApp',st.wa],
+        ['Ventas',st.ventas],['Importe gastado ($)',st.gasto.toFixed(2)],
+        ['---','---'],
+        ['Tasa visita→lead (%)',tVis.toFixed(2)],
+        ['Tasa lead→comprador (%)',tLC.toFixed(2)],
+        ['CPL GP ($)',cplGP.toFixed(2)],
+        ['CPW ($)',cpw.toFixed(2)]
+      ];
+      XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ws1data),'Funnel');
+ 
+      /* Sheet 2: Leads por fuente */
+      var totL=b2LeadsData.reduce(function(s,r){return s+r.leads;},0);
+      var ws2data=[['UTM Content','Leads GP','% Total','CPL GP ($)']].concat(
+        b2LeadsData.map(function(r){return[r.utm,r.leads,totL>0?parseFloat((r.leads/totL*100).toFixed(1)):0,r.leads>0?parseFloat((r.gasto/r.leads).toFixed(2)):0];}));
+      XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ws2data),'Leads por fuente');
+ 
+      /* Sheet 3: Compradores */
+      var ws3data=[['UTM Content','Compradores','Facturación ($)','Inversión ($)','ROAS']].concat(
+        b2BuyersData.map(function(r){return[r.utm,r.compradores,r.fact,r.inv,r.inv>0?parseFloat((r.fact/r.inv).toFixed(2)):0];}));
+      XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ws3data),'Compradores');
+ 
+      XLSX.writeFile(wb,'datos_conversiones_'+new Date().toISOString().split('T')[0]+'.xlsx');
+      b2Toast('Reporte exportado como .xlsx');
+    }catch(e){doCSV();}
+    btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Exportar reporte';
+    btn.disabled=false;
+  }
+};
+ 
+/* ---- AI ANALYSIS ---- */
+window.b2AnalyzeAI=async function(){
+  var key=(document.getElementById('b2-apikey').value||'').trim();
+  if(!key){alert('Ingresá tu API key de Anthropic.');return;}
+  var btn=document.getElementById('b2-ai-btn');var panel=document.getElementById('b2-ai-panel');var txt=document.getElementById('b2-ai-txt');
+  btn.innerHTML='<span class="b2-spinner"></span>Analizando...';btn.disabled=true;
+  panel.style.display='block';txt.textContent='Procesando...';
+  var s=b2State;
+  var tVis=s.vis>0?s.lgp/s.vis*100:0;
+  var tLC=s.lgp>0?s.ventas/s.lgp*100:0;
+  var cplGP=s.lgp>0?s.gasto/s.lgp:0;
+  var cpw=s.wa>0?s.gasto/s.wa:0;
+  var cac=s.ventas>0?s.gasto/s.ventas:0;
+  var pWA=s.lgp>0?s.wa/s.lgp*100:0;
+  var data=[
+    'Período analizado — Funnel completo:',
+    'Impresiones: '+s.imp+' | Clics: '+s.cli+' | Visitas: '+s.vis,
+    'Leads Meta: '+s.lm+' | Leads GP: '+s.lgp+' | WhatsApp: '+s.wa+' | Ventas: '+s.ventas,
+    'Importe: $'+s.gasto.toFixed(2),
+    'Tasas: visita→lead '+tVis.toFixed(2)+'% | lead→comprador '+tLC.toFixed(2)+'% | % WhatsApp '+pWA.toFixed(1)+'%',
+    'Costos: CPL GP $'+cplGP.toFixed(2)+' | CPW $'+cpw.toFixed(2)+(cac>0?' | CAC $'+cac.toFixed(2):''),
+    'Umbrales: Connect rate objetivo >80% | Reg. GP objetivo >30% | % WA objetivo >80% | CPL GP objetivo <$1'
+  ].join('\n');
+  try{
+    var r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:'Sos experto en marketing de performance. Analizá este funnel en español:\n\n'+data+'\n\n1) ¿Dónde está la mayor pérdida del funnel?, 2) ¿Qué está funcionando bien?, 3) 3 acciones concretas para mejorar la conversión, priorizadas por impacto.'}]})});
+    var d=await r.json();txt.textContent=(d.content&&d.content[0]&&d.content[0].text)||'Sin respuesta.';
+  }catch(e){txt.textContent='Error al conectar con la API.';}
+  btn.innerHTML='Analizar conversiones con IA';btn.disabled=false;
+};
+ 
+/* ---- INIT ---- */
+b2RefreshLeadsTable();
+b2RefreshBuyersTable();
+ 
+})();
+</script>
       </section>
 
       <!-- SECTION: WEBINAR PERFORMANCE -->
