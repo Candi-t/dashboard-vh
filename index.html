@@ -1770,23 +1770,572 @@ b3BuildClasesTable();
  
 })();
 </script>
+        </section>
  
       <!-- SECTION: AVATAR & INSIGHTS -->
       <section class="section" id="section-avatar">
-        <div class="section-header">
-          <h1 class="section-title">Avatar & Insights</h1>
-          <p class="section-desc">Perfil demográfico · Psicología · Vocabulario · Sub-avatares</p>
+        <style>
+/* ---- Bloque 4 — Avatar & Insights ---- */
+.b4-header { margin-bottom: 24px; }
+.b4-title  { font-size: 24px; font-weight: 600; color: #f0f0f8; letter-spacing: -0.3px; margin-bottom: 4px; }
+.b4-desc   { font-size: 13px; color: #9090b0; }
+ 
+/* Upload area */
+.b4-upload-area {
+  border: 1.5px dashed rgba(255,255,255,0.10);
+  border-radius: 14px; padding: 1.25rem 1.75rem;
+  margin-bottom: 20px;
+  display: flex; flex-wrap: wrap; gap: 14px;
+  align-items: center; justify-content: space-between;
+  background: #16161f;
+}
+.b4-upload-area .ua-left .ua-title { font-size: 14px; font-weight: 500; color: #f0f0f8; margin-bottom: 3px; }
+.b4-upload-area .ua-left .ua-sub   { font-size: 12px; color: #9090b0; }
+.b4-ua-input {
+  font-size: 13px; padding: 7px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: #0a0a0f; color: #55556a;
+  width: 280px; font-family: 'DM Mono', monospace;
+}
+.b4-ua-btns { display: flex; gap: 8px; }
+.b4-btn-ua {
+  font-size: 13px; padding: 7px 16px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: #0a0a0f; color: #f0f0f8; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all 120ms ease;
+}
+.b4-btn-ua:hover { background: rgba(255,255,255,0.05); }
+.b4-btn-pri {
+  background: #7c6fe0; color: #fff; border: none;
+  padding: 7px 16px; border-radius: 6px;
+  font-size: 13px; font-family: 'DM Sans', sans-serif;
+  font-weight: 500; cursor: pointer; transition: background 120ms ease;
+  display: flex; align-items: center; gap: 6px;
+}
+.b4-btn-pri:hover { background: #6a5ed0; }
+.b4-btn-sec {
+  background: #12121a; color: #f0f0f8;
+  border: 1px solid rgba(255,255,255,0.10);
+  padding: 7px 14px; border-radius: 6px;
+  font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer;
+}
+.b4-n-badge {
+  display: inline-block; background: rgba(124,111,224,0.15);
+  color: #7c6fe0; font-size: 11px; font-weight: 500;
+  padding: 2px 8px; border-radius: 20px; margin-left: 6px;
+}
+.b4-sample-badge {
+  font-size: 11px; padding: 3px 10px; border-radius: 20px;
+  background: rgba(124,111,224,0.15); color: #7c6fe0; font-weight: 500;
+}
+ 
+/* Section card */
+.b4-section {
+  background: #16161f;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px; overflow: hidden; margin-bottom: 16px;
+}
+.b4-sec-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-wrap: wrap; gap: 8px;
+}
+.b4-sec-hdr-l { display: flex; align-items: center; gap: 10px; }
+.b4-sec-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.b4-sec-title  { font-size: 15px; font-weight: 500; color: #f0f0f8; }
+.b4-collbtn    { background: none; border: none; cursor: pointer; color: #55556a; font-size: 12px; padding: 2px 6px; }
+.b4-sec-body   { padding: 16px 20px; }
+.b4-collapsed  { display: none; }
+ 
+/* Stat pills */
+.b4-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1rem; }
+.b4-pill {
+  font-size: 12px; padding: 4px 12px; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.10); color: #f0f0f8;
+  background: #12121a;
+}
+.b4-pill strong { font-weight: 500; }
+ 
+/* Category label */
+.b4-cat-lbl { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; margin-bottom: .75rem; }
+.b4-amber { color: #e8a830; } .b4-coral { color: #e85555; }
+.b4-green { color: #1db87a; } .b4-purple { color: #7c6fe0; }
+.b4-teal  { color: #2ac4a0; } .b4-blue  { color: #3d9de8; }
+ 
+/* Bar rows */
+.b4-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+.b4-bar-name { font-size: 13px; color: #f0f0f8; flex: 1; min-width: 0; line-height: 1.4; }
+.b4-bar-pct  { font-size: 13px; font-weight: 500; width: 36px; text-align: right; flex-shrink: 0; }
+.b4-bar-track { width: 80px; height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; flex-shrink: 0; overflow: hidden; }
+.b4-bar-fill  { height: 100%; border-radius: 3px; }
+ 
+/* Tags */
+.b4-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+.b4-tag {
+  font-size: 12px; padding: 4px 12px; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.10); color: #f0f0f8; background: #12121a;
+}
+ 
+/* Score rows */
+.b4-score-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 9px; }
+.b4-score-ic  { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; color: #55556a; }
+.b4-score-name { font-size: 13px; color: #f0f0f8; flex: 1; line-height: 1.4; }
+.b4-score-val  { font-size: 13px; font-weight: 500; flex-shrink: 0; }
+.b4-sv-red  { color: #e85555; } .b4-sv-amber { color: #e8a830; }
+ 
+/* Insight box */
+.b4-insight-box {
+  border-left: 3px solid; border-radius: 0 8px 8px 0;
+  padding: .75rem 1rem; margin-top: 1rem;
+}
+.b4-ig-green  { border-color: #1db87a; background: rgba(29,184,122,0.07); }
+.b4-ig-coral  { border-color: #e85555; background: rgba(232,85,85,0.07); }
+.b4-ig-purple { border-color: #7c6fe0; background: rgba(124,111,224,0.07); }
+.b4-ig-amber  { border-color: #e8a830; background: rgba(232,168,48,0.07); }
+.b4-i-label { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; font-weight: 500; margin-bottom: 4px; font-family: 'DM Mono', monospace; }
+.b4-i-text  { font-size: 13px; color: #f0f0f8; line-height: 1.6; }
+ 
+/* Two col grid */
+.b4-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.b4-obj-card {
+  background: rgba(255,255,255,0.04); border-radius: 8px;
+  padding: .7rem .9rem; margin-bottom: 7px;
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.b4-obj-txt { font-size: 13px; color: #f0f0f8; flex: 1; line-height: 1.4; }
+.b4-obj-pct { font-size: 13px; font-weight: 500; flex-shrink: 0; }
+.b4-obj-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #085041; color: #9FE1CB;
+  font-size: 11px; font-weight: 500;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+ 
+/* Why box */
+.b4-why-box {
+  background: rgba(29,184,122,0.06);
+  border: 1px solid rgba(29,184,122,0.2);
+  border-radius: 8px; padding: .75rem 1rem; margin-top: 1rem;
+}
+.b4-why-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: #1db87a; font-weight: 500; margin-bottom: 5px; font-family: 'DM Mono', monospace; }
+ 
+/* Doubt cards */
+.b4-doubt-card { background: rgba(255,255,255,0.04); border-radius: 8px; padding: .8rem 1rem; margin-bottom: 7px; }
+.b4-doubt-q    { font-size: 13px; font-weight: 500; color: #f0f0f8; margin-bottom: 4px; display: flex; align-items: flex-start; gap: 8px; }
+.b4-doubt-q span { color: #7c6fe0; font-size: 15px; flex-shrink: 0; }
+.b4-doubt-quote { font-size: 12px; color: #9090b0; font-style: italic; padding-left: 20px; line-height: 1.5; }
+ 
+/* Quote cards */
+.b4-quote-card {
+  background: rgba(255,255,255,0.04); border-radius: 8px;
+  padding: .8rem 1rem; margin-bottom: 7px;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.b4-qm  { font-size: 22px; color: #7c6fe0; line-height: 1; flex-shrink: 0; margin-top: -2px; }
+.b4-qt  { font-size: 13px; color: #f0f0f8; font-style: italic; flex: 1; line-height: 1.5; }
+.b4-qa  { display: flex; gap: 5px; flex-shrink: 0; }
+.b4-qbtn {
+  font-size: 11px; padding: 3px 7px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: #12121a; color: #9090b0; cursor: pointer;
+}
+.b4-qbtn.top { background: #7c6fe0; color: #fff; border-color: #7c6fe0; }
+ 
+.b4-tono-line { font-size: 13px; color: #9090b0; margin-top: .75rem; font-style: italic; }
+.b4-tono-line strong { color: #f0f0f8; font-style: normal; }
+ 
+/* Sub-avatares */
+.b4-sub-card { border-radius: 8px; padding: .85rem 1rem; margin-bottom: 8px; }
+.b4-sub-card.sc-new     { background: rgba(232,168,48,0.08); border: 1px solid rgba(232,168,48,0.25); }
+.b4-sub-card.sc-decline { background: rgba(232,85,85,0.08);  border: 1px solid rgba(232,85,85,0.25); }
+.b4-sub-card.sc-normal  { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
+.b4-sc-inner { display: flex; align-items: flex-start; gap: 8px; }
+.b4-sc-badge { font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 6px; flex-shrink: 0; margin-top: 2px; }
+.b4-sc-badge.new  { background: #854F0B; color: #FAC775; }
+.b4-sc-badge.down { background: #993C1D; color: #F5C4B3; }
+.b4-sc-body { flex: 1; }
+.b4-sc-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.b4-sc-desc { font-size: 12px; color: #9090b0; line-height: 1.5; }
+.b4-sc-pct  {
+  font-size: 14px; font-weight: 500; color: #7c6fe0;
+  background: rgba(124,111,224,0.12); padding: 3px 10px;
+  border-radius: 8px; flex-shrink: 0; align-self: center;
+}
+ 
+/* AI panel */
+.b4-ai-panel { background: #12121a; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; padding: 1.25rem; margin-top: 1rem; display: none; }
+.b4-ai-lbl   { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: #7c6fe0; font-weight: 500; margin-bottom: .5rem; font-family: 'DM Mono', monospace; }
+.b4-ai-txt   { font-size: 13px; color: #f0f0f8; line-height: 1.7; white-space: pre-wrap; }
+.b4-apikey   { font-size: 13px; padding: 7px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.10); background: #12121a; color: #f0f0f8; width: 100%; max-width: 380px; margin-bottom: .75rem; font-family: 'DM Mono', monospace; }
+.b4-spinner  { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: b4spin .7s linear infinite; vertical-align: middle; margin-right: 5px; }
+@keyframes b4spin { to { transform: rotate(360deg); } }
+</style>
+ 
+<!-- ===== HEADER ===== -->
+<div class="b4-header">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+    <div>
+      <h1 class="b4-title">Avatar & Insights</h1>
+      <p class="b4-desc">Análisis de 45 perfiles · Cohorte inicio VH 2026</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span class="b4-sample-badge">n=45 alumnos</span>
+      <button class="b4-btn-pri" onclick="b4ExportPdf()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Exportar PDF
+      </button>
+    </div>
+  </div>
+</div>
+ 
+<!-- Upload area -->
+<div class="b4-upload-area">
+  <div class="ua-left">
+    <div class="ua-title">Analizá tu avatar con IA</div>
+    <div class="ua-sub">Subí el estudio del avatar (PDF, DOCX, TXT) o pegá el link de un form post compra</div>
+  </div>
+  <input class="b4-ua-input" type="text" placeholder="https://docs.google.com/forms/... o https://tally.so/...">
+  <div class="b4-ua-btns">
+    <button class="b4-btn-ua">↑ Subir estudio del avatar</button>
+    <button class="b4-btn-ua">⊕ Conectar form / URL</button>
+  </div>
+</div>
+ 
+<!-- AI re-analysis -->
+<div class="b4-section" style="margin-bottom:16px;">
+  <div class="b4-sec-hdr" style="padding:14px 20px;">
+    <span style="font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#9090b0;text-transform:uppercase;letter-spacing:.1em;">Análisis IA del documento <span class="b4-n-badge">IA</span></span>
+  </div>
+  <div style="padding:14px 20px;">
+    <input type="password" class="b4-apikey" id="b4-api-key" placeholder="sk-ant-... (API key de Anthropic)">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="b4-btn-pri" id="b4-analyze-btn" onclick="b4AnalyzeAvatar()">Analizar avatar con IA</button>
+      <span style="font-size:12px;color:#55556a;align-self:center;">· O explorá el análisis manual de los 45 perfiles abajo</span>
+    </div>
+    <div class="b4-ai-panel" id="b4-ai-panel">
+      <div class="b4-ai-lbl">Insights de Claude</div>
+      <div class="b4-ai-txt" id="b4-ai-txt"></div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ===== PERFIL DEMOGRÁFICO ===== -->
+<div class="b4-section">
+  <div class="b4-sec-hdr">
+    <div class="b4-sec-hdr-l">
+      <div class="b4-sec-icon" style="background:rgba(124,111,224,0.15);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c6fe0" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <span class="b4-sec-title">Perfil Demográfico</span>
+    </div>
+    <button class="b4-collbtn" onclick="b4Toggle('b4-demog',this)">▲</button>
+  </div>
+  <div id="b4-demog" class="b4-sec-body">
+    <div class="b4-pills">
+      <span class="b4-pill">Edad predominante: <strong>28–55 años</strong></span>
+      <span class="b4-pill">Género: <strong>~73% mujeres</strong></span>
+      <span class="b4-pill">Con hijos: <strong>~55%</strong></span>
+      <span class="b4-pill">Primer programa de ventas: <strong>78%</strong></span>
+    </div>
+    <div class="b4-cat-lbl b4-amber">Rubros principales</div>
+    <div class="b4-bar-row"><div class="b4-bar-name">Relación de dependencia buscando salir (empleados con techo)</div><div class="b4-bar-pct b4-purple">51%</div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:51%;background:#7c6fe0"></div></div></div>
+    <div class="b4-bar-row"><div class="b4-bar-name">Emprendedor activo sin sistema de ventas (pastelería, cosméticos, artesanías, eventos)</div><div class="b4-bar-pct b4-purple">29%</div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:29%;background:#7c6fe0"></div></div></div>
+    <div class="b4-bar-row"><div class="b4-bar-name">Profesional independiente (contadora, odontóloga, ingeniera, docente)</div><div class="b4-bar-pct b4-purple">16%</div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:16%;background:#534AB7"></div></div></div>
+    <div class="b4-bar-row"><div class="b4-bar-name">Sin experiencia laboral / primera vez en el mundo comercial</div><div class="b4-bar-pct b4-purple">13%</div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:13%;background:#AFA9EC"></div></div></div>
+ 
+    <div style="margin-top:1rem;margin-bottom:.5rem;">
+      <div class="b4-cat-lbl b4-amber">Provincias representadas</div>
+      <div class="b4-tags">
+        <span class="b4-tag">Buenos Aires (25)</span><span class="b4-tag">Córdoba (7)</span>
+        <span class="b4-tag">Mendoza (4)</span><span class="b4-tag">Santa Fe (5)</span>
+        <span class="b4-tag">Tucumán (2)</span><span class="b4-tag">Entre Ríos (1)</span>
+        <span class="b4-tag">Chubut (1)</span><span class="b4-tag">Ecuador (1)</span>
+      </div>
+    </div>
+ 
+    <div class="b4-cat-lbl b4-amber">Punto de contacto con VH</div>
+    <div class="b4-bar-row"><div class="b4-bar-name">Taller gratuito de los domingos</div><div class="b4-bar-pct b4-coral">44%</div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:44%;background:#e85555"></div></div></div>
+    <div class="b4-bar-row"><div class="b4-bar-name">Incubadora / Practigram (ya eran alumnos del ecosistema)</div><div class="b4-bar-pct b4-coral">31%</div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:31%;background:#e85555"></div></div></div>
+    <div class="b4-bar-row"><div class="b4-bar-name">Instagram / Anuncios en Meta</div><div class="b4-bar-pct b4-coral">20%</div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:20%;background:#F0997B"></div></div></div>
+    <div class="b4-bar-row"><div class="b4-bar-name">Podcast / YouTube</div><div class="b4-bar-pct b4-coral">11%</div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:11%;background:#F5C4B3"></div></div></div>
+  </div>
+</div>
+ 
+<!-- ===== SITUACIÓN DOMINANTE ===== -->
+<div class="b4-section">
+  <div class="b4-sec-hdr">
+    <div class="b4-sec-hdr-l">
+      <div class="b4-sec-icon" style="background:rgba(232,85,85,0.12);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e85555" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <span class="b4-sec-title">Situación Dominante</span>
+    </div>
+    <button class="b4-collbtn" onclick="b4Toggle('b4-sit',this)">▲</button>
+  </div>
+  <div id="b4-sit" class="b4-sec-body">
+    <div class="b4-bar-row"><div class="b4-bar-name">Techo laboral — trabajan en relación de dependencia sin posibilidad de crecer ni ganar más</div><div class="b4-bar-pct b4-coral">51%</div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:51%;background:#e85555"></div></div></div>
+    <div class="b4-bar-row"><div class="b4-bar-name">Emprendedor con ventas físicas/boca a boca que quiere escalar online</div><div class="b4-bar-pct b4-coral">29%</div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:29%;background:#e85555"></div></div></div>
+    <div class="b4-bar-row"><div class="b4-bar-name">Reinvención — dejó o está por dejar un trabajo de años, construyendo desde cero</div><div class="b4-bar-pct b4-coral">20%</div><div class="b4-bar-track"><div class="b4-bar-fill" style="width:20%;background:#F0997B"></div></div></div>
+    <div class="b4-insight-box b4-ig-green">
+      <div class="b4-i-label" style="color:#1db87a;">Insight clave</div>
+      <div class="b4-i-text">El motor universal no es ambición, es escape. Escapar de un horario que les roba sus hijos, de un sueldo que no alcanza, de un jefe que no valora, de una vida "en automático". VH no es un curso — es la primera decisión en años que tomaron por ellos mismos.</div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ===== PSICOLOGÍA DEL AVATAR ===== -->
+<div class="b4-section">
+  <div class="b4-sec-hdr">
+    <div class="b4-sec-hdr-l">
+      <div class="b4-sec-icon" style="background:rgba(212,83,126,0.12);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4537E" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      </div>
+      <span class="b4-sec-title">Psicología del Avatar</span>
+    </div>
+    <button class="b4-collbtn" onclick="b4Toggle('b4-psico',this)">▲</button>
+  </div>
+  <div id="b4-psico" class="b4-sec-body">
+    <div class="b4-cat-lbl b4-coral">Miedos principales</div>
+    <div class="b4-score-row"><svg class="b4-score-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="b4-score-name">Ser estafado / que sea "otro curso enlatado que no da resultados"</div><div class="b4-score-val b4-sv-red">10/10</div></div>
+    <div class="b4-score-row"><svg class="b4-score-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="b4-score-name">No llegar con el pago o no recuperar lo invertido</div><div class="b4-score-val b4-sv-red">10/10</div></div>
+    <div class="b4-score-row"><svg class="b4-score-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="b4-score-name">Quedarse solo/a sin acompañamiento después de comprar</div><div class="b4-score-val b4-sv-red">9/10</div></div>
+    <div class="b4-score-row"><svg class="b4-score-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="b4-score-name">No poder con la tecnología / quedar expuesto como "dinosaurio"</div><div class="b4-score-val b4-sv-red">8/10</div></div>
+    <div class="b4-score-row"><svg class="b4-score-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="b4-score-name">Que absorba demasiado tiempo / no poder cumplir con familia y trabajo</div><div class="b4-score-val b4-sv-amber">7/10</div></div>
+    <div class="b4-score-row"><svg class="b4-score-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="b4-score-name">Entorno que desalienta / pareja o familia escéptica</div><div class="b4-score-val b4-sv-amber">7/10</div></div>
+    <div class="b4-score-row"><svg class="b4-score-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="b4-score-name">No ser suficientemente buena/o para esto — baja autoestima comercial</div><div class="b4-score-val b4-sv-amber">7/10</div></div>
+    <div class="b4-insight-box b4-ig-coral" style="margin-top:1rem;">
+      <div class="b4-i-label" style="color:#e85555;">Diagnóstico propio</div>
+      <div class="b4-i-text">Se perciben como "buenos en lo que hacen pero invisibles". Creen que el problema es el canal, no el producto. La vergüenza más grande es sentir que el mundo cambió de idioma y ellos se quedaron mudos.</div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ===== DECISIÓN DE COMPRA ===== -->
+<div class="b4-section">
+  <div class="b4-sec-hdr">
+    <div class="b4-sec-hdr-l">
+      <div class="b4-sec-icon" style="background:rgba(29,184,122,0.12);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1db87a" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.99-1.61L23 6H6"/></svg>
+      </div>
+      <span class="b4-sec-title">Decisión de Compra</span>
+    </div>
+    <button class="b4-collbtn" onclick="b4Toggle('b4-compra',this)">▲</button>
+  </div>
+  <div id="b4-compra" class="b4-sec-body">
+    <div class="b4-two-col">
+      <div>
+        <div class="b4-cat-lbl b4-coral">Objeciones principales</div>
+        <div class="b4-obj-card"><div class="b4-obj-txt">Falta de liquidez / usar lo último de la tarjeta o del mes</div><div class="b4-obj-pct b4-coral">82%</div></div>
+        <div class="b4-obj-card"><div class="b4-obj-txt">Miedo a la estafa / "ya me fallaron antes"</div><div class="b4-obj-pct b4-coral">71%</div></div>
+        <div class="b4-obj-card"><div class="b4-obj-txt">Falta de tiempo entre trabajo, hijos y vida</div><div class="b4-obj-pct b4-coral">53%</div></div>
+        <div class="b4-obj-card"><div class="b4-obj-txt">Entorno que no apoya / pareja o familia escéptica</div><div class="b4-obj-pct b4-coral">29%</div></div>
+      </div>
+      <div>
+        <div class="b4-cat-lbl b4-green">Top 4 objetivos</div>
+        <div class="b4-obj-card"><div class="b4-obj-num">1</div><div class="b4-obj-txt">Libertad económica / salir de la relación de dependencia</div><div class="b4-obj-pct b4-green">87%</div></div>
+        <div class="b4-obj-card"><div class="b4-obj-num">2</div><div class="b4-obj-txt">Generar ingresos extras sin cambiar todo de golpe</div><div class="b4-obj-pct b4-green">76%</div></div>
+        <div class="b4-obj-card"><div class="b4-obj-num">3</div><div class="b4-obj-txt">Aprender a vender / desarrollar la habilidad como activo</div><div class="b4-obj-pct b4-green">69%</div></div>
+        <div class="b4-obj-card"><div class="b4-obj-num">4</div><div class="b4-obj-txt">Tener tiempo para hijos, familia, viajes, calidad de vida</div><div class="b4-obj-pct b4-green">58%</div></div>
+      </div>
+    </div>
+    <div class="b4-why-box">
+      <div class="b4-why-lbl">¿Por qué compraron HOY?</div>
+      <div style="font-size:13px;color:#f0f0f8;line-height:1.6;">La combinación de <strong>ver las clases gratis de los domingos + la reunión 1:1 con el asesor</strong> es el detonador universal. El taller les muestra que es posible; el asesor les muestra que es posible para ellos. Sin uno de los dos, no compran.</div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ===== DUDAS ANTES DE INVERTIR ===== -->
+<div class="b4-section">
+  <div class="b4-sec-hdr">
+    <div class="b4-sec-hdr-l">
+      <div class="b4-sec-icon" style="background:rgba(61,157,232,0.12);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d9de8" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <span class="b4-sec-title">Dudas y miedos antes de invertir</span>
+    </div>
+    <button class="b4-collbtn" onclick="b4Toggle('b4-dudas',this)">▲</button>
+  </div>
+  <div id="b4-dudas" class="b4-sec-body">
+    <div class="b4-doubt-card"><div class="b4-doubt-q"><span>●</span>¿Esto funciona para mi rubro tan específico?</div><div class="b4-doubt-quote">"No sé si lo que enseñan aplica para una gomería, una odontología o algo que no es cool." — Melina C. / Roxana F.</div></div>
+    <div class="b4-doubt-card"><div class="b4-doubt-q"><span>●</span>¿Es otro curso más que no da resultados?</div><div class="b4-doubt-quote">"Compré cursos antes y me quedé sola, sin respuesta. Tenía miedo de que me abandonaran." — Daniela R. / Cintia C.</div></div>
+    <div class="b4-doubt-card"><div class="b4-doubt-q"><span>●</span>¿Voy a poder recuperar la inversión?</div><div class="b4-doubt-quote">"Mi pareja me ayuda con esto y no puede ser otra pérdida más de dinero y tiempo." — Daniela R. / Gonzalo P.</div></div>
+    <div class="b4-doubt-card"><div class="b4-doubt-q"><span>●</span>¿Voy a tener tiempo con todas mis responsabilidades?</div><div class="b4-doubt-quote">"No quiero algo que me absorba toda la vida. No tengo a nadie que me ayude en casa." — María Inés F. / Lorena T.</div></div>
+    <div class="b4-doubt-card"><div class="b4-doubt-q"><span>●</span>¿Lo hice a escondidas porque tenía miedo al entorno?</div><div class="b4-doubt-quote">"Tantos fracasos, que se lo dije a escondidas a mi señora por miedo." — Hernán C. / Cristian A.</div></div>
+  </div>
+</div>
+ 
+<!-- ===== VOCABULARIO DEL AVATAR ===== -->
+<div class="b4-section">
+  <div class="b4-sec-hdr">
+    <div class="b4-sec-hdr-l">
+      <div class="b4-sec-icon" style="background:rgba(124,111,224,0.15);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c6fe0" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <span class="b4-sec-title">Vocabulario del Avatar</span>
+    </div>
+    <button class="b4-collbtn" onclick="b4Toggle('b4-vocab',this)">▲</button>
+  </div>
+  <div id="b4-vocab" class="b4-sec-body">
+    <div style="font-size:12px;color:#9090b0;margin-bottom:.6rem;">Palabras que se repiten en todos los perfiles</div>
+    <div class="b4-tags">
+      <span class="b4-tag">Libertad</span><span class="b4-tag">Techo</span><span class="b4-tag">Estancada/o</span>
+      <span class="b4-tag">Mis hijos</span><span class="b4-tag">No me alcanza</span><span class="b4-tag">Estafa</span>
+      <span class="b4-tag">Acompañamiento</span><span class="b4-tag">Remoto</span><span class="b4-tag">Relación de dependencia</span>
+      <span class="b4-tag">Sola/solo</span><span class="b4-tag">Tiempo</span><span class="b4-tag">Confianza</span>
+      <span class="b4-tag">No me siento capaz</span><span class="b4-tag">Cambio</span><span class="b4-tag">Jubilación</span>
+    </div>
+ 
+    <div class="b4-cat-lbl b4-coral" style="margin-bottom:.6rem;">Frases literales poderosas</div>
+ 
+    <div class="b4-quote-card"><div class="b4-qm">"</div><div class="b4-qt">Una lloradita y a seguir.</div><div class="b4-qa"><button class="b4-qbtn" onclick="b4Copy(this,'Una lloradita y a seguir.')">⧉</button><button class="b4-qbtn top">TOP</button></div></div>
+    <div class="b4-quote-card"><div class="b4-qm">"</div><div class="b4-qt">Un día tenés 1 solo cliente y ese cliente se cae.</div><div class="b4-qa"><button class="b4-qbtn" onclick="b4Copy(this,'Un día tenés 1 solo cliente y ese cliente se cae.')">⧉</button><button class="b4-qbtn top">TOP</button></div></div>
+    <div class="b4-quote-card"><div class="b4-qm">"</div><div class="b4-qt">Quiero trabajar en mi casa, ver a mis hijos, sin preocuparme del tiempo ni de la plata.</div><div class="b4-qa"><button class="b4-qbtn" onclick="b4Copy(this,'Quiero trabajar en mi casa, ver a mis hijos, sin preocuparme del tiempo ni de la plata.')">⧉</button><button class="b4-qbtn top">TOP</button></div></div>
+    <div class="b4-quote-card"><div class="b4-qm">"</div><div class="b4-qt">Sos el perrito que lo golpearon siempre y le dan la comida con la mano y muerde.</div><div class="b4-qa"><button class="b4-qbtn" onclick="b4Copy(this,'Sos el perrito que lo golpearon siempre y le dan la comida con la mano y muerde.')">⧉</button><button class="b4-qbtn top">TOP</button></div></div>
+    <div class="b4-quote-card"><div class="b4-qm">"</div><div class="b4-qt">El boca en boca es lento — fueron 12 años.</div><div class="b4-qa"><button class="b4-qbtn" onclick="b4Copy(this,'El boca en boca es lento — fueron 12 años.')">⧉</button><button class="b4-qbtn">TOP</button></div></div>
+    <div class="b4-quote-card"><div class="b4-qm">"</div><div class="b4-qt">No quiero sentirme una jubilada chota. Quiero sentirme útil y productiva.</div><div class="b4-qa"><button class="b4-qbtn" onclick="b4Copy(this,'No quiero sentirme una jubilada chota. Quiero sentirme útil y productiva.')">⧉</button><button class="b4-qbtn">TOP</button></div></div>
+    <div class="b4-quote-card"><div class="b4-qm">"</div><div class="b4-qt">La gente no diferencia invertir en un activo o un pasivo.</div><div class="b4-qa"><button class="b4-qbtn" onclick="b4Copy(this,'La gente no diferencia invertir en un activo o un pasivo.')">⧉</button><button class="b4-qbtn top">TOP</button></div></div>
+    <div class="b4-quote-card"><div class="b4-qm">"</div><div class="b4-qt">Pasaron 10 años y soy el mismo Joaco. Eso me dolió.</div><div class="b4-qa"><button class="b4-qbtn" onclick="b4Copy(this,'Pasaron 10 años y soy el mismo. Eso me dolió.')">⧉</button><button class="b4-qbtn top">TOP</button></div></div>
+    <div class="b4-quote-card"><div class="b4-qm">"</div><div class="b4-qt">Me tiré a la pileta y espero que haya agua.</div><div class="b4-qa"><button class="b4-qbtn" onclick="b4Copy(this,'Me tiré a la pileta y espero que haya agua.')">⧉</button><button class="b4-qbtn">TOP</button></div></div>
+    <div class="b4-quote-card"><div class="b4-qm">"</div><div class="b4-qt">Lo peor que me puede pasar: 500 dólares pero lo intenté. Prefiero eso a llegar a los 60 cobrando 400 lucas.</div><div class="b4-qa"><button class="b4-qbtn" onclick="b4Copy(this,'Lo peor que me puede pasar: 500 dólares pero lo intenté.')">⧉</button><button class="b4-qbtn top">TOP</button></div></div>
+ 
+    <div class="b4-tono-line">Tono dominante: <strong>Urgencia afectiva, vulnerabilidad económica, hambre de libertad real y miedo a la irrelevancia.</strong></div>
+  </div>
+</div>
+ 
+<!-- ===== SUB-AVATARES ===== -->
+<div class="b4-section">
+  <div class="b4-sec-hdr">
+    <div class="b4-sec-hdr-l">
+      <div class="b4-sec-icon" style="background:rgba(124,111,224,0.15);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c6fe0" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <span class="b4-sec-title">Sub-Avatares Identificados (4)</span>
+    </div>
+    <button class="b4-collbtn" onclick="b4Toggle('b4-sub',this)">▲</button>
+  </div>
+  <div id="b4-sub" class="b4-sec-body">
+    <div class="b4-sub-card sc-new">
+      <div class="b4-sc-inner">
+        <div class="b4-sc-badge new">NEW</div>
+        <div class="b4-sc-body">
+          <div class="b4-sc-name b4-amber">Sub-avatar emergente detectado</div>
+          <div class="b4-sc-desc">El Empleado Atrapado con Techo — trabaja en relación de dependencia con sueldo bajo, sin posibilidad de crecer ni ascender. La mayoría tiene hijos y quiere tiempo, no solo dinero. Apareció con fuerza dominante en este cohorte. (Juan Manuel, Bruno, Eliana, Melina, Lorena, Cintia, Lucas, Macarena, Santiago...)</div>
         </div>
-        <div class="coming-soon-card">
-          <div class="cs-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
-            </svg>
-          </div>
-          <div class="cs-title">Avatar & Insights</div>
-          <div class="cs-desc">45 perfiles analizados · Dolores · Objeciones · Frases poderosas · Sub-avatares</div>
-          <div class="cs-badge">Bloque 4</div>
+      </div>
+    </div>
+    <div class="b4-sub-card sc-decline">
+      <div class="b4-sc-inner">
+        <div class="b4-sc-badge down">↘</div>
+        <div class="b4-sc-body">
+          <div class="b4-sc-name b4-coral">Sub-avatar en declive detectado</div>
+          <div class="b4-sc-desc">El Especialista Sin Red — profesional con años de experiencia que asociaba "vender" al comercio físico agresivo. Sigue presente pero con menor representación que cohortes anteriores.</div>
         </div>
+      </div>
+    </div>
+    <div class="b4-sub-card sc-normal" style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+      <div class="b4-sc-body">
+        <div class="b4-sc-name" style="color:#f0f0f8;">El Emprendedor Invisible</div>
+        <div class="b4-sc-desc">Vende hace años (ferias, boca a boca, servicios presenciales) pero no sabe cómo trasladar su negocio a digital. Tiene producto probado, le falta sistema. (Daniela R., Agustina, Manuela, Marcela, Roxana F., Alfredo...)</div>
+      </div>
+      <div class="b4-sc-pct">31%</div>
+    </div>
+    <div class="b4-sub-card sc-normal" style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+      <div class="b4-sc-body">
+        <div class="b4-sc-name" style="color:#f0f0f8;">La Reinventora en Transición</div>
+        <div class="b4-sc-desc">Mujer de 35–58 años que dejó (o está por dejar) empleo formal después de años de sacrificio. Quiere construir algo propio con tiempo y dinero. Muchas vienen de la incubadora. (Roxana M., Laura B., Alejandra F., Giselle, Ivana F...)</div>
+      </div>
+      <div class="b4-sc-pct">22%</div>
+    </div>
+  </div>
+</div>
+ 
+<script>
+(function() {
+'use strict';
+ 
+/* ---- COLLAPSE ---- */
+window.b4Toggle = function(id, btn) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var hidden = el.classList.toggle('b4-collapsed');
+  btn.textContent = hidden ? '▼' : '▲';
+};
+ 
+/* ---- COPY QUOTE ---- */
+window.b4Copy = function(btn, text) {
+  if (navigator.clipboard) navigator.clipboard.writeText(text).catch(function(){});
+  var orig = btn.textContent;
+  btn.textContent = '✓';
+  setTimeout(function(){ btn.textContent = orig; }, 1500);
+};
+ 
+/* ---- EXPORT PDF (stub — abre ventana de impresión) ---- */
+window.b4ExportPdf = function() {
+  window.print();
+};
+ 
+/* ---- AI ANALYSIS ---- */
+window.b4AnalyzeAvatar = async function() {
+  var key = (document.getElementById('b4-api-key').value || '').trim();
+  if (!key) {
+    alert('Ingresá tu API key de Anthropic para usar el análisis IA.');
+    return;
+  }
+  var btn   = document.getElementById('b4-analyze-btn');
+  var panel = document.getElementById('b4-ai-panel');
+  var txt   = document.getElementById('b4-ai-txt');
+  btn.innerHTML = '<span class="b4-spinner"></span>Analizando...';
+  btn.disabled  = true;
+  panel.style.display = 'block';
+  txt.textContent = 'Procesando...';
+ 
+  var context = [
+    'Datos reales de 45 perfiles de alumnos inicio VH 2026:',
+    '- 51% empleados con techo laboral (sueldo bajo, sin posibilidad de crecer)',
+    '- 29% emprendedores activos sin sistema de ventas online',
+    '- 78% es su primer programa de ventas',
+    '- Provincias: BA(25), Santa Fe(5), Córdoba(7), Mendoza(4), Tucumán(2), otras(2)',
+    '- Miedos top: estafa/cursos que no dan resultado (10/10), no recuperar inversión (10/10), quedarse solos (9/10)',
+    '- Motor de compra: taller gratuito + 1:1 con asesor',
+    '- Frase literal más poderosa: "Una lloradita y a seguir"',
+    '- Tono dominante: urgencia afectiva, vulnerabilidad económica, hambre de libertad real',
+    '- Sub-avatar emergente: "Empleado Atrapado con Techo" (Juan Manuel, Bruno, Eliana, Melina, Lorena...)',
+  ].join('\n');
+ 
+  try {
+    var r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 800,
+        messages: [{
+          role: 'user',
+          content: 'Sos experto en marketing y psicología del consumidor. Analizá este avatar en español y dá insights accionables:\n\n' + context + '\n\n1) Qué mensaje de ventas resuena más con este avatar, 2) Qué contenido de Instagram conecta mejor con sus dolores, 3) Cómo deberían estructurarse las clases del webinar para este perfil, 4) 3 recomendaciones de copy para anuncios basadas en sus frases literales.'
+        }]
+      })
+    });
+    var d = await r.json();
+    txt.textContent = (d.content && d.content[0] && d.content[0].text) || 'Sin respuesta.';
+  } catch(e) {
+    txt.textContent = 'Error al conectar con la API. Verificá tu API key.';
+  }
+  btn.innerHTML = 'Analizar avatar con IA';
+  btn.disabled  = false;
+};
+ 
+})();
+</script>
       </section>
  
       <!-- SECTION: CONTENT PERFORMANCE -->
