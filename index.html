@@ -570,7 +570,7 @@ document.addEventListener('click', function(e) {
  
       <!-- SECTION: DATOS & CONVERSIONES -->
       <section class="section" id="section-conversiones">
-        <style>
+<style>
 /* ======================================================
    BLOQUE 2 — Datos & Conversiones  (prefijo b2-)
    ====================================================== */
@@ -609,11 +609,6 @@ document.addEventListener('click', function(e) {
 .b2-mc-val.p{color:#7c6fe0;} .b2-mc-val.g{color:#1db87a;} .b2-mc-val.b{color:#3d9de8;}
 .b2-mc-val.a{color:#e8a830;} .b2-mc-val.t{color:#2ac4a0;}
 .b2-mc-sub{font-size:11px;color:#55556a;margin-top:3px;}
- 
-/* import banner */
-.b2-import-banner{background:#12121a;border:1px solid rgba(255,255,255,.10);border-radius:8px;padding:.65rem 1rem;margin-bottom:1.25rem;font-size:12px;color:#9090b0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.b2-pill-b1{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:rgba(124,111,224,.15);color:#7c6fe0;}
-.b2-pill-own{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:rgba(29,184,122,.15);color:#1db87a;}
  
 /* funnel bar chart */
 .b2-funnel-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
@@ -660,12 +655,6 @@ document.addEventListener('click', function(e) {
 .b2-mb-no{background:rgba(232,85,85,.12);color:#e85555;}
 .b2-match-detail{font-size:11px;color:#9090b0;}
  
-/* input row for manual data */
-.b2-input-row{display:grid;grid-template-columns:120px 1fr 1fr;gap:8px;align-items:center;margin-bottom:6px;}
-.b2-input-row label{font-size:11px;color:#9090b0;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.04em;}
-.b2-input-row input{font-size:13px;padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;font-family:'DM Mono',monospace;text-align:right;}
-.b2-from-b1{background:rgba(124,111,224,.08)!important;border-color:rgba(124,111,224,.25)!important;color:#c8c2f8!important;}
- 
 /* chart row */
 .b2-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
 .b2-ccard{background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:1rem 1.25rem;}
@@ -692,49 +681,41 @@ document.addEventListener('click', function(e) {
  
 <div id="b2-toast" class="b2-toast"></div>
  
-<!-- ===== IMPORT BANNER ===== -->
-<div class="b2-import-banner">
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7c6fe0" stroke-width="2" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-  <span style="font-weight:500;color:#f0f0f8;">Campos de Bloque 1:</span>
-  <span class="b2-pill-b1">Impresiones</span>
-  <span class="b2-pill-b1">Clics</span>
-  <span class="b2-pill-b1">Leads Meta</span>
-  <span class="b2-pill-b1">Importe gastado</span>
-  <span style="color:#55556a;margin:0 4px;">·</span>
-  <span style="font-weight:500;color:#f0f0f8;">Campos propios Bloque 2:</span>
-  <span class="b2-pill-own">Visitas página</span>
-  <span class="b2-pill-own">Leads GP</span>
-  <span class="b2-pill-own">WhatsApp</span>
-</div>
- 
-<!-- ===== FORM INGRESO DE DATOS ===== -->
-<div class="b2-card">
+<!-- ===== GOOGLE SHEETS CONNECT ===== -->
+<div class="b2-card" style="margin-bottom:20px;">
   <div class="b2-card-hdr">
-    <span class="b2-card-title">Ingresar datos del período</span>
-    <span style="font-size:11px;color:#55556a;">Campos en <span style="color:#7c6fe0;font-weight:500;">violeta</span> vienen del Bloque 1</span>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1db87a" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+      <span class="b2-card-title">Conectar con Google Sheets</span>
+      <span id="b2-gs-status-badge" style="font-size:11px;padding:2px 10px;border-radius:20px;background:rgba(255,255,255,.06);color:#55556a;font-weight:500;">Sin conectar</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span id="b2-gs-last-sync" style="font-size:11px;color:#55556a;display:none;"></span>
+      <button class="b2-btn-sec" id="b2-gs-refresh-btn" onclick="b2SyncSheets()" style="display:none;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+        Actualizar
+      </button>
+    </div>
   </div>
   <div class="b2-card-body">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <!-- Bloque 1 data -->
-      <div>
-        <div style="font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#7c6fe0;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem;">Del Bloque 1</div>
-        <div class="b2-input-row"><label>Impresiones</label><input type="number" id="b2-imp" class="b2-from-b1" placeholder="379754" min="0" oninput="b2Recalc()"><span style="font-size:11px;color:#55556a;font-family:'DM Mono',monospace;">B1</span></div>
-        <div class="b2-input-row"><label>Clics</label><input type="number" id="b2-cli" class="b2-from-b1" placeholder="5892" min="0" oninput="b2Recalc()"><span style="font-size:11px;color:#55556a;font-family:'DM Mono',monospace;">B1</span></div>
-        <div class="b2-input-row"><label>Leads Meta</label><input type="number" id="b2-lm" class="b2-from-b1" placeholder="1159" min="0" oninput="b2Recalc()"><span style="font-size:11px;color:#55556a;font-family:'DM Mono',monospace;">B1</span></div>
-        <div class="b2-input-row"><label>Importe $</label><input type="number" id="b2-gasto" class="b2-from-b1" placeholder="826.36" min="0" step="0.01" oninput="b2Recalc()"><span style="font-size:11px;color:#55556a;font-family:'DM Mono',monospace;">B1</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:.75rem;">
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <label style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;">Google API Key</label>
+        <input type="password" id="b2-gs-apikey" value="AIzaSyBIec6jZUNdWZ6a_fe_el-22cgt_3WzQCY" style="font-size:13px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;font-family:'DM Mono',monospace;">
       </div>
-      <!-- Bloque 2 own data -->
-      <div>
-        <div style="font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#1db87a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem;">Datos propios Bloque 2</div>
-        <div class="b2-input-row"><label>Visitas pág.</label><input type="number" id="b2-vis" placeholder="0" min="0" oninput="b2Recalc()"><span></span></div>
-        <div class="b2-input-row"><label>Leads GP</label><input type="number" id="b2-lgp" placeholder="0" min="0" oninput="b2Recalc()"><span></span></div>
-        <div class="b2-input-row"><label>WhatsApp</label><input type="number" id="b2-wa" placeholder="0" min="0" oninput="b2Recalc()"><span></span></div>
-        <div class="b2-input-row"><label>Ventas</label><input type="number" id="b2-ventas" placeholder="0" min="0" oninput="b2Recalc()"><span></span></div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <label style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;">Sheet ID <span style="color:#55556a;font-weight:400;text-transform:none;letter-spacing:0;">(precargado)</span></label>
+        <input type="text" id="b2-gs-sheetid" value="1eM9ymTqWezASTkcv8-hMJ5NfWnZdfX4PEzkxv-lnp14" style="font-size:12px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#9090b0;font-family:'DM Mono',monospace;">
       </div>
     </div>
-    <div style="margin-top:1rem;">
-      <button class="b2-btn-pri" onclick="b2Recalc()">Calcular métricas</button>
+    <div style="font-size:12px;color:#55556a;margin-bottom:.75rem;">
+      Pestaña: <span style="color:#7c6fe0;font-family:'DM Mono',monospace;">🚀 Captación</span> · Lee fila 2 (TOTAL) para métricas · Filas 4+ para gráficos diarios · La hoja debe ser <span style="color:#f0f0f8;">visible para cualquiera con el link</span>.
     </div>
+    <button class="b2-btn-pri" id="b2-gs-connect-btn" onclick="b2SyncSheets()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+      Sincronizar datos
+    </button>
+    <div id="b2-gs-error" style="margin-top:.75rem;font-size:12px;color:#e85555;display:none;"></div>
   </div>
 </div>
  
@@ -1179,912 +1160,177 @@ window.b2AnalyzeAI=async function(){
   btn.innerHTML='Analizar conversiones con IA';btn.disabled=false;
 };
  
+/* ---- GOOGLE SHEETS SYNC ---- */
+var B2_SHEET_ID = '1eM9ymTqWezASTkcv8-hMJ5NfWnZdfX4PEzkxv-lnp14';
+var B2_SHEET_TAB = '🚀 Captación';
+var B2_DEFAULT_GKEY = 'AIzaSyBIec6jZUNdWZ6a_fe_el-22cgt_3WzQCY';
+ 
+/* Column mapping based on header row (row 3):
+   A=Fecha, B=Impresiones, C=Clics, D=Visitas página,
+   E=Leads Meta, F=Leads GreatPages, G=WhatsApp, H=Importe Gastado
+   Row 2 = TOTAL row */
+var B2_COL = { fecha:0, imp:1, cli:2, vis:3, lm:4, lgp:5, wa:6, gasto:7 };
+ 
+window.b2SyncSheets = async function() {
+  var apiKey = (document.getElementById('b2-gs-apikey').value||'').trim() || B2_DEFAULT_GKEY;
+  var sheetId = (document.getElementById('b2-gs-sheetid').value||'').trim() || B2_SHEET_ID;
+  var errEl  = document.getElementById('b2-gs-error');
+  var badge  = document.getElementById('b2-gs-status-badge');
+  var btn    = document.getElementById('b2-gs-connect-btn');
+  var refBtn = document.getElementById('b2-gs-refresh-btn');
+  var lastSync = document.getElementById('b2-gs-last-sync');
+ 
+  errEl.style.display = 'none';
+ 
+  if (!apiKey) {
+    errEl.textContent = 'Ingresá tu API key de Google para continuar.';
+    errEl.style.display = 'block';
+    return;
+  }
+ 
+  btn.innerHTML = '<span class="b2-spinner"></span>Sincronizando...';
+  btn.disabled = true;
+  badge.textContent = 'Conectando...';
+  badge.style.background = 'rgba(232,168,48,0.15)';
+  badge.style.color = '#e8a830';
+ 
+  /* Fetch entire sheet — rows 2 to 100 covers TOTAL + all daily rows */
+  var range = encodeURIComponent("'" + B2_SHEET_TAB + "'!A2:H100");
+  var url = 'https://sheets.googleapis.com/v4/spreadsheets/' + sheetId +
+    '/values/' + range + '?key=' + apiKey;
+ 
+  try {
+    var resp = await fetch(url);
+    if (!resp.ok) {
+      var errData = await resp.json();
+      var msg = (errData.error && errData.error.message) || ('HTTP ' + resp.status);
+      throw new Error(msg);
+    }
+    var data = await resp.json();
+    var rows = data.values || [];
+ 
+    if (!rows.length) throw new Error('La hoja no tiene datos o la pestaña "🚀 Captación" no existe.');
+ 
+    /* Row 0 of response = row 2 of sheet = TOTAL */
+    var totRow = rows[0];
+    function parseNum(v) { return parseFloat((v||'0').toString().replace(/[$,%\s]/g,'').replace(',','.')) || 0; }
+ 
+    var imp   = parseNum(totRow[B2_COL.imp]);
+    var cli   = parseNum(totRow[B2_COL.cli]);
+    var vis   = parseNum(totRow[B2_COL.vis]);
+    var lm    = parseNum(totRow[B2_COL.lm]);
+    var lgp   = parseNum(totRow[B2_COL.lgp]);
+    var wa    = parseNum(totRow[B2_COL.wa]);
+    var gasto = parseNum(totRow[B2_COL.gasto]);
+ 
+    /* Rows 1+ of response = rows 4+ of sheet = daily data */
+    /* Row index 1 = sheet row 3 (headers), so actual daily rows start at index 2 */
+    /* But our range starts at row 2, so index 0 = TOTAL, index 1 = header row 3,
+       index 2+ = daily rows from row 4 onward */
+    var dailyRows = rows.slice(2).filter(function(r){
+      return r[0] && parseNum(r[B2_COL.imp]) > 0;
+    });
+ 
+    /* Update state & render */
+    b2State = { imp:imp, cli:cli, vis:vis, lm:lm, lgp:lgp, wa:wa, gasto:gasto, ventas:0 };
+ 
+    var tVis  = vis  > 0 ? lgp  / vis  * 100 : 0;
+    var tLC   = lgp  > 0 ? 0    / lgp  * 100 : 0;
+    var cplGP = lgp  > 0 ? gasto / lgp  : 0;
+    var cpw   = wa   > 0 ? gasto / wa   : 0;
+ 
+    function fN(v){ return v > 0 ? v.toLocaleString('es-AR') : '—'; }
+    function fP(v){ return v > 0 ? v.toFixed(2) + '%' : '—'; }
+    function fD(v){ return v > 0 ? '$' + v.toFixed(2) : '—'; }
+ 
+    document.getElementById('b2-v-imp').textContent    = fN(imp);
+    document.getElementById('b2-v-vis').textContent    = fN(vis);
+    document.getElementById('b2-v-lgp').textContent    = fN(lgp);
+    document.getElementById('b2-v-wa').textContent     = fN(wa);
+    document.getElementById('b2-v-ventas').textContent = '—';
+    document.getElementById('b2-v-tvis').textContent   = fP(tVis);
+    document.getElementById('b2-v-tlc').textContent    = '—';
+    document.getElementById('b2-v-cplgp').textContent  = fD(cplGP);
+    document.getElementById('b2-v-cpw').textContent    = fD(cpw);
+ 
+    b2BuildFunnel(imp, cli, vis, lgp, wa, 0);
+    b2BuildInsight(imp, cli, vis, lgp, wa, 0, gasto, tVis, tLC, cplGP, cpw);
+    waitChart(function(){
+      b2BuildTrafficChart(imp, cli, vis);
+      b2BuildCostsChart(gasto, lgp, wa, 0);
+      if (dailyRows.length) b2BuildDailyTrendChart(dailyRows);
+    });
+ 
+    /* Update UI status */
+    badge.textContent = 'Conectado';
+    badge.style.background = 'rgba(29,184,122,0.15)';
+    badge.style.color = '#1db87a';
+    var now = new Date();
+    lastSync.textContent = 'Última sync: ' + now.toLocaleTimeString('es-AR', {hour:'2-digit',minute:'2-digit'});
+    lastSync.style.display = 'block';
+    refBtn.style.display = 'inline-flex';
+    btn.style.display = 'none';
+    errEl.style.display = 'none';
+    b2Toast('Datos sincronizados desde Google Sheets.');
+ 
+  } catch(e) {
+    badge.textContent = 'Error';
+    badge.style.background = 'rgba(232,85,85,0.15)';
+    badge.style.color = '#e85555';
+    var msg = e.message || 'Error desconocido';
+    if (msg.includes('API key')) msg = 'API key inválida o sin permisos para Google Sheets API.';
+    if (msg.includes('403'))     msg = 'Acceso denegado. Verificá que la hoja sea pública (cualquiera con el link puede ver) y que la Sheets API esté habilitada.';
+    if (msg.includes('404'))     msg = 'Hoja no encontrada. Verificá el Sheet ID.';
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg> Sincronizar datos';
+    btn.disabled = false;
+  }
+};
+ 
+/* ---- DAILY TREND CHART (populated from Sheets data) ---- */
+function b2BuildDailyTrendChart(dailyRows) {
+  /* Inject chart card if not already present */
+  var existingCard = document.getElementById('b2-daily-trend-card');
+  if (!existingCard) {
+    var chartSection = document.querySelector('.b2-chart-row');
+    if (!chartSection) return;
+    var card = document.createElement('div');
+    card.id = 'b2-daily-trend-card';
+    card.className = 'b2-ccard';
+    card.style.cssText = 'grid-column:1/-1;margin-top:0;';
+    card.innerHTML = '<div class="b2-ctitle">Tendencia diaria — Leads GP y WhatsApp</div><div style="position:relative;width:100%;height:220px;"><canvas id="b2-daily-chart"></canvas></div>';
+    chartSection.appendChild(card);
+  }
+ 
+  if (b2CI.daily) { b2CI.daily.destroy(); b2CI.daily = null; }
+  var labels = dailyRows.map(function(r){ return r[0] || ''; });
+  var lgpD   = dailyRows.map(function(r){ return parseFloat((r[B2_COL.lgp]||'0').replace(',','.')) || 0; });
+  var waD    = dailyRows.map(function(r){ return parseFloat((r[B2_COL.wa] ||'0').replace(',','.')) || 0; });
+ 
+  b2CI.daily = new Chart(document.getElementById('b2-daily-chart'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        { label:'Leads GP',  data:lgpD, borderColor:'#1db87a', backgroundColor:'rgba(29,184,122,.08)', fill:true, tension:.4, pointRadius:3, pointBackgroundColor:'#1db87a' },
+        { label:'WhatsApp',  data:waD,  borderColor:'#2ac4a0', backgroundColor:'transparent', tension:.4, pointRadius:3, pointBackgroundColor:'#2ac4a0', borderDash:[4,3] }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:true, position:'bottom', labels:{ font:{size:11}, color:tickC, boxWidth:10, padding:10 } } },
+      scales:{
+        x:{ grid:{color:gridC}, ticks:{color:tickC, font:{size:10}, maxRotation:30, autoSkip:true, maxTicksLimit:12} },
+        y:{ grid:{color:gridC}, ticks:{color:tickC, font:{size:11}}, min:0 }
+      }
+    }
+  });
+}
+ 
 /* ---- INIT ---- */
 b2RefreshLeadsTable();
 b2RefreshBuyersTable();
- 
-})();
-</script>
-      </section>
-
-      <!-- SECTION: WEBINAR PERFORMANCE -->
-      <section class="section" id="section-webinar">
-<style>
-/* ---- Bloque 3 — Webinar Performance ---- */
-.b3-section-header { margin-bottom: 24px; }
-.b3-section-title  { font-size: 24px; font-weight: 600; color: #f0f0f8; letter-spacing: -0.3px; margin-bottom: 4px; }
-.b3-section-desc   { font-size: 13px; color: #9090b0; }
- 
-/* Toast */
-.b3-toast { background:#085041; color:#9FE1CB; font-size:13px; padding:7px 14px; border-radius:8px; margin-bottom:1rem; display:none; }
- 
-/* Generic card */
-.b3-card {
-  background: #16161f;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 16px;
-}
-.b3-card-hdr {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  flex-wrap: wrap; gap: 8px;
-}
-.b3-card-title {
-  font-size: 11px; font-family: 'DM Mono', monospace;
-  font-weight: 500; color: #9090b0;
-  letter-spacing: 0.1em; text-transform: uppercase;
-}
- 
-/* Metric cards */
-.b3-metrics { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; margin-bottom: 20px; }
-.b3-mcard { background:#16161f; border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:16px 18px; transition:background 120ms ease; }
-.b3-mcard:hover { background:#1c1c28; }
-.b3-mlabel { display:flex; align-items:center; gap:6px; font-size:10px; font-family:'DM Mono',monospace; font-weight:500; color:#55556a; letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px; }
-.b3-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-.b3-dot.b { background:#3d9de8; box-shadow:0 0 6px #3d9de8; }
-.b3-dot.g { background:#1db87a; box-shadow:0 0 6px #1db87a; }
-.b3-dot.a { background:#e8a830; box-shadow:0 0 6px #e8a830; }
-.b3-dot.p { background:#7c6fe0; box-shadow:0 0 6px #7c6fe0; }
-.b3-mval { font-family:'DM Mono',monospace; font-size:26px; font-weight:500; letter-spacing:-0.5px; line-height:1; }
-.b3-mval.b { color:#3d9de8; } .b3-mval.g { color:#1db87a; }
-.b3-mval.a { color:#e8a830; } .b3-mval.p { color:#7c6fe0; }
-.b3-msub   { font-size:11px; color:#55556a; margin-top:3px; }
- 
-/* Buttons */
-.b3-btn-pri {
-  background:#7c6fe0; color:#fff; border:none;
-  padding:6px 14px; border-radius:6px;
-  font-size:12px; font-family:'DM Sans',sans-serif; font-weight:500;
-  cursor:pointer; transition:background 120ms ease;
-}
-.b3-btn-pri:hover { background:#6a5ed0; }
-.b3-btn-pri.on { background:#7c6fe0; }
-.b3-btn-sec {
-  background:#12121a; color:#f0f0f8;
-  border:1px solid rgba(255,255,255,0.10);
-  padding:6px 14px; border-radius:6px;
-  font-size:12px; font-family:'DM Sans',sans-serif;
-  cursor:pointer; transition:all 120ms ease;
-}
-.b3-btn-sec:hover { background:rgba(255,255,255,0.05); }
-.b3-btn-sec.active-cmp { background:#7c6fe0; color:#fff; border-color:#7c6fe0; }
- 
-/* Seg buttons */
-.b3-segs { display:flex; }
-.b3-seg {
-  padding:5px 12px; border:1px solid rgba(255,255,255,0.10);
-  background:#12121a; color:#9090b0;
-  font-size:12px; font-family:'DM Sans',sans-serif;
-  cursor:pointer; border-right-width:0; transition:all 120ms ease;
-}
-.b3-seg:first-child { border-radius:6px 0 0 6px; }
-.b3-seg:last-child  { border-radius:0 6px 6px 0; border-right-width:1px; }
-.b3-seg.on { background:#7c6fe0; color:#fff; border-color:#7c6fe0; }
-.b3-seg:hover:not(.on) { background:rgba(255,255,255,0.05); color:#f0f0f8; }
- 
-/* Chart toggles */
-.b3-chart-toggles { display:flex; flex-wrap:wrap; gap:6px; margin-top:1rem; align-items:center; }
-.b3-chart-toggles span { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:#55556a; margin-right:4px; }
-.b3-tog {
-  font-size:12px; padding:4px 10px; border-radius:6px;
-  border:1px solid rgba(255,255,255,0.10);
-  background:#12121a; color:#9090b0; cursor:pointer; transition:all 120ms ease;
-}
-.b3-tog.on { background:#7c6fe0; color:#fff; border-color:#7c6fe0; }
- 
-/* Chart area */
-.b3-chart-box { margin-top:1rem; position:relative; width:100%; height:220px; display:none; }
- 
-/* Compare panel */
-.b3-cmp-panel {
-  background:#12121a; border:1px solid rgba(255,255,255,0.10);
-  border-radius:12px; padding:1.25rem; margin-top:1rem; display:none;
-}
-.b3-cmp-title { font-size:13px; font-weight:500; color:#f0f0f8; margin-bottom:.5rem; }
-.b3-cmp-hint  { font-size:12px; color:#9090b0; }
- 
-/* Table */
-.b3-twrap { overflow-x:auto; }
-.b3-table { width:100%; border-collapse:collapse; font-size:12px; }
-.b3-table thead th {
-  padding:10px 14px; text-align:left;
-  font-size:9px; font-family:'DM Mono',monospace; font-weight:500;
-  color:#55556a; letter-spacing:.1em; text-transform:uppercase;
-  border-bottom:1px solid rgba(255,255,255,0.06); white-space:nowrap;
-}
-.b3-table tbody td {
-  padding:11px 14px;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  color:#9090b0; font-family:'DM Mono',monospace; font-size:12px; white-space:nowrap;
-}
-.b3-table tbody tr:last-child td { border-bottom:none; }
-.b3-table tbody tr:hover td { background:rgba(255,255,255,0.025); color:#f0f0f8; }
-.b3-cb { width:32px; text-align:center; }
-.b3-table input[type=checkbox] { width:14px; height:14px; accent-color:#7c6fe0; cursor:pointer; }
-.b3-tname { color:#f0f0f8 !important; font-family:'DM Sans',sans-serif !important; font-size:13px !important; font-weight:500 !important; }
-.b3-tg { color:#1db87a !important; font-weight:500 !important; }
-.b3-ta { color:#e8a830 !important; font-weight:500 !important; }
-.b3-tp { color:#7c6fe0 !important; font-weight:500 !important; }
-.b3-tb { color:#3d9de8 !important; font-weight:500 !important; }
-.b3-selected-row { background:rgba(124,111,224,0.07) !important; }
- 
-/* Upload zone */
-.b3-upload-zone {
-  border:1.5px dashed rgba(255,255,255,0.12);
-  border-radius:12px; padding:1.5rem; text-align:center;
-  cursor:pointer; margin-bottom:1rem; transition:background 120ms ease;
-}
-.b3-upload-zone:hover { background:rgba(255,255,255,0.03); }
-.b3-upload-zone input { display:none; }
-.b3-uz-text { font-size:14px; font-weight:500; color:#f0f0f8; margin-bottom:3px; }
-.b3-uz-sub  { font-size:12px; color:#9090b0; }
-.b3-ai-badge { display:inline-block; background:rgba(124,111,224,0.15); color:#7c6fe0; font-size:11px; font-weight:500; padding:2px 8px; border-radius:20px; margin-left:6px; }
- 
-/* Processing */
-.b3-processing { display:none; align-items:center; gap:10px; padding:.75rem 1rem; background:rgba(255,255,255,0.04); border-radius:8px; font-size:13px; color:#9090b0; margin-top:.75rem; }
-.b3-spinner { width:14px; height:14px; border:2px solid rgba(255,255,255,0.1); border-top-color:#7c6fe0; border-radius:50%; animation:b3spin .8s linear infinite; flex-shrink:0; }
-@keyframes b3spin { to { transform:rotate(360deg); } }
- 
-/* PDF meta */
-.b3-pdf-meta { display:none; background:#12121a; border:1px solid rgba(255,255,255,0.10); border-radius:12px; padding:1rem 1.25rem; margin-bottom:1rem; margin-top:.75rem; }
-.b3-pdf-row { display:flex; flex-wrap:wrap; gap:10px; }
-.b3-pdf-item { flex:1; min-width:110px; }
-.b3-pdf-item label { font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:#9090b0; display:block; margin-bottom:3px; font-family:'DM Mono',monospace; }
-.b3-pdf-item input { font-size:13px; padding:6px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.10); background:#0a0a0f; color:#f0f0f8; width:100%; font-family:'DM Sans',sans-serif; }
- 
-/* Top 3 podium */
-.b3-top3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:1.25rem; }
-.b3-pod { background:#12121a; border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:1rem; }
-.b3-pod.gold { border:1.5px solid rgba(232,168,48,0.4); }
-.b3-pod-rank { font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; }
-.b3-pr-gold { color:#e8a830; } .b3-pr-silver { color:#55556a; } .b3-pr-bronze { color:#c8825a; }
-.b3-pod-name { font-size:13px; font-weight:500; color:#f0f0f8; margin-bottom:8px; }
-.b3-pod-stat { font-size:12px; color:#9090b0; margin-bottom:3px; }
-.b3-pod-stat strong { color:#f0f0f8; font-weight:500; }
- 
-/* Ret bar */
-.b3-rbar-row { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
-.b3-rbar-lbl { font-size:11px; color:#9090b0; width:56px; flex-shrink:0; }
-.b3-rbar-track { flex:1; height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; }
-.b3-rbar-fill  { height:100%; border-radius:3px; }
-.b3-rbar-pct   { font-size:11px; font-weight:500; width:34px; text-align:right; flex-shrink:0; }
- 
-/* Trial card */
-.b3-trial-card { background:#12121a; border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:1rem 1.25rem; margin-bottom:10px; }
-.b3-trial-card.tw { border:1.5px solid rgba(29,184,122,0.35); }
-.b3-trial-card.ts { border:1.5px solid rgba(124,111,224,0.35); }
-.b3-tc-hdr { display:flex; align-items:center; gap:8px; margin-bottom:.75rem; flex-wrap:wrap; }
-.b3-tc-name { font-size:14px; font-weight:500; color:#f0f0f8; flex:1; }
-.b3-score-badge { font-size:13px; font-weight:500; padding:3px 12px; border-radius:20px; }
-.b3-sh { background:rgba(29,184,122,0.15); color:#1db87a; }
-.b3-sm { background:rgba(232,168,48,0.15); color:#e8a830; }
-.b3-sl { background:rgba(255,255,255,0.06); color:#9090b0; }
-.b3-v-scale { background:rgba(124,111,224,0.15); color:#7c6fe0; font-size:11px; font-weight:500; padding:2px 10px; border-radius:20px; }
-.b3-v-test  { background:rgba(232,168,48,0.15); color:#e8a830; font-size:11px; font-weight:500; padding:2px 10px; border-radius:20px; }
-.b3-v-skip  { background:rgba(255,255,255,0.05); color:#55556a; font-size:11px; font-weight:500; padding:2px 10px; border-radius:20px; }
-.b3-t-metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-bottom:.75rem; }
-.b3-tmc { background:#16161f; border-radius:6px; padding:.6rem .75rem; }
-.b3-tmc .l { font-size:10px; color:#55556a; text-transform:uppercase; letter-spacing:.04em; margin-bottom:2px; }
-.b3-tmc .v { font-size:15px; font-weight:500; color:#f0f0f8; }
-.b3-reason { border-left:3px solid; border-radius:0 6px 6px 0; padding:.6rem .9rem; margin-top:.75rem; font-size:13px; color:#f0f0f8; line-height:1.6; }
-.b3-r-green { border-color:#1db87a; background:rgba(29,184,122,0.06); }
-.b3-r-amber { border-color:#e8a830; background:rgba(232,168,48,0.06); }
-.b3-r-gray  { border-color:rgba(255,255,255,0.1); background:rgba(255,255,255,0.03); }
-.b3-del-btn { font-size:11px; padding:2px 7px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#55556a; cursor:pointer; }
-.b3-del-btn:hover { color:#e85555; border-color:#e85555; }
- 
-/* AI panel */
-.b3-ai-panel { background:#12121a; border:1px solid rgba(255,255,255,0.10); border-radius:12px; padding:1.25rem; margin-top:1rem; display:none; }
-.b3-ai-lbl   { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:#7c6fe0; font-weight:500; margin-bottom:.5rem; font-family:'DM Mono',monospace; }
-.b3-ai-txt   { font-size:13px; color:#f0f0f8; line-height:1.7; white-space:pre-wrap; }
- 
-/* API key input */
-.b3-apikey { font-size:13px; padding:7px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.10); background:#12121a; color:#f0f0f8; width:100%; max-width:380px; margin-bottom:.75rem; font-family:'DM Mono',monospace; }
- 
-/* Legend row */
-.b3-legend { display:flex; gap:12px; margin-bottom:8px; font-size:11px; color:#9090b0; flex-wrap:wrap; align-items:center; }
-.b3-lsq { width:10px; height:10px; border-radius:2px; display:inline-block; margin-right:3px; }
-.b3-empty-state { text-align:center; padding:2rem; color:#55556a; font-size:13px; }
-</style>
- 
-<!-- ===== SECTION HEADER ===== -->
-<div class="b3-section-header">
-  <h1 class="b3-section-title">Webinar Performance</h1>
-  <p class="b3-section-desc">Live Funnels · Comparativa de lanzamientos · Tabla de clases</p>
-</div>
- 
-<div id="b3-toast" class="b3-toast"></div>
- 
-<!-- ===== METRICS ===== -->
-<div class="b3-metrics">
-  <div class="b3-mcard"><div class="b3-mlabel"><span class="b3-dot b"></span>Pico máximo</div><div class="b3-mval b">713</div></div>
-  <div class="b3-mcard"><div class="b3-mlabel"><span class="b3-dot b"></span>Usuarios únicos</div><div class="b3-mval b">1.471</div></div>
-  <div class="b3-mcard"><div class="b3-mlabel"><span class="b3-dot g"></span>% Asistencia</div><div class="b3-mval g">51,6%</div><div class="b3-msub">Asist / Leads GP</div></div>
-  <div class="b3-mcard"><div class="b3-mlabel"><span class="b3-dot a"></span>% Ventas / Leads</div><div class="b3-mval a">1,1%</div></div>
-</div>
- 
-<!-- ===== TABLA LIVE FUNNELS ===== -->
-<div class="b3-card">
-  <div class="b3-card-hdr">
-    <span class="b3-card-title">Tabla comparativa de Live Funnels</span>
-    <button class="b3-btn-sec" id="b3-lf-cmp-btn" onclick="b3ToggleLfCmp()">Comparar seleccionados</button>
-  </div>
-  <div class="b3-twrap">
-    <table class="b3-table">
-      <thead><tr>
-        <th class="b3-cb"></th>
-        <th>Clase / LF</th><th>Leads GP</th><th>Ventas</th><th>Inversión</th>
-        <th>Cash collected</th><th>Facturación</th><th>CPL</th><th>CAC</th>
-        <th>CPA</th><th>ROAS</th><th>% Conv.</th><th>Asistencia</th>
-      </tr></thead>
-      <tbody id="b3-lf-tbody"></tbody>
-    </table>
-  </div>
- 
-  <!-- Chart toggles -->
-  <div class="b3-chart-toggles" style="padding:0 20px 16px;">
-    <span>Mostrar gráficas:</span>
-    <button class="b3-tog" onclick="b3ToggleChart('CPL',this)">CPL</button>
-    <button class="b3-tog" onclick="b3ToggleChart('ROAS',this)">ROAS</button>
-    <button class="b3-tog" onclick="b3ToggleChart('CAC',this)">CAC</button>
-    <button class="b3-tog" onclick="b3ToggleChart('conv',this)">% Conversión</button>
-    <button class="b3-tog" onclick="b3ToggleChart('leads',this)">Total Leads</button>
-  </div>
-  <div class="b3-chart-box" id="b3-lf-chart-box" style="padding:0 20px 20px;">
-    <canvas id="b3-lf-chart"></canvas>
-  </div>
- 
-  <!-- Compare panel LF -->
-  <div class="b3-cmp-panel" id="b3-lf-cmp-panel" style="margin:0 16px 16px;">
-    <div class="b3-cmp-title" id="b3-lf-cmp-title">Comparando LFs seleccionados</div>
-    <div class="b3-cmp-hint" id="b3-lf-cmp-hint">Seleccioná 2 o más filas para comparar.</div>
-    <div style="position:relative;width:100%;height:260px;margin-top:.75rem;"><canvas id="b3-lf-cmp-chart"></canvas></div>
-  </div>
-</div>
- 
-<!-- ===== WEBINAR LANZAMIENTO ===== -->
-<div class="b3-card">
-  <div class="b3-card-hdr">
-    <span class="b3-card-title">Webinar de lanzamiento — Detalle por clase <span class="b3-ai-badge">IA</span></span>
-    <button class="b3-btn-sec" onclick="b3AddClaseRow()">+ Agregar clase</button>
-  </div>
-  <div style="padding:16px 20px;">
-    <p style="font-size:12px;color:#9090b0;margin-bottom:1rem;">Al subir un .pdf se autocompletan título, tema y pitch con IA.</p>
-    <label class="b3-upload-zone">
-      <input type="file" id="b3-pdf-input" accept=".pdf,.pptx" onchange="b3HandleUpload(event)">
-      <div style="font-size:22px;color:#55556a;margin-bottom:.5rem;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      </div>
-      <div class="b3-uz-text">Subir presentación (.pdf / .pptx)</div>
-      <div class="b3-uz-sub">Se extraen título, tema y pitch automáticamente</div>
-    </label>
-    <div class="b3-processing" id="b3-processing"><div class="b3-spinner"></div><span id="b3-proc-txt">Extrayendo datos con IA...</span></div>
-    <div class="b3-pdf-meta" id="b3-pdf-meta">
-      <div style="font-size:12px;color:#9090b0;margin-bottom:.75rem;">Datos extraídos — podés editarlos antes de guardar</div>
-      <div class="b3-pdf-row">
-        <div class="b3-pdf-item"><label>Clase #</label><input id="b3-meta-num" type="text"></div>
-        <div class="b3-pdf-item" style="flex:3"><label>Título</label><input id="b3-meta-titulo" type="text"></div>
-        <div class="b3-pdf-item" style="flex:2"><label>Tema</label><input id="b3-meta-tema" type="text"></div>
-        <div class="b3-pdf-item" style="flex:3"><label>Pitch</label><input id="b3-meta-pitch" type="text"></div>
-        <div class="b3-pdf-item"><label>Fecha</label><input id="b3-meta-fecha" type="date"></div>
-      </div>
-      <button class="b3-btn-pri" style="margin-top:.75rem;" onclick="b3SaveClaseFromPdf()">Guardar clase</button>
-    </div>
-  </div>
- 
-  <!-- Tabla clases -->
-  <div style="padding:0 20px 16px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:8px;">
-      <span style="font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#9090b0;text-transform:uppercase;letter-spacing:.06em;">Tabla comparativa de clases</span>
-      <button class="b3-btn-sec" id="b3-cl-cmp-btn" onclick="b3ToggleClCmp()">Comparar seleccionados</button>
-    </div>
-    <div class="b3-twrap">
-      <table class="b3-table">
-        <thead><tr>
-          <th class="b3-cb"></th>
-          <th>Clase</th><th>Asistencia</th><th>Pico máx.</th><th>Dur. pre-pitch</th>
-          <th>Us. transición</th><th>% pico→trans</th><th>Us. pitch</th><th>% trans.→pitch</th>
-          <th>Dur. pitch→CTA</th><th>Us. CTA</th><th>% pitch→CTA</th><th>Chat</th>
-        </tr></thead>
-        <tbody id="b3-clases-tbody"></tbody>
-      </table>
-    </div>
-    <div class="b3-cmp-panel" id="b3-cl-cmp-panel" style="margin-top:1rem;">
-      <div class="b3-cmp-title" id="b3-cl-cmp-title">Comparando clases seleccionadas</div>
-      <div class="b3-cmp-hint" id="b3-cl-cmp-hint">Seleccioná 2 o más filas para comparar.</div>
-      <div style="position:relative;width:100%;height:260px;margin-top:.75rem;"><canvas id="b3-cl-cmp-chart"></canvas></div>
-    </div>
-  </div>
-</div>
- 
-<!-- ===== TRIAL REELS ===== -->
-<div class="b3-card">
-  <div class="b3-card-hdr">
-    <span class="b3-card-title">Trial Reels — Scoring de retención</span>
-    <span id="b3-trial-counter" style="font-size:11px;color:#55556a;font-family:'DM Mono',monospace;">0 / 5 trials</span>
-  </div>
-  <div style="padding:16px 20px;">
-    <!-- Trial form -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-      <div style="display:flex;flex-direction:column;gap:4px;grid-column:1/-1;">
-        <label style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;">Nombre del contenido</label>
-        <input type="text" id="b3-t-name" placeholder="Ej: Hook con pregunta — precio anunciado" style="font-size:13px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:#12121a;color:#f0f0f8;font-family:'DM Sans',sans-serif;">
-      </div>
-      <div style="display:flex;flex-direction:column;gap:4px;grid-column:1/-1;">
-        <label style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;">Copy del video</label>
-        <textarea id="b3-t-copy" placeholder="¿Qué trata? ¿Cuál es el hook?" style="font-size:13px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:#12121a;color:#f0f0f8;font-family:'DM Sans',sans-serif;min-height:52px;resize:vertical;"></textarea>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <label style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;">Visualizaciones</label>
-        <input type="number" id="b3-t-views" placeholder="0" min="0" style="font-size:13px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:#12121a;color:#f0f0f8;">
-      </div>
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <label style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;">Duración (seg)</label>
-        <input type="number" id="b3-t-dur" placeholder="30" min="1" style="font-size:13px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:#12121a;color:#f0f0f8;">
-      </div>
-    </div>
- 
-    <!-- Retención -->
-    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;margin-bottom:8px;">Retención</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;">
-      <div style="background:#12121a;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.75rem;">
-        <div style="font-size:11px;color:#9090b0;text-transform:uppercase;letter-spacing:.04em;font-family:'DM Mono',monospace;margin-bottom:3px;">% al segundo 1</div>
-        <div style="font-size:10px;color:#55556a;margin-bottom:6px;">¿Cuántos siguen al inicio?</div>
-        <input type="number" id="b3-t-r1" placeholder="85" min="0" max="100" style="font-size:18px;font-weight:500;width:100%;border:none;background:transparent;color:#f0f0f8;outline:none;font-family:'DM Mono',monospace;">
-      </div>
-      <div style="background:#12121a;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.75rem;">
-        <div style="font-size:11px;color:#9090b0;text-transform:uppercase;letter-spacing:.04em;font-family:'DM Mono',monospace;margin-bottom:3px;">% a la mitad</div>
-        <div style="font-size:10px;color:#55556a;margin-bottom:6px;">¿Cuántos llegan al medio?</div>
-        <input type="number" id="b3-t-r2" placeholder="50" min="0" max="100" style="font-size:18px;font-weight:500;width:100%;border:none;background:transparent;color:#f0f0f8;outline:none;font-family:'DM Mono',monospace;">
-      </div>
-      <div style="background:#12121a;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.75rem;">
-        <div style="font-size:11px;color:#9090b0;text-transform:uppercase;letter-spacing:.04em;font-family:'DM Mono',monospace;margin-bottom:3px;">% al final</div>
-        <div style="font-size:10px;color:#55556a;margin-bottom:6px;">¿Cuántos ven completo?</div>
-        <input type="number" id="b3-t-r3" placeholder="25" min="0" max="100" style="font-size:18px;font-weight:500;width:100%;border:none;background:transparent;color:#f0f0f8;outline:none;font-family:'DM Mono',monospace;">
-      </div>
-    </div>
- 
-    <!-- Interacciones -->
-    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;margin-bottom:8px;">Interacciones</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
-      <div style="background:#12121a;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem .75rem;"><label style="font-size:11px;color:#9090b0;text-transform:uppercase;letter-spacing:.04em;font-family:'DM Mono',monospace;display:block;margin-bottom:3px;">Likes</label><input type="number" id="b3-t-likes" placeholder="0" min="0" style="font-size:15px;font-weight:500;width:100%;border:none;background:transparent;color:#f0f0f8;outline:none;font-family:'DM Mono',monospace;"></div>
-      <div style="background:#12121a;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem .75rem;"><label style="font-size:11px;color:#9090b0;text-transform:uppercase;letter-spacing:.04em;font-family:'DM Mono',monospace;display:block;margin-bottom:3px;">Comentarios</label><input type="number" id="b3-t-com" placeholder="0" min="0" style="font-size:15px;font-weight:500;width:100%;border:none;background:transparent;color:#f0f0f8;outline:none;font-family:'DM Mono',monospace;"></div>
-      <div style="background:#12121a;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem .75rem;"><label style="font-size:11px;color:#9090b0;text-transform:uppercase;letter-spacing:.04em;font-family:'DM Mono',monospace;display:block;margin-bottom:3px;">Guardados</label><input type="number" id="b3-t-guard" placeholder="0" min="0" style="font-size:15px;font-weight:500;width:100%;border:none;background:transparent;color:#f0f0f8;outline:none;font-family:'DM Mono',monospace;"></div>
-      <div style="background:#12121a;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem .75rem;"><label style="font-size:11px;color:#9090b0;text-transform:uppercase;letter-spacing:.04em;font-family:'DM Mono',monospace;display:block;margin-bottom:3px;">Compartidos</label><input type="number" id="b3-t-comp" placeholder="0" min="0" style="font-size:15px;font-weight:500;width:100%;border:none;background:transparent;color:#f0f0f8;outline:none;font-family:'DM Mono',monospace;"></div>
-    </div>
- 
-    <div style="display:flex;gap:10px;">
-      <button class="b3-btn-pri" onclick="b3SaveTrial()">Guardar trial</button>
-      <button class="b3-btn-sec" onclick="b3ClearTrialForm()">Limpiar</button>
-    </div>
-  </div>
- 
-  <!-- Trial results -->
-  <div id="b3-trial-results" style="display:none;">
-    <div style="padding:0 20px 16px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;">
-        <span style="font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#9090b0;text-transform:uppercase;letter-spacing:.06em;">Resultados del testeo</span>
-        <button class="b3-btn-sec" onclick="b3ClearTrials()">Limpiar todo</button>
-      </div>
-      <div id="b3-trials-container"></div>
-    </div>
- 
-    <!-- Podium -->
-    <div style="padding:0 20px 16px;">
-      <div style="font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#9090b0;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem;">Top contenidos a escalar</div>
-      <div class="b3-top3" id="b3-top-podium"></div>
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#9090b0;font-family:'DM Mono',monospace;font-weight:500;margin-bottom:.75rem;">Comparativa de retención</div>
-      <div style="position:relative;width:100%;height:220px;"><canvas id="b3-ret-chart"></canvas></div>
-    </div>
- 
-    <!-- AI Trial -->
-    <div style="padding:0 20px 20px;">
-      <div style="font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#9090b0;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">Análisis IA — Por qué escalar cada uno</div>
-      <input type="password" id="b3-api-key-trial" class="b3-apikey" placeholder="sk-ant-... (API key de Anthropic)">
-      <button class="b3-btn-pri" id="b3-ai-trial-btn" onclick="b3AnalyzeTrials()">Analizar con IA por qué escalar cada uno</button>
-      <div class="b3-ai-panel" id="b3-ai-trial-panel"><div class="b3-ai-lbl">Análisis de Claude</div><div class="b3-ai-txt" id="b3-ai-trial-txt"></div></div>
-    </div>
-  </div>
-</div>
- 
-<script>
-(function() {
-'use strict';
- 
-/* ---- DATA ---- */
-var B3_LF = [
-  {id:'LF#1',leads:1840,ventas:6,inv:892.10,cash:2100,fact:4200,cpl:.48,cac:148.68,cpa:148.68,roas:2.35,conv:.33,asist:1020},
-  {id:'LF#2',leads:2221,ventas:8,inv:1021.94,cash:2800,fact:5000,cpl:.46,cac:127.74,cpa:178.32,roas:2.74,conv:.36,asist:1253},
-  {id:'LF#3',leads:1950,ventas:5,inv:980.00,cash:1750,fact:3500,cpl:.50,cac:196.00,cpa:196.00,roas:1.79,conv:.26,asist:990},
-  {id:'LF#4',leads:2760,ventas:16,inv:1314.55,cash:3285.46,fact:11200,cpl:.38,cac:82.16,cpa:87.60,roas:4.10,conv:.58,asist:1471}
-];
- 
-var B3_CLASES_DEFAULT = [
-  {cl:'CL1',asist:1020,pico:713,prePitch:'38min',trans:680,pctPicoTrans:'95,4%',pitch:520,pctTransPitch:'76,5%',durPitchCta:'22min',cta:410,pctPitchCta:'78,8%',chat:312},
-  {cl:'CL2',asist:1253,pico:890,prePitch:'41min',trans:820,pctPicoTrans:'92,1%',pitch:640,pctTransPitch:'78,0%',durPitchCta:'19min',cta:510,pctPitchCta:'79,7%',chat:428},
-  {cl:'CL3',asist:990, pico:640,prePitch:'35min',trans:590,pctPicoTrans:'92,2%',pitch:450,pctTransPitch:'76,3%',durPitchCta:'25min',cta:340,pctPitchCta:'75,6%',chat:285}
-];
- 
-var b3Trials       = [];
-var b3ClasesData   = B3_CLASES_DEFAULT.slice();
-var b3ClaseCount   = B3_CLASES_DEFAULT.length;
-var b3LfSelected   = new Set();
-var b3ClSelected   = new Set();
-var b3ActiveMetric = null;
- 
-var b3Charts = {};   /* key → Chart instance */
- 
-/* ---- UTILS ---- */
-function b3Toast(msg) {
-  var t = document.getElementById('b3-toast');
-  t.textContent = msg; t.style.display = 'block';
-  setTimeout(function(){ t.style.display = 'none'; }, 2200);
-}
- 
-function b3ColorRow(lf) {
-  return lf.roas >= 4 ? '#1db87a' : lf.roas >= 2.5 ? '#e8a830' : '#e85555';
-}
- 
-function b3RcCol(p) {
-  return p >= 70 ? '#1db87a' : p >= 40 ? '#e8a830' : '#e85555';
-}
- 
-var b3GridC  = 'rgba(255,255,255,0.06)';
-var b3TickC  = '#55556a';
-var b3Colors = ['#7c6fe0','#1db87a','#e85555','#e8a830','#3d9de8'];
- 
-/* ---- WAIT FOR CHARTJS ---- */
-function b3WaitChart(cb) {
-  if (window.Chart) { cb(); }
-  else {
-    var s = document.createElement('script');
-    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';
-    s.onload = cb;
-    document.head.appendChild(s);
-  }
-}
- 
-/* ---- BUILD LF TABLE ---- */
-function b3BuildLfTable() {
-  var tb = document.getElementById('b3-lf-tbody');
-  if (!tb) return;
-  tb.innerHTML = B3_LF.map(function(lf, i) {
-    var c = b3ColorRow(lf);
-    return '<tr id="b3-lf-row-' + i + '">' +
-      '<td class="b3-cb"><input type="checkbox" onchange="b3LfToggle(' + i + ',this)"></td>' +
-      '<td class="b3-tname">' + lf.id + '</td>' +
-      '<td class="b3-tp">' + lf.leads.toLocaleString('es-AR') + '</td>' +
-      '<td class="b3-tg">' + lf.ventas + '</td>' +
-      '<td style="color:' + c + ';font-weight:500">$' + lf.inv.toFixed(2).replace('.',',') + '</td>' +
-      '<td style="color:' + c + ';font-weight:500">$' + lf.cash.toLocaleString('es-AR') + ',00</td>' +
-      '<td style="color:' + c + ';font-weight:500">$' + lf.fact.toLocaleString('es-AR') + ',00</td>' +
-      '<td>$' + lf.cpl.toFixed(2).replace('.',',') + '</td>' +
-      '<td>$' + lf.cac.toFixed(2).replace('.',',') + '</td>' +
-      '<td>$' + lf.cpa.toFixed(2).replace('.',',') + '</td>' +
-      '<td style="color:' + c + ';font-weight:500">' + lf.roas.toFixed(2).replace('.',',') + 'x</td>' +
-      '<td style="color:' + (lf.conv>=.5?'#1db87a':'#9090b0') + ';font-weight:500">' + lf.conv.toFixed(2).replace('.',',') + '%</td>' +
-      '<td>' + lf.asist.toLocaleString('es-AR') + '</td>' +
-    '</tr>';
-  }).join('');
-}
- 
-/* ---- BUILD CLASES TABLE ---- */
-function b3BuildClasesTable() {
-  b3ClasesData.forEach(function(cl, i) { b3AddClaseRowEl(cl, i); });
-}
- 
-function b3AddClaseRowEl(cl, i) {
-  var tb = document.getElementById('b3-clases-tbody');
-  if (!tb) return;
-  var tr = document.createElement('tr');
-  tr.id = 'b3-cl-row-' + i;
-  tr.innerHTML =
-    '<td class="b3-cb"><input type="checkbox" onchange="b3ClToggle(' + i + ',this)"></td>' +
-    '<td class="b3-tname">' + cl.cl + '</td>' +
-    '<td class="b3-tp">' + cl.asist.toLocaleString('es-AR') + '</td>' +
-    '<td class="b3-tb">' + cl.pico.toLocaleString('es-AR') + '</td>' +
-    '<td>' + cl.prePitch + '</td>' +
-    '<td>' + cl.trans.toLocaleString('es-AR') + '</td>' +
-    '<td class="b3-ta">' + cl.pctPicoTrans + '</td>' +
-    '<td>' + cl.pitch.toLocaleString('es-AR') + '</td>' +
-    '<td class="b3-ta">' + cl.pctTransPitch + '</td>' +
-    '<td>' + cl.durPitchCta + '</td>' +
-    '<td>' + cl.cta.toLocaleString('es-AR') + '</td>' +
-    '<td class="b3-tg">' + cl.pctPitchCta + '</td>' +
-    '<td>' + cl.chat.toLocaleString('es-AR') + '</td>';
-  tb.appendChild(tr);
-}
- 
-window.b3AddClaseRow = function() {
-  var i = b3ClaseCount++;
-  var cl = {cl:'CL'+(i+1),asist:0,pico:0,prePitch:'—',trans:0,pctPicoTrans:'—',pitch:0,pctTransPitch:'—',durPitchCta:'—',cta:0,pctPitchCta:'—',chat:0};
-  b3ClasesData.push(cl);
-  b3AddClaseRowEl(cl, i);
-};
- 
-/* ---- LF CHART TOGGLE ---- */
-var b3MetricCfg = {
-  CPL:  { get: function(d){return d.cpl;},  color:'#7c6fe0', label:'CPL ($)',      fmt:function(v){return '$'+v.toFixed(2);} },
-  ROAS: { get: function(d){return d.roas;}, color:'#1db87a', label:'ROAS (x)',     fmt:function(v){return v.toFixed(2)+'x';} },
-  CAC:  { get: function(d){return d.cac;},  color:'#e85555', label:'CAC ($)',      fmt:function(v){return '$'+v.toFixed(0);} },
-  conv: { get: function(d){return d.conv;}, color:'#e8a830', label:'% Conv.',      fmt:function(v){return v.toFixed(2)+'%';} },
-  leads:{ get: function(d){return d.leads;},color:'#3d9de8', label:'Total Leads',  fmt:function(v){return v.toLocaleString();} }
-};
- 
-window.b3ToggleChart = function(metric, el) {
-  var box = document.getElementById('b3-lf-chart-box');
-  var isOpen = b3ActiveMetric === metric;
-  document.querySelectorAll('.b3-tog').forEach(function(b){ b.classList.remove('on'); });
-  if (isOpen) {
-    b3ActiveMetric = null;
-    box.style.display = 'none';
-    if (b3Charts['lf']) { b3Charts['lf'].destroy(); b3Charts['lf'] = null; }
-    return;
-  }
-  b3ActiveMetric = metric;
-  el.classList.add('on');
-  box.style.display = 'block';
-  if (b3Charts['lf']) { b3Charts['lf'].destroy(); b3Charts['lf'] = null; }
-  b3WaitChart(function() {
-    var m = b3MetricCfg[metric];
-    b3Charts['lf'] = new Chart(document.getElementById('b3-lf-chart'), {
-      type: 'bar',
-      data: {
-        labels: B3_LF.map(function(d){ return d.id; }),
-        datasets: [{ data: B3_LF.map(m.get), backgroundColor: m.color, borderRadius: 4, label: m.label }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend:{display:false}, tooltip:{callbacks:{label:function(ctx){return m.fmt(ctx.parsed.y);}}} },
-        scales: {
-          x: { grid:{color:b3GridC}, ticks:{color:b3TickC,font:{size:12}} },
-          y: { grid:{color:b3GridC}, ticks:{color:b3TickC,font:{size:11},callback:m.fmt} }
-        }
-      }
-    });
-  });
-};
- 
-/* ---- LF COMPARE ---- */
-window.b3LfToggle = function(i, cb) {
-  if (cb.checked) b3LfSelected.add(i); else b3LfSelected.delete(i);
-  var row = document.getElementById('b3-lf-row-' + i);
-  if (row) row.classList.toggle('b3-selected-row', cb.checked);
-  if (document.getElementById('b3-lf-cmp-panel').style.display === 'block') b3RenderLfCmp();
-};
- 
-window.b3ToggleLfCmp = function() {
-  var panel = document.getElementById('b3-lf-cmp-panel');
-  var btn   = document.getElementById('b3-lf-cmp-btn');
-  var open  = panel.style.display !== 'block';
-  panel.style.display = open ? 'block' : 'none';
-  btn.classList.toggle('active-cmp', open);
-  if (open) b3RenderLfCmp();
-  else if (b3Charts['lfCmp']) { b3Charts['lfCmp'].destroy(); b3Charts['lfCmp'] = null; }
-};
- 
-function b3RenderLfCmp() {
-  var sel  = Array.from(b3LfSelected);
-  var hint = document.getElementById('b3-lf-cmp-hint');
-  if (sel.length < 2) { hint.style.display = 'block'; return; }
-  hint.style.display = 'none';
-  var selected = sel.map(function(i){ return B3_LF[i]; });
-  document.getElementById('b3-lf-cmp-title').textContent = 'Comparando: ' + selected.map(function(d){return d.id;}).join(' vs ');
-  if (b3Charts['lfCmp']) { b3Charts['lfCmp'].destroy(); b3Charts['lfCmp'] = null; }
-  b3WaitChart(function() {
-    b3Charts['lfCmp'] = new Chart(document.getElementById('b3-lf-cmp-chart'), {
-      type: 'bar',
-      data: {
-        labels: ['CPL','ROAS','CAC','% Conv.'],
-        datasets: selected.map(function(d, i) {
-          return { label:d.id, data:[d.cpl,d.roas,d.cac,d.conv], backgroundColor:b3Colors[sel[i]%b3Colors.length], borderRadius:3 };
-        })
-      },
-      options: { responsive:true,maintainAspectRatio:false, plugins:{legend:{display:true,labels:{font:{size:11},color:b3TickC}}}, scales:{x:{grid:{color:b3GridC},ticks:{color:b3TickC}},y:{grid:{color:b3GridC},ticks:{color:b3TickC}}} }
-    });
-  });
-}
- 
-/* ---- CLASES COMPARE ---- */
-window.b3ClToggle = function(i, cb) {
-  if (cb.checked) b3ClSelected.add(i); else b3ClSelected.delete(i);
-  var row = document.getElementById('b3-cl-row-' + i);
-  if (row) row.classList.toggle('b3-selected-row', cb.checked);
-  if (document.getElementById('b3-cl-cmp-panel').style.display === 'block') b3RenderClCmp();
-};
- 
-window.b3ToggleClCmp = function() {
-  var panel = document.getElementById('b3-cl-cmp-panel');
-  var btn   = document.getElementById('b3-cl-cmp-btn');
-  var open  = panel.style.display !== 'block';
-  panel.style.display = open ? 'block' : 'none';
-  btn.classList.toggle('active-cmp', open);
-  if (open) b3RenderClCmp();
-  else if (b3Charts['clCmp']) { b3Charts['clCmp'].destroy(); b3Charts['clCmp'] = null; }
-};
- 
-function b3RenderClCmp() {
-  var sel  = Array.from(b3ClSelected);
-  var hint = document.getElementById('b3-cl-cmp-hint');
-  if (sel.length < 2) { hint.style.display='block'; return; }
-  hint.style.display = 'none';
-  var selected = sel.map(function(i){ return b3ClasesData[i]; });
-  document.getElementById('b3-cl-cmp-title').textContent = 'Comparando: ' + selected.map(function(d){return d.cl;}).join(' vs ');
-  if (b3Charts['clCmp']) { b3Charts['clCmp'].destroy(); b3Charts['clCmp'] = null; }
-  b3WaitChart(function() {
-    b3Charts['clCmp'] = new Chart(document.getElementById('b3-cl-cmp-chart'), {
-      type: 'bar',
-      data: {
-        labels: ['Asistencia','Pico','Us. trans.','Us. pitch','Us. CTA','Chat'],
-        datasets: selected.map(function(d, i) {
-          return { label:d.cl, data:[d.asist,d.pico,d.trans,d.pitch,d.cta,d.chat], backgroundColor:b3Colors[sel[i]%b3Colors.length], borderRadius:3 };
-        })
-      },
-      options: { responsive:true,maintainAspectRatio:false, plugins:{legend:{display:true,labels:{font:{size:11},color:b3TickC}}}, scales:{x:{grid:{color:b3GridC},ticks:{color:b3TickC}},y:{grid:{color:b3GridC},ticks:{color:b3TickC}}} }
-    });
-  });
-}
- 
-/* ---- PDF UPLOAD ---- */
-window.b3HandleUpload = async function(e) {
-  var file = e.target.files[0]; if (!file) return;
-  document.getElementById('b3-pdf-meta').style.display = 'none';
-  var proc = document.getElementById('b3-processing');
-  proc.style.display = 'flex';
-  var text = file.name;
-  try {
-    if (file.type === 'application/pdf') {
-      var ab = await file.arrayBuffer();
-      var bytes = new Uint8Array(ab);
-      var str = '';
-      bytes.slice(0,4000).forEach(function(b){ if(b>31&&b<127) str+=String.fromCharCode(b); });
-      text = str.replace(/[^\x20-\x7E\n]/g,'').replace(/\s+/g,' ').trim().slice(0,1500) || file.name;
-    }
-  } catch(err) { text = file.name; }
-  var apiKey = document.getElementById('b3-api-key-trial').value.trim();
-  try {
-    if (apiKey) {
-      var r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:'Analizá este texto de una presentación de webinar y respondé SOLO con JSON (sin markdown): {"titulo":"...","tema":"...","pitch":"..."}. Texto: '+text.slice(0,800)}]})});
-      var d = await r.json();
-      var raw = (d.content&&d.content[0]&&d.content[0].text)||'{}';
-      raw = raw.replace(/```json|```/g,'').trim();
-      var p = JSON.parse(raw);
-      document.getElementById('b3-meta-titulo').value = p.titulo||'Clase extraída';
-      document.getElementById('b3-meta-tema').value   = p.tema||'Por completar';
-      document.getElementById('b3-meta-pitch').value  = p.pitch||'Por completar';
-    } else {
-      document.getElementById('b3-meta-titulo').value = file.name.replace(/\.(pdf|pptx)$/i,'');
-      document.getElementById('b3-meta-tema').value   = 'Por completar';
-      document.getElementById('b3-meta-pitch').value  = 'Por completar';
-    }
-  } catch(err) {
-    document.getElementById('b3-meta-titulo').value = file.name.replace(/\.(pdf|pptx)$/i,'');
-    document.getElementById('b3-meta-tema').value   = 'Por completar';
-    document.getElementById('b3-meta-pitch').value  = 'Por completar';
-  }
-  document.getElementById('b3-meta-num').value = 'CL' + (b3ClasesData.length + 1);
-  document.getElementById('b3-meta-fecha').value = new Date().toISOString().split('T')[0];
-  proc.style.display = 'none';
-  document.getElementById('b3-pdf-meta').style.display = 'block';
-};
- 
-window.b3SaveClaseFromPdf = function() {
-  var i = b3ClaseCount++;
-  var cl = {
-    cl: document.getElementById('b3-meta-num').value||('CL'+(i+1)),
-    asist:0,pico:0,prePitch:'—',trans:0,pctPicoTrans:'—',
-    pitch:0,pctTransPitch:'—',durPitchCta:'—',cta:0,pctPitchCta:'—',chat:0
-  };
-  b3ClasesData.push(cl);
-  b3AddClaseRowEl(cl, i);
-  document.getElementById('b3-pdf-meta').style.display = 'none';
-  document.getElementById('b3-pdf-input').value = '';
-  b3Toast('Clase guardada.');
-};
- 
-/* ---- TRIAL REELS ---- */
-function b3CalcScore(t) {
-  var views = t.views||1;
-  var eng   = (t.likes+t.com+t.guard+t.comp)/views*100;
-  return parseFloat(((t.r1*.3+t.r2*.4+t.r3*.3)*.5+eng*2+t.r1*.1+t.r3*.1).toFixed(1));
-}
- 
-function b3GetVerdict(score, all) {
-  var scores = all.map(function(t){ return b3CalcScore(t); });
-  var max    = Math.max.apply(null, scores);
-  var avg    = scores.reduce(function(a,b){return a+b;},0)/scores.length;
-  if (score >= max*.85) return 'escalar';
-  if (score >= avg)     return 'testear';
-  return 'descartar';
-}
- 
-function b3ReasonTxt(t, v) {
-  var eng = t.views>0 ? ((t.likes+t.com+t.guard+t.comp)/t.views*100).toFixed(1) : 0;
-  if (v==='escalar') {
-    var s=[];
-    if(t.r1>=75) s.push('hook fuerte ('+t.r1+'% seg. 1)');
-    if(t.r3>=30) s.push('alto % vistas completas ('+t.r3+'%)');
-    if(parseFloat(eng)>=3) s.push('engagement '+eng+'%');
-    if(t.guard>0) s.push(t.guard+' guardados');
-    return 'Candidato a escalar'+(s.length?': '+s.join(', ')+'.':'.');
-  }
-  if (v==='testear') {
-    var w=[];
-    if(t.r1<60) w.push('mejorar hook ('+t.r1+'% seg. 1)');
-    if(t.r3<20) w.push('mejorar cierre');
-    return 'Potencial moderado. '+(w.length?'Mejorar: '+w.join(' y ')+'.':'Revisar estructura.');
-  }
-  return 'Métricas bajas frente al grupo. Cambiar hook, formato o tema.';
-}
- 
-window.b3SaveTrial = function() {
-  if (b3Trials.length >= 5) { b3Toast('Máximo 5 trials.'); return; }
-  var name = (document.getElementById('b3-t-name').value||'').trim();
-  if (!name) { b3Toast('Ingresá un nombre.'); return; }
-  b3Trials.push({
-    id: Date.now(), name: name,
-    copy:  (document.getElementById('b3-t-copy').value||'').trim(),
-    views: parseInt(document.getElementById('b3-t-views').value)||0,
-    dur:   parseInt(document.getElementById('b3-t-dur').value)||30,
-    r1:    parseInt(document.getElementById('b3-t-r1').value)||0,
-    r2:    parseInt(document.getElementById('b3-t-r2').value)||0,
-    r3:    parseInt(document.getElementById('b3-t-r3').value)||0,
-    likes: parseInt(document.getElementById('b3-t-likes').value)||0,
-    com:   parseInt(document.getElementById('b3-t-com').value)||0,
-    guard: parseInt(document.getElementById('b3-t-guard').value)||0,
-    comp:  parseInt(document.getElementById('b3-t-comp').value)||0
-  });
-  b3ClearTrialForm();
-  b3Toast('Trial guardado.');
-  b3RenderTrials();
-};
- 
-window.b3ClearTrialForm = function() {
-  ['b3-t-name','b3-t-copy','b3-t-views','b3-t-dur','b3-t-r1','b3-t-r2','b3-t-r3','b3-t-likes','b3-t-com','b3-t-guard','b3-t-comp'].forEach(function(id){
-    var el = document.getElementById(id); if(el) el.value = '';
-  });
-};
- 
-window.b3ClearTrials = function() {
-  if (!confirm('¿Limpiar todos los trials?')) return;
-  b3Trials = [];
-  b3RenderTrials();
-};
- 
-window.b3DelTrial = function(id) {
-  b3Trials = b3Trials.filter(function(t){ return t.id!==id; });
-  b3RenderTrials();
-};
- 
-function b3RenderTrials() {
-  document.getElementById('b3-trial-counter').textContent = b3Trials.length + ' / 5 trials';
-  var sec = document.getElementById('b3-trial-results');
-  if (!b3Trials.length) { sec.style.display='none'; return; }
-  sec.style.display = 'block';
- 
-  var sorted = b3Trials.slice().sort(function(a,b){ return b3CalcScore(b)-b3CalcScore(a); });
-  var container = document.getElementById('b3-trials-container');
- 
-  container.innerHTML = sorted.map(function(t, i) {
-    var sc = b3CalcScore(t);
-    var v  = b3GetVerdict(sc, b3Trials);
-    var eng = t.views>0 ? ((t.likes+t.com+t.guard+t.comp)/t.views*100).toFixed(1) : '0';
-    var scores = b3Trials.map(function(x){ return b3CalcScore(x); });
-    var maxS = Math.max.apply(null, scores);
-    var avgS = scores.reduce(function(a,b){return a+b;},0)/scores.length;
-    var scCls = sc>=maxS*.85 ? 'b3-sh' : sc>=avgS ? 'b3-sm' : 'b3-sl';
-    var vBadge = v==='escalar' ? '<span class="b3-v-scale">Escalar</span>' : v==='testear' ? '<span class="b3-v-test">Testear más</span>' : '<span class="b3-v-skip">Descartar</span>';
-    var cardCls = v==='escalar' ? 'tw' : v==='testear' ? 'ts' : '';
-    var rCls = v==='escalar' ? 'b3-r-green' : v==='testear' ? 'b3-r-amber' : 'b3-r-gray';
- 
-    return '<div class="b3-trial-card ' + cardCls + '">' +
-      '<div class="b3-tc-hdr">' +
-        '<span style="font-size:12px;color:#55556a;width:18px;">#'+(i+1)+'</span>' +
-        '<span class="b3-tc-name">'+t.name+'</span>' +
-        '<span class="b3-score-badge '+scCls+'">'+sc+' pts</span>' +
-        vBadge +
-        '<button class="b3-del-btn" onclick="b3DelTrial('+t.id+')">✕</button>' +
-      '</div>' +
-      (t.copy ? '<div style="font-size:12px;color:#9090b0;margin-bottom:.75rem;font-style:italic;">'+t.copy.slice(0,100)+(t.copy.length>100?'...':'')+'</div>' : '') +
-      '<div class="b3-t-metrics">' +
-        '<div class="b3-tmc"><div class="l">Views</div><div class="v">'+t.views.toLocaleString('es-AR')+'</div></div>' +
-        '<div class="b3-tmc"><div class="l">Engagement</div><div class="v" style="color:#7c6fe0">'+eng+'%</div></div>' +
-        '<div class="b3-tmc"><div class="l">Guardados</div><div class="v" style="color:#e8a830">'+t.guard+'</div></div>' +
-        '<div class="b3-tmc"><div class="l">Compartidos</div><div class="v" style="color:#1db87a">'+t.comp+'</div></div>' +
-      '</div>' +
-      '<div class="b3-rbar-row"><span class="b3-rbar-lbl">Seg. 1</span><div class="b3-rbar-track"><div class="b3-rbar-fill" style="width:'+t.r1+'%;background:'+b3RcCol(t.r1)+'"></div></div><span class="b3-rbar-pct" style="color:'+b3RcCol(t.r1)+'">'+t.r1+'%</span></div>' +
-      '<div class="b3-rbar-row"><span class="b3-rbar-lbl">Mitad</span><div class="b3-rbar-track"><div class="b3-rbar-fill" style="width:'+t.r2+'%;background:'+b3RcCol(t.r2)+'"></div></div><span class="b3-rbar-pct" style="color:'+b3RcCol(t.r2)+'">'+t.r2+'%</span></div>' +
-      '<div class="b3-rbar-row"><span class="b3-rbar-lbl">Final</span><div class="b3-rbar-track"><div class="b3-rbar-fill" style="width:'+t.r3+'%;background:'+b3RcCol(t.r3)+'"></div></div><span class="b3-rbar-pct" style="color:'+b3RcCol(t.r3)+'">'+t.r3+'%</span></div>' +
-      '<div class="b3-reason '+rCls+'">'+b3ReasonTxt(t,v)+'</div>' +
-    '</div>';
-  }).join('');
- 
-  b3BuildPodium(sorted);
-  b3BuildRetChart(sorted);
-}
- 
-function b3BuildPodium(sorted) {
-  var top    = sorted.filter(function(t){ return b3GetVerdict(b3CalcScore(t),b3Trials)==='escalar'; }).slice(0,3);
-  var podium = document.getElementById('b3-top-podium');
-  if (!top.length) {
-    podium.innerHTML = '<div style="grid-column:1/-1;font-size:13px;color:#55556a;text-align:center;padding:1.5rem;">Todavía no hay contenidos con score suficiente para escalar.</div>';
-    return;
-  }
-  var ranks = [{l:'#1 — Escalar ahora',c:'b3-pr-gold'},{l:'#2 — Escalar',c:'b3-pr-silver'},{l:'#3 — Escalar',c:'b3-pr-bronze'}];
-  podium.innerHTML = top.map(function(t, i) {
-    var r   = ranks[i]||{l:'#'+(i+1),c:'b3-pr-silver'};
-    var eng = t.views>0 ? ((t.likes+t.com+t.guard+t.comp)/t.views*100).toFixed(1) : '0';
-    return '<div class="b3-pod'+(i===0?' gold':'')+'">' +
-      '<div class="b3-pod-rank '+r.c+'">'+r.l+'</div>' +
-      '<div class="b3-pod-name">'+t.name+'</div>' +
-      '<div class="b3-pod-stat">Views: <strong>'+t.views.toLocaleString('es-AR')+'</strong></div>' +
-      '<div class="b3-pod-stat">Eng: <strong>'+eng+'%</strong></div>' +
-      '<div class="b3-pod-stat">Ret. seg.1: <strong style="color:'+b3RcCol(t.r1)+'">'+t.r1+'%</strong></div>' +
-      '<div class="b3-pod-stat">Ret. final: <strong style="color:'+b3RcCol(t.r3)+'">'+t.r3+'%</strong></div>' +
-      '<div class="b3-pod-stat">Guardados: <strong>'+t.guard+'</strong></div>' +
-    '</div>';
-  }).join('');
-}
- 
-function b3BuildRetChart(sorted) {
-  if (b3Charts['ret']) { b3Charts['ret'].destroy(); b3Charts['ret'] = null; }
-  b3WaitChart(function() {
-    b3Charts['ret'] = new Chart(document.getElementById('b3-ret-chart'), {
-      type: 'line',
-      data: {
-        labels: ['Segundo 1','Mitad','Final'],
-        datasets: sorted.map(function(t, i) {
-          return { label: t.name.slice(0,20), data:[t.r1,t.r2,t.r3], borderColor:b3Colors[i%b3Colors.length], backgroundColor:'transparent', pointBackgroundColor:b3Colors[i%b3Colors.length], pointRadius:5, tension:.3, borderWidth:2 };
-        })
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend:{display:true,position:'bottom',labels:{font:{size:11},color:b3TickC,boxWidth:10,padding:10}} },
-        scales: {
-          x: { grid:{color:b3GridC}, ticks:{color:b3TickC,font:{size:12}} },
-          y: { grid:{color:b3GridC}, ticks:{color:b3TickC,font:{size:11},callback:function(v){return v+'%';}}, min:0, max:100 }
-        }
-      }
-    });
-  });
-}
- 
-/* ---- AI TRIALS ---- */
-window.b3AnalyzeTrials = async function() {
-  var key = document.getElementById('b3-api-key-trial').value.trim();
-  if (!key) { b3Toast('Ingresá tu API key de Anthropic.'); return; }
-  if (!b3Trials.length) { b3Toast('No hay trials para analizar.'); return; }
-  var btn  = document.getElementById('b3-ai-trial-btn');
-  var panel= document.getElementById('b3-ai-trial-panel');
-  var txt  = document.getElementById('b3-ai-trial-txt');
-  btn.innerHTML = '<span style="display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:b3spin .8s linear infinite;vertical-align:middle;margin-right:5px;"></span>Analizando...';
-  btn.disabled = true;
-  panel.style.display = 'block';
-  txt.textContent = 'Procesando...';
- 
-  var sorted = b3Trials.slice().sort(function(a,b){ return b3CalcScore(b)-b3CalcScore(a); });
-  var data   = sorted.map(function(t) {
-    var eng = t.views>0?((t.likes+t.com+t.guard+t.comp)/t.views*100).toFixed(1):'0';
-    return '"'+t.name+'" | '+b3GetVerdict(b3CalcScore(t),b3Trials)+' | Views:'+t.views+' Eng:'+eng+'% | Ret: seg1:'+t.r1+'% mitad:'+t.r2+'% final:'+t.r3+'% | L:'+t.likes+' C:'+t.com+' G:'+t.guard+' Comp:'+t.comp+' | Copy:'+t.copy;
-  }).join('\n');
- 
-  try {
-    var r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:'Experto en Instagram. Analiza estos trials en español:\n'+data+'\n\nPara "escalar": explicá POR QUÉ funciona y cómo replicarlo. Para "testear": qué cambiar. Para "descartar": por qué no funciona.'}]})});
-    var d = await r.json();
-    txt.textContent = (d.content&&d.content[0]&&d.content[0].text)||'Sin respuesta.';
-  } catch(e) {
-    txt.textContent = 'Error al conectar con la API.';
-  }
-  btn.innerHTML = 'Analizar con IA por qué escalar cada uno';
-  btn.disabled  = false;
-};
- 
-/* ---- INIT ---- */
-b3BuildLfTable();
-b3BuildClasesTable();
  
 })();
 </script>
