@@ -128,239 +128,100 @@
       <!-- SECTION: RENDIMIENTO ADS -->
       <section class="section active" id="section-ads">
 <style>
-/* ---------- Bloque 1 estilos ---------- */
-.b1-filter-bar {
-  background: #16161f;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px;
-  padding: 16px 20px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  align-items: flex-end;
-  justify-content: space-between;
-}
-.b1-filter-group { display: flex; flex-direction: column; gap: 8px; }
-.b1-filter-label {
-  font-size: 9px;
-  font-family: 'DM Mono', monospace;
-  font-weight: 500;
-  color: #55556a;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-.b1-filter-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.b1-select {
-  background: #12121a;
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 6px;
-  color: #f0f0f8;
-  font-size: 13px;
-  font-family: 'DM Sans', sans-serif;
-  padding: 6px 10px;
-  cursor: pointer;
-  outline: none;
-  min-width: 90px;
-}
-.b1-select.wide { min-width: 170px; }
-.b1-select:focus { border-color: #7c6fe0; }
-.b1-date {
-  background: #12121a;
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 6px;
-  color: #f0f0f8;
-  font-size: 12px;
-  font-family: 'DM Mono', monospace;
-  padding: 6px 10px;
-  outline: none;
-  cursor: pointer;
-}
-.b1-date:focus { border-color: #7c6fe0; }
-.b1-segs {
-  display: flex;
-  background: #12121a;
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 6px;
-  overflow: hidden;
-}
-.b1-seg {
-  padding: 6px 12px;
-  border: none;
-  background: transparent;
-  color: #9090b0;
-  font-size: 12px;
-  font-family: 'DM Sans', sans-serif;
-  cursor: pointer;
-  transition: all 120ms ease;
-  white-space: nowrap;
-}
-.b1-seg.on { background: #7c6fe0; color: #fff; font-weight: 500; }
-.b1-seg:hover:not(.on) { background: rgba(255,255,255,0.05); color: #f0f0f8; }
-.b1-btn-dl {
-  display: flex; align-items: center; gap: 6px;
-  padding: 6px 14px;
-  border: none; border-radius: 6px;
-  background: #7c6fe0; color: #fff;
-  font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500;
-  cursor: pointer; transition: background 120ms ease;
-}
-.b1-btn-dl:hover { background: #6a5ed0; }
+/* ---- Bloque 1 (prefijo b1-) ---- */
+.b1-filter-bar{background:#16161f;border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;}
+.b1-filter-group{display:flex;flex-direction:column;gap:6px;}
+.b1-filter-label{font-size:9px;font-family:'DM Mono',monospace;font-weight:500;color:#55556a;letter-spacing:.12em;text-transform:uppercase;}
+.b1-filter-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.b1-select{background:#12121a;border:1px solid rgba(255,255,255,.10);border-radius:6px;color:#f0f0f8;font-size:13px;font-family:'DM Sans',sans-serif;padding:6px 10px;cursor:pointer;outline:none;transition:border-color 120ms ease;}
+.b1-select:focus{border-color:#7c6fe0;}
+.b1-select.wide{min-width:160px;}
+.b1-segs{display:flex;background:#12121a;border:1px solid rgba(255,255,255,.10);border-radius:6px;overflow:hidden;}
+.b1-seg{padding:6px 12px;border:none;background:transparent;color:#9090b0;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 120ms ease;white-space:nowrap;}
+.b1-seg.on{background:#7c6fe0;color:#fff;font-weight:500;}
+.b1-seg:hover:not(.on){background:rgba(255,255,255,.05);color:#f0f0f8;}
+.b1-btn-dl{display:flex;align-items:center;gap:6px;padding:6px 14px;border:none;border-radius:6px;background:#7c6fe0;color:#fff;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background 120ms ease;}
+.b1-btn-dl:hover{background:#6a5ed0;}
  
 /* Metric cards */
-.b1-metrics { display: grid; gap: 10px; margin-bottom: 10px; }
-.b1-mc5 { grid-template-columns: repeat(5, minmax(0,1fr)); }
-.b1-mc4 { grid-template-columns: repeat(4, minmax(0,1fr)); margin-bottom: 20px; }
-.b1-mcard {
-  background: #16161f;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 16px 18px;
-  transition: background 120ms ease;
-}
-.b1-mcard:hover { background: #1c1c28; }
-.b1-mlabel {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 10px; font-family: 'DM Mono', monospace;
-  font-weight: 500; color: #55556a;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.b1-dot {
-  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
-}
-.b1-dot.g { background:#1db87a; box-shadow:0 0 6px #1db87a; }
-.b1-dot.b { background:#3d9de8; box-shadow:0 0 6px #3d9de8; }
-.b1-dot.p { background:#7c6fe0; box-shadow:0 0 6px #7c6fe0; }
-.b1-dot.a { background:#e8a830; box-shadow:0 0 6px #e8a830; }
-.b1-mval {
-  font-family: 'DM Mono', monospace;
-  font-size: 26px; font-weight: 500;
-  letter-spacing: -0.5px; line-height: 1;
-}
-.b1-mval.g { color:#1db87a; }
-.b1-mval.b { color:#3d9de8; }
-.b1-mval.p { color:#7c6fe0; }
-.b1-mval.a { color:#e8a830; }
+.b1-metrics{display:grid;gap:10px;margin-bottom:10px;}
+.b1-mc5{grid-template-columns:repeat(5,minmax(0,1fr));}
+.b1-mc4{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:20px;}
+.b1-mcard{background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:16px 18px;transition:background 120ms ease;}
+.b1-mcard:hover{background:#1c1c28;}
+.b1-mlabel{display:flex;align-items:center;gap:6px;font-size:10px;font-family:'DM Mono',monospace;font-weight:500;color:#55556a;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.b1-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.b1-dot.g{background:#1db87a;box-shadow:0 0 6px #1db87a;}
+.b1-dot.b{background:#3d9de8;box-shadow:0 0 6px #3d9de8;}
+.b1-dot.p{background:#7c6fe0;box-shadow:0 0 6px #7c6fe0;}
+.b1-dot.a{background:#e8a830;box-shadow:0 0 6px #e8a830;}
+.b1-mval{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;letter-spacing:-.5px;line-height:1;}
+.b1-mval.g{color:#1db87a;} .b1-mval.b{color:#3d9de8;} .b1-mval.p{color:#7c6fe0;} .b1-mval.a{color:#e8a830;}
  
-/* Chart row */
-.b1-chart-row {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 14px; margin-bottom: 16px;
-}
-.b1-ccard {
-  background: #16161f;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px;
-  padding: 16px 20px;
-}
-.b1-ctitle {
-  font-size: 11px; font-family: 'DM Mono', monospace;
-  font-weight: 500; color: #9090b0;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.b1-csub { font-size: 11px; color: #55556a; margin-bottom: 10px; }
-.b1-legend {
-  display: flex; flex-wrap: wrap; gap: 10px;
-  margin-bottom: 8px; font-size: 11px; color: #9090b0;
-  align-items: center;
-}
-.b1-lsq {
-  width: 10px; height: 10px; border-radius: 2px;
-  display: inline-block; margin-right: 3px; flex-shrink: 0;
-}
-.b1-ldash {
-  width: 16px; height: 2px;
-  border-top: 2px dashed #888;
-  display: inline-block; margin-right: 3px;
-  vertical-align: middle; flex-shrink: 0;
-}
+/* Charts */
+.b1-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.b1-ccard{background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:1rem 1.25rem;}
+.b1-ctitle{font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#9090b0;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem;}
+.b1-csub{font-size:11px;color:#55556a;margin-bottom:.75rem;}
+.b1-legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:11px;color:#9090b0;align-items:center;}
+.b1-lsq{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:3px;}
+ 
+/* Scatter tip */
+.b1-scatter-wrap{position:relative;}
+.b1-tip{position:absolute;background:#16161f;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 14px;font-size:12px;pointer-events:none;z-index:10;min-width:160px;display:none;}
+.b1-tip-title{font-size:13px;font-weight:500;color:#f0f0f8;margin-bottom:5px;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.b1-tip-row{display:flex;justify-content:space-between;gap:14px;margin-bottom:2px;}
+.b1-tip-lbl{color:#9090b0;} .b1-tip-val{font-weight:500;color:#f0f0f8;}
  
 /* Table */
-.b1-card {
-  background: #16161f;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 16px;
-}
-.b1-card-hdr {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.b1-card-title {
-  font-size: 11px; font-family: 'DM Mono', monospace;
-  font-weight: 500; color: #9090b0;
-  letter-spacing: 0.1em; text-transform: uppercase;
-}
-.b1-twrap { overflow-x: auto; }
-.b1-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.b1-table thead th {
-  padding: 10px 14px; text-align: left;
-  font-size: 9px; font-family: 'DM Mono', monospace;
-  font-weight: 500; color: #55556a;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  white-space: nowrap;
-}
-.b1-table tbody td {
-  padding: 11px 14px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  color: #9090b0;
-  font-family: 'DM Mono', monospace; font-size: 12px;
-  white-space: nowrap;
-}
-.b1-table tbody tr:last-child td { border-bottom: none; }
-.b1-table tbody tr:hover td { background: rgba(255,255,255,0.025); color:#f0f0f8; }
-.b1-tname { color:#f0f0f8 !important; font-family:'DM Sans',sans-serif !important; font-size:13px !important; font-weight:500 !important; }
-.b1-tp { color:#7c6fe0 !important; font-weight:500 !important; }
-.b1-ta { color:#e8a830 !important; font-weight:500 !important; }
-.b1-tg { color:#1db87a !important; font-weight:500 !important; }
+.b1-card{background:#16161f;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.b1-card-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.06);}
+.b1-card-title{font-size:11px;font-family:'DM Mono',monospace;font-weight:500;color:#9090b0;letter-spacing:.1em;text-transform:uppercase;}
+.b1-twrap{overflow-x:auto;}
+.b1-table{width:100%;border-collapse:collapse;font-size:12px;}
+.b1-table thead th{padding:10px 14px;text-align:left;font-size:9px;font-family:'DM Mono',monospace;font-weight:500;color:#55556a;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);white-space:nowrap;}
+.b1-table tbody td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.06);color:#9090b0;font-family:'DM Mono',monospace;font-size:12px;white-space:nowrap;}
+.b1-table tbody tr:last-child td{border-bottom:none;}
+.b1-table tbody tr:hover td{background:rgba(255,255,255,.025);color:#f0f0f8;}
+.b1-tname{color:#f0f0f8!important;font-family:'DM Sans',sans-serif!important;font-size:13px!important;font-weight:500!important;}
+.b1-tp{color:#7c6fe0!important;font-weight:500!important;}
+.b1-ta{color:#e8a830!important;font-weight:500!important;}
+.b1-tg{color:#1db87a!important;font-weight:500!important;}
+ 
+/* Empty state */
+.b1-empty-row td{text-align:center;color:#55556a!important;font-family:'DM Sans',sans-serif!important;font-size:13px!important;padding:2rem!important;}
+ 
+/* Add row btn */
+.b1-add-btn{font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:#12121a;color:#f0f0f8;cursor:pointer;}
+.b1-add-btn:hover{background:rgba(255,255,255,.05);}
  
 /* Top 3 */
-.b1-top3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; padding:16px 20px; }
-.b1-t3card {
-  background:#1e1e2a; border:1px solid rgba(255,255,255,0.06);
-  border-radius:10px; padding:14px 16px; transition:border-color 120ms ease;
-}
-.b1-t3card.winner { border-color:rgba(124,111,224,0.35); }
-.b1-t3card:hover { border-color:rgba(255,255,255,0.18); }
-.b1-t3rank { font-size:10px; font-family:'DM Mono',monospace; font-weight:500; letter-spacing:.06em; text-transform:uppercase; margin-bottom:6px; }
-.b1-t3rank.gold   { color:#e8a830; }
-.b1-t3rank.silver { color:#55556a; }
-.b1-t3rank.bronze { color:#c8825a; }
-.b1-t3name { font-size:13px; font-weight:500; color:#f0f0f8; margin-bottom:10px; }
-.b1-t3stats { display:flex; flex-wrap:wrap; gap:6px; }
-.b1-t3s {
-  font-size:11px; font-family:'DM Mono',monospace;
-  padding:2px 8px; border-radius:4px;
-  background:rgba(255,255,255,0.05); color:#9090b0;
-}
-.b1-t3s.g { background:rgba(29,184,122,0.15); color:#1db87a; }
-.b1-t3s.p { background:rgba(124,111,224,0.15); color:#7c6fe0; }
-.b1-t3s.a { background:rgba(232,168,48,0.15); color:#e8a830; }
+.b1-top3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:16px 20px;}
+.b1-t3card{background:#1e1e2a;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px 16px;transition:border-color 120ms ease;}
+.b1-t3card.winner{border-color:rgba(124,111,224,.35);}
+.b1-t3card:hover{border-color:rgba(255,255,255,.18);}
+.b1-t3rank{font-size:10px;font-family:'DM Mono',monospace;font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;}
+.b1-t3rank.gold{color:#e8a830;} .b1-t3rank.silver{color:#55556a;} .b1-t3rank.bronze{color:#c8825a;}
+.b1-t3name{font-size:13px;font-weight:500;color:#f0f0f8;margin-bottom:10px;}
+.b1-t3stats{display:flex;flex-wrap:wrap;gap:6px;}
+.b1-t3s{font-size:11px;font-family:'DM Mono',monospace;padding:2px 8px;border-radius:4px;background:rgba(255,255,255,.05);color:#9090b0;}
+.b1-t3s.g{background:rgba(29,184,122,.15);color:#1db87a;}
+.b1-t3s.p{background:rgba(124,111,224,.15);color:#7c6fe0;}
+.b1-t3s.a{background:rgba(232,168,48,.15);color:#e8a830;}
  
-/* Scatter tooltip */
-.b1-scatter-wrap { position:relative; }
-.b1-tip {
-  position:absolute; background:#16161f;
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:12px; padding:10px 14px;
-  font-size:12px; pointer-events:none; z-index:10; min-width:160px; display:none;
-}
-.b1-tip-title { font-size:13px; font-weight:500; color:#f0f0f8; margin-bottom:5px; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.b1-tip-row { display:flex; justify-content:space-between; gap:14px; margin-bottom:2px; }
-.b1-tip-lbl { color:#9090b0; } .b1-tip-val { font-weight:500; color:#f0f0f8; }
+/* Toast */
+.b1-toast{background:#085041;color:#9FE1CB;font-size:13px;padding:7px 14px;border-radius:8px;margin-bottom:1rem;display:none;}
 </style>
  
+<!-- SECTION HEADER -->
 <div class="section-header">
   <h1 class="section-title">Rendimiento Ads</h1>
   <p class="section-desc">Meta Ads · Seguimiento en tiempo real de campañas</p>
 </div>
  
-<!-- Filter bar -->
+<div id="b1-toast" class="b1-toast"></div>
+ 
+<!-- ===== FILTER BAR ===== -->
 <div class="b1-filter-bar">
   <div class="b1-filter-group">
     <span class="b1-filter-label">Filtros</span>
@@ -369,59 +230,43 @@
         <option>Hoy</option><option>Ayer</option><option selected>Esta semana</option><option>Este mes</option>
       </select>
       <div class="b1-segs" id="b1-view-group">
-        <button class="b1-seg on">Por Anuncio</button>
-        <button class="b1-seg">Por Conjunto</button>
-        <button class="b1-seg">Por Campaña</button>
+        <button class="b1-seg on" onclick="b1SetView(this)">Por Anuncio</button>
+        <button class="b1-seg"    onclick="b1SetView(this)">Por Conjunto</button>
+        <button class="b1-seg"    onclick="b1SetView(this)">Por Campaña</button>
       </div>
-      <select class="b1-select wide">
+      <select class="b1-select wide" id="b1-camp">
         <option>Todas las campañas</option>
         <option>[VH] Captación LF</option>
         <option>[VH] Remarketing</option>
         <option>[VH] Vendedores</option>
       </select>
-      <select class="b1-select wide">
+      <select class="b1-select wide" id="b1-conj">
         <option>Todos los conjuntos</option>
-        <option>Conjunto A</option><option>Conjunto B</option>
+        <option>Conjunto A</option>
+        <option>Conjunto B</option>
       </select>
     </div>
   </div>
-  <div class="b1-filter-group">
-    <span class="b1-filter-label">Exportar reporte</span>
-    <div class="b1-filter-controls">
-      <div class="b1-segs" id="b1-range-group">
-        <button class="b1-seg">Hoy</button>
-        <button class="b1-seg on">7d</button>
-        <button class="b1-seg">14d</button>
-        <button class="b1-seg">30d</button>
-      </div>
-      <input type="date" class="b1-date" value="2026-03-07">
-      <input type="date" class="b1-date" value="2026-04-06">
-      <button class="b1-btn-dl">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Bajar Reporte
-      </button>
-    </div>
-  </div>
 </div>
  
-<!-- Metrics row 1 -->
-<div class="b1-metrics b1-mc5">
-  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot g"></span>Gasto</div><div class="b1-mval g">$826,36</div></div>
-  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot b"></span>Impresiones</div><div class="b1-mval b">379.754</div></div>
-  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot p"></span>Clics</div><div class="b1-mval p">5.892</div></div>
-  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot p"></span>Leads Meta</div><div class="b1-mval p">1.159</div></div>
-  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot a"></span>CTR</div><div class="b1-mval a">1,14%</div></div>
+<!-- ===== MÉTRICAS ROW 1 ===== -->
+<div class="b1-metrics b1-mc5" id="b1-mc1">
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot g"></span>Gasto</div><div class="b1-mval g" id="b1-v-gasto">—</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot b"></span>Impresiones</div><div class="b1-mval b" id="b1-v-imp">—</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot p"></span>Clics</div><div class="b1-mval p" id="b1-v-cli">—</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot p"></span>Leads Meta</div><div class="b1-mval p" id="b1-v-lm">—</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot a"></span>CTR</div><div class="b1-mval a" id="b1-v-ctr">—</div></div>
 </div>
  
-<!-- Metrics row 2 -->
+<!-- ===== MÉTRICAS ROW 2 ===== -->
 <div class="b1-metrics b1-mc4">
-  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot b"></span>CPM</div><div class="b1-mval b">$2,18</div></div>
-  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot a"></span>CPC</div><div class="b1-mval a">$0,19</div></div>
-  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot g"></span>CPL Meta</div><div class="b1-mval g">$0,71</div></div>
-  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot p"></span>Costo por visita</div><div class="b1-mval p">$0,22</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot b"></span>CPM</div><div class="b1-mval b" id="b1-v-cpm">—</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot a"></span>CPC</div><div class="b1-mval a" id="b1-v-cpc">—</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot g"></span>CPL Meta</div><div class="b1-mval g" id="b1-v-cplm">—</div></div>
+  <div class="b1-mcard"><div class="b1-mlabel"><span class="b1-dot p"></span>Costo por visita</div><div class="b1-mval p" id="b1-v-cpv">—</div></div>
 </div>
  
-<!-- Charts -->
+<!-- ===== CHARTS ===== -->
 <div class="b1-chart-row">
   <div class="b1-ccard">
     <div class="b1-ctitle">Gasto diario</div>
@@ -441,191 +286,286 @@
   </div>
 </div>
  
-<!-- Tabla detalle por anuncio -->
+<!-- ===== TABLA DETALLE ===== -->
 <div class="b1-card">
-  <div class="b1-card-hdr"><span class="b1-card-title">Detalle por anuncio</span></div>
+  <div class="b1-card-hdr">
+    <span class="b1-card-title">Detalle por anuncio</span>
+    <button class="b1-add-btn" onclick="b1AddRow()">+ Agregar anuncio</button>
+  </div>
   <div class="b1-twrap">
     <table class="b1-table">
       <thead>
         <tr>
           <th>Nombre</th><th>Gasto</th><th>Impresiones</th><th>Clics</th>
           <th>Frec.</th><th>Leads Meta</th><th>CTR</th><th>CPM</th>
-          <th>CPC</th><th>CPL Meta</th><th>C/Visita</th>
+          <th>CPC</th><th>CPL Meta</th><th>C/Visita</th><th></th>
         </tr>
       </thead>
-      <tbody>
-        <tr><td class="b1-tname">[VH] AD Vendedor 01</td><td>$17,49</td><td>7.687</td><td>412</td><td>1,1</td><td class="b1-tp">28</td><td class="b1-ta">0,82%</td><td>$2,28</td><td>$0,28</td><td class="b1-tg">$0,62</td><td>$0,30</td></tr>
-        <tr><td class="b1-tname">[VH] AD Vendedor 02</td><td>$22,32</td><td>7.496</td><td>380</td><td>1,1</td><td class="b1-tp">21</td><td class="b1-ta">0,87%</td><td>$2,98</td><td>$0,34</td><td>$1,06</td><td>$0,38</td></tr>
-        <tr><td class="b1-tname">[VH] Remarketing 01</td><td>$34,10</td><td>12.300</td><td>890</td><td>1,2</td><td class="b1-tp">48</td><td class="b1-ta">1,20%</td><td>$2,77</td><td>$0,22</td><td class="b1-tg">$0,71</td><td>$0,28</td></tr>
-        <tr><td class="b1-tname">[VH] Captación LF 01</td><td>$41,80</td><td>18.900</td><td>1.240</td><td>1,1</td><td class="b1-tp">62</td><td class="b1-ta">1,05%</td><td>$2,21</td><td>$0,17</td><td class="b1-tg">$0,67</td><td>$0,20</td></tr>
-        <tr><td class="b1-tname">[VH] Test Ads 01</td><td>$9,20</td><td>4.200</td><td>310</td><td>1,0</td><td class="b1-tp">12</td><td class="b1-ta">0,94%</td><td>$2,19</td><td>$0,21</td><td>$0,77</td><td>$0,25</td></tr>
+      <tbody id="b1-ads-tbody">
+        <tr class="b1-empty-row"><td colspan="12">No hay anuncios cargados. Hacé clic en "+ Agregar anuncio" para comenzar.</td></tr>
       </tbody>
     </table>
   </div>
 </div>
  
-<!-- Top 3 -->
-<div class="b1-card">
+<!-- ===== TOP 3 ===== -->
+<div class="b1-card" id="b1-top3-card" style="display:none;">
   <div class="b1-card-hdr"><span class="b1-card-title">Top 3 anuncios ganadores</span></div>
-  <div class="b1-top3">
-    <div class="b1-t3card winner">
-      <div class="b1-t3rank gold">#1 — Mejor CPL Meta</div>
-      <div class="b1-t3name">[VH] Captación LF 01</div>
-      <div class="b1-t3stats">
-        <span class="b1-t3s g">$0,67 CPL</span><span class="b1-t3s p">62 leads</span>
-        <span class="b1-t3s a">1,05% CTR</span><span class="b1-t3s">$41,80</span>
-      </div>
-    </div>
-    <div class="b1-t3card">
-      <div class="b1-t3rank silver">#2 — Mejor CTR</div>
-      <div class="b1-t3name">[VH] Remarketing 01</div>
-      <div class="b1-t3stats">
-        <span class="b1-t3s g">$0,71 CPL</span><span class="b1-t3s p">48 leads</span>
-        <span class="b1-t3s a">1,20% CTR</span><span class="b1-t3s">$34,10</span>
-      </div>
-    </div>
-    <div class="b1-t3card">
-      <div class="b1-t3rank bronze">#3 — Mejor CPC</div>
-      <div class="b1-t3name">[VH] AD Vendedor 01</div>
-      <div class="b1-t3stats">
-        <span class="b1-t3s g">$0,62 CPL</span><span class="b1-t3s p">28 leads</span>
-        <span class="b1-t3s a">0,82% CTR</span><span class="b1-t3s">$17,49</span>
-      </div>
-    </div>
-  </div>
+  <div class="b1-top3" id="b1-top3-grid"></div>
 </div>
  
 <script>
-(function() {
-  // Segment toggle helper
-  document.querySelectorAll('.b1-segs').forEach(function(grp) {
-    grp.addEventListener('click', function(e) {
-      var btn = e.target.closest('.b1-seg');
-      if (!btn) return;
-      grp.querySelectorAll('.b1-seg').forEach(function(b) { b.classList.remove('on'); });
-      btn.classList.add('on');
-    });
-  });
+(function(){
+'use strict';
  
-  // Wait for Chart.js
-  function waitChart(cb) {
-    if (window.Chart) { cb(); }
-    else {
-      var s = document.createElement('script');
-      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';
-      s.onload = cb;
-      document.head.appendChild(s);
-    }
+/* ---- state ---- */
+var b1Ads = [];
+var b1Charts = {};
+var gridC = 'rgba(255,255,255,0.06)', tickC = '#55556a';
+ 
+/* ---- segment toggles ---- */
+window.b1SetView = function(el) {
+  document.querySelectorAll('#b1-view-group .b1-seg').forEach(function(b){ b.classList.remove('on'); });
+  el.classList.add('on');
+};
+ 
+/* ---- toast ---- */
+function b1Toast(m) {
+  var t = document.getElementById('b1-toast');
+  t.textContent = m; t.style.display = 'block';
+  setTimeout(function(){ t.style.display = 'none'; }, 2200);
+}
+ 
+/* ---- wait chart ---- */
+function waitChart(cb) {
+  if (window.Chart) { cb(); }
+  else {
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';
+    s.onload = cb;
+    document.head.appendChild(s);
   }
+}
  
-  waitChart(function() {
-    var isDark = true;
-    var grid  = 'rgba(255,255,255,0.06)';
-    var tick  = '#55556a';
+/* ---- ADD ROW ---- */
+window.b1AddRow = function() {
+  var nombre = prompt('Nombre del anuncio (ej: [VH] AD Vendedor 01):');
+  if (!nombre) return;
+  var gasto = parseFloat(prompt('Gasto ($):') || '0');
+  var imp   = parseInt(prompt('Impresiones:') || '0');
+  var cli   = parseInt(prompt('Clics:') || '0');
+  var frec  = parseFloat(prompt('Frecuencia:') || '1');
+  var lm    = parseInt(prompt('Leads Meta:') || '0');
+  var vis   = parseInt(prompt('Visitas (para C/Visita):') || '0');
  
-    // --- Gasto diario (línea verde) ---
-    new Chart(document.getElementById('b1-gasto-chart'), {
-      type: 'line',
-      data: {
-        labels: ['L','M','X','J','V','S','D'],
-        datasets: [{
-          data: [95, 118, 102, 130, 145, 110, 126],
-          borderColor: '#1db87a',
-          backgroundColor: 'rgba(29,184,122,0.08)',
-          fill: true, tension: 0.4,
-          pointRadius: 3, pointBackgroundColor: '#1db87a'
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { grid: { color: grid }, ticks: { color: tick, font: { size: 11 } } },
-          y: { grid: { color: grid }, ticks: { color: tick, font: { size: 11 }, callback: function(v){ return '$'+v; } } }
-        }
-      }
+  var ctr  = imp  > 0 ? cli  / imp  * 100       : 0;
+  var cpm  = imp  > 0 ? gasto / imp  * 1000     : 0;
+  var cpc  = cli  > 0 ? gasto / cli             : 0;
+  var cplm = lm   > 0 ? gasto / lm              : 0;
+  var cpv  = vis  > 0 ? gasto / vis             : 0;
+ 
+  b1Ads.push({ nombre:nombre, gasto:gasto, imp:imp, cli:cli, frec:frec, lm:lm, ctr:ctr, cpm:cpm, cpc:cpc, cplm:cplm, cpv:cpv });
+  b1Refresh();
+};
+ 
+/* ---- DELETE ROW ---- */
+window.b1DelRow = function(i) {
+  b1Ads.splice(i, 1);
+  b1Refresh();
+};
+ 
+/* ---- REFRESH ALL ---- */
+function b1Refresh() {
+  b1UpdateMetrics();
+  b1BuildTable();
+  b1BuildTop3();
+  waitChart(function(){ b1BuildGasto(); b1BuildLeads(); });
+}
+ 
+/* ---- METRICS ---- */
+function b1UpdateMetrics() {
+  if (!b1Ads.length) {
+    ['b1-v-gasto','b1-v-imp','b1-v-cli','b1-v-lm','b1-v-ctr','b1-v-cpm','b1-v-cpc','b1-v-cplm','b1-v-cpv'].forEach(function(id){
+      document.getElementById(id).textContent = '—';
     });
+    return;
+  }
+  var totG   = b1Ads.reduce(function(s,r){ return s+r.gasto; }, 0);
+  var totImp = b1Ads.reduce(function(s,r){ return s+r.imp;   }, 0);
+  var totCli = b1Ads.reduce(function(s,r){ return s+r.cli;   }, 0);
+  var totLM  = b1Ads.reduce(function(s,r){ return s+r.lm;    }, 0);
+  var ctr    = totImp > 0 ? totCli/totImp*100 : 0;
+  var cpm    = totImp > 0 ? totG/totImp*1000  : 0;
+  var cpc    = totCli > 0 ? totG/totCli       : 0;
+  var cplm   = totLM  > 0 ? totG/totLM        : 0;
+  var totVis = b1Ads.reduce(function(s,r){ return s + (r.cpv>0 ? r.gasto/r.cpv : 0); }, 0);
+  var cpv    = totVis > 0 ? totG/totVis : 0;
  
-    // --- Leads vs CPL (barras + línea) ---
-    var adsData = [
-      { label: 'Vendedor 01', leads: 28, cpl: 0.62 },
-      { label: 'Vendedor 02', leads: 21, cpl: 1.06 },
-      { label: 'Remarketing', leads: 48, cpl: 0.71 },
-      { label: 'Captación LF', leads: 62, cpl: 0.67 },
-      { label: 'Test Ads',    leads: 12, cpl: 0.77 }
-    ];
+  document.getElementById('b1-v-gasto').textContent = '$' + totG.toFixed(2).replace('.', ',');
+  document.getElementById('b1-v-imp').textContent   = totImp.toLocaleString('es-AR');
+  document.getElementById('b1-v-cli').textContent   = totCli.toLocaleString('es-AR');
+  document.getElementById('b1-v-lm').textContent    = totLM.toLocaleString('es-AR');
+  document.getElementById('b1-v-ctr').textContent   = ctr.toFixed(2).replace('.', ',') + '%';
+  document.getElementById('b1-v-cpm').textContent   = '$' + cpm.toFixed(2).replace('.', ',');
+  document.getElementById('b1-v-cpc').textContent   = '$' + cpc.toFixed(2).replace('.', ',');
+  document.getElementById('b1-v-cplm').textContent  = '$' + cplm.toFixed(2).replace('.', ',');
+  document.getElementById('b1-v-cpv').textContent   = cpv > 0 ? '$' + cpv.toFixed(2).replace('.', ',') : '—';
+}
  
-    var leadsChart = new Chart(document.getElementById('b1-leads-chart'), {
-      type: 'bar',
-      data: {
-        labels: adsData.map(function(d){ return d.label; }),
-        datasets: [
-          {
-            label: 'Leads',
-            data: adsData.map(function(d){ return d.leads; }),
-            backgroundColor: '#7c6fe0',
-            yAxisID: 'yL', order: 2, borderRadius: 3
-          },
-          {
-            label: 'CPL Meta',
-            data: adsData.map(function(d){ return d.cpl; }),
-            type: 'line',
-            borderColor: '#1db87a',
-            backgroundColor: 'transparent',
-            pointBackgroundColor: '#1db87a',
-            pointRadius: 5, tension: 0.3,
-            yAxisID: 'yC', order: 1
-          }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: function(ctx) {
-                return ctx.dataset.yAxisID === 'yC'
-                  ? ' CPL: $' + ctx.parsed.y.toFixed(2)
-                  : ' Leads: ' + ctx.parsed.y;
-              }
-            }
-          }
-        },
-        scales: {
-          x: { grid: { color: grid }, ticks: { color: tick, font: { size: 10 }, autoSkip: false, maxRotation: 25 } },
-          yL: { position: 'left', grid: { color: grid }, ticks: { color: '#7c6fe0', font: { size: 11 } } },
-          yC: { position: 'right', min: 0, max: 1.4, grid: { drawOnChartArea: false }, ticks: { color: '#1db87a', font: { size: 11 }, callback: function(v){ return '$'+v.toFixed(2); } } }
-        },
-        onClick: function(evt) {
-          var pts = leadsChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
-          if (!pts.length) { document.getElementById('b1-scatter-tip').style.display = 'none'; return; }
-          var d   = adsData[pts[0].index];
-          var tip = document.getElementById('b1-scatter-tip');
-          tip.innerHTML =
-            '<div class="b1-tip-title">' + d.label + '</div>' +
-            '<div class="b1-tip-row"><span class="b1-tip-lbl">Leads</span><span class="b1-tip-val">' + d.leads + '</span></div>' +
-            '<div class="b1-tip-row"><span class="b1-tip-lbl">CPL</span><span class="b1-tip-val">$' + d.cpl.toFixed(2) + '</span></div>';
-          var wr = document.getElementById('b1-leads-chart').parentElement.getBoundingClientRect();
-          var l  = evt.clientX - wr.left + 10;
-          var t  = evt.clientY - wr.top  - 20;
-          if (l + 180 > wr.width) l = evt.clientX - wr.left - 190;
-          tip.style.left = l + 'px';
-          tip.style.top  = t + 'px';
-          tip.style.display = 'block';
-        }
+/* ---- TABLE ---- */
+function b1BuildTable() {
+  var tbody = document.getElementById('b1-ads-tbody');
+  if (!b1Ads.length) {
+    tbody.innerHTML = '<tr class="b1-empty-row"><td colspan="12">No hay anuncios cargados. Hacé clic en "+ Agregar anuncio" para comenzar.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = b1Ads.map(function(r, i) {
+    /* gasto siempre verde */
+    var gastoCell = '<td class="b1-tg">$' + r.gasto.toFixed(2).replace('.',',') + '</td>';
+    var cplColor  = r.cplm > 0 && r.cplm <= 1 ? 'b1-tg' : r.cplm <= 2 ? 'b1-ta' : '';
+    return '<tr>' +
+      '<td class="b1-tname">' + r.nombre + '</td>' +
+      gastoCell +
+      '<td>' + r.imp.toLocaleString('es-AR') + '</td>' +
+      '<td>' + r.cli.toLocaleString('es-AR') + '</td>' +
+      '<td>' + r.frec.toFixed(1).replace('.',',') + '</td>' +
+      '<td class="b1-tp">'  + r.lm + '</td>' +
+      '<td class="b1-ta">'  + r.ctr.toFixed(2).replace('.',',')  + '%</td>' +
+      '<td>$' + r.cpm.toFixed(2).replace('.',',')  + '</td>' +
+      '<td>$' + r.cpc.toFixed(2).replace('.',',')  + '</td>' +
+      '<td class="' + cplColor + '">$' + r.cplm.toFixed(2).replace('.',',') + '</td>' +
+      '<td>' + (r.cpv > 0 ? '$' + r.cpv.toFixed(2).replace('.',',') : '—') + '</td>' +
+      '<td><button onclick="b1DelRow(' + i + ')" style="font-size:11px;padding:2px 7px;border-radius:6px;border:1px solid rgba(255,255,255,.10);background:transparent;color:#55556a;cursor:pointer;" onmouseover="this.style.color=\'#e85555\'" onmouseout="this.style.color=\'#55556a\'">✕</button></td>' +
+    '</tr>';
+  }).join('');
+}
+ 
+/* ---- TOP 3 ---- */
+function b1BuildTop3() {
+  var card = document.getElementById('b1-top3-card');
+  if (b1Ads.length < 1) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  var sorted = b1Ads.slice().sort(function(a, b){ return a.cplm - b.cplm; });
+  var top = sorted.slice(0, 3);
+  var ranks = [
+    { cls:'gold',   label:'#1 — Mejor CPL Meta' },
+    { cls:'silver', label:'#2 — Mejor CTR' },
+    { cls:'bronze', label:'#3 — Mejor CPC' }
+  ];
+  document.getElementById('b1-top3-grid').innerHTML = top.map(function(r, i) {
+    var rk = ranks[i] || { cls:'silver', label:'#'+(i+1) };
+    return '<div class="b1-t3card' + (i===0?' winner':'') + '">' +
+      '<div class="b1-t3rank ' + rk.cls + '">' + rk.label + '</div>' +
+      '<div class="b1-t3name">' + r.nombre + '</div>' +
+      '<div class="b1-t3stats">' +
+        '<span class="b1-t3s g">$' + r.cplm.toFixed(2).replace('.',',') + ' CPL</span>' +
+        '<span class="b1-t3s p">'  + r.lm + ' leads</span>' +
+        '<span class="b1-t3s a">'  + r.ctr.toFixed(2).replace('.',',') + '% CTR</span>' +
+        '<span class="b1-t3s">$'   + r.gasto.toFixed(2).replace('.',',') + '</span>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+ 
+/* ---- GASTO CHART ---- */
+function b1BuildGasto() {
+  if (b1Charts['gasto']) { b1Charts['gasto'].destroy(); b1Charts['gasto'] = null; }
+  var ctx = document.getElementById('b1-gasto-chart');
+  if (!b1Ads.length) { return; }
+  var labels = b1Ads.map(function(r){ return r.nombre.replace('[VH] ','').slice(0,12); });
+  var data   = b1Ads.map(function(r){ return r.gasto; });
+  b1Charts['gasto'] = new Chart(ctx, {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ data: data, backgroundColor: '#1db87a', borderRadius: 4 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(c){ return ' $' + c.parsed.y.toFixed(2); } } } },
+      scales: {
+        x: { grid: { color: gridC }, ticks: { color: tickC, font: { size: 10 }, maxRotation: 30 } },
+        y: { grid: { color: gridC }, ticks: { color: tickC, font: { size: 11 }, callback: function(v){ return '$'+v; } } }
       }
-    });
- 
-    document.addEventListener('click', function(e) {
-      var tip = document.getElementById('b1-scatter-tip');
-      if (tip && !tip.contains(e.target) && e.target.id !== 'b1-leads-chart') {
-        tip.style.display = 'none';
-      }
-    });
+    }
   });
+}
+ 
+/* ---- LEADS vs CPL CHART ---- */
+function b1BuildLeads() {
+  if (b1Charts['leads']) { b1Charts['leads'].destroy(); b1Charts['leads'] = null; }
+  var ctx = document.getElementById('b1-leads-chart');
+  if (!b1Ads.length) { return; }
+  var labels   = b1Ads.map(function(r){ return r.nombre.replace('[VH] ','').slice(0,12); });
+  var leadsD   = b1Ads.map(function(r){ return r.lm; });
+  var cplD     = b1Ads.map(function(r){ return parseFloat(r.cplm.toFixed(2)); });
+  var leadsChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'Leads', data: leadsD, backgroundColor: '#7c6fe0', yAxisID: 'yL', order: 2, borderRadius: 3 },
+        { label: 'CPL Meta', data: cplD, type: 'line', borderColor: '#1db87a', backgroundColor: 'transparent', pointBackgroundColor: '#1db87a', pointRadius: 5, tension: 0.3, yAxisID: 'yC', order: 1 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: function(c){ return c.dataset.yAxisID === 'yC' ? ' CPL: $' + c.parsed.y.toFixed(2) : ' Leads: ' + c.parsed.y; } } }
+      },
+      scales: {
+        x: { grid: { color: gridC }, ticks: { color: tickC, font: { size: 10 }, autoSkip: false, maxRotation: 25 } },
+        yL: { position: 'left', grid: { color: gridC }, ticks: { color: '#7c6fe0', font: { size: 11 } } },
+        yC: { position: 'right', min: 0, grid: { drawOnChartArea: false }, ticks: { color: '#1db87a', font: { size: 11 }, callback: function(v){ return '$' + v.toFixed(2); } } }
+      },
+      onClick: function(evt) {
+        var pts = leadsChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        if (!pts.length) { document.getElementById('b1-scatter-tip').style.display = 'none'; return; }
+        var r = b1Ads[pts[0].index];
+        var tip = document.getElementById('b1-scatter-tip');
+        tip.innerHTML =
+          '<div class="b1-tip-title">' + r.nombre + '</div>' +
+          '<div class="b1-tip-row"><span class="b1-tip-lbl">Leads</span><span class="b1-tip-val">' + r.lm + '</span></div>' +
+          '<div class="b1-tip-row"><span class="b1-tip-lbl">CPL Meta</span><span class="b1-tip-val">$' + r.cplm.toFixed(2) + '</span></div>' +
+          '<div class="b1-tip-row"><span class="b1-tip-lbl">Gasto</span><span class="b1-tip-val">$' + r.gasto.toFixed(2) + '</span></div>';
+        var wr = ctx.parentElement.getBoundingClientRect();
+        var l = evt.clientX - wr.left + 10;
+        var t = evt.clientY - wr.top - 20;
+        if (l + 180 > wr.width) l = evt.clientX - wr.left - 190;
+        tip.style.left = l + 'px'; tip.style.top = t + 'px'; tip.style.display = 'block';
+      }
+    }
+  });
+  b1Charts['leads'] = leadsChart;
+  ctx.addEventListener('mousemove', function(e){
+    var pts = leadsChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+    ctx.style.cursor = pts.length ? 'pointer' : 'default';
+  });
+}
+ 
+/* ---- EXPORT CSV ---- */
+window.b1ExportCSV = function() {
+  if (!b1Ads.length) { b1Toast('No hay anuncios para exportar.'); return; }
+  var h = ['Nombre','Gasto','Impresiones','Clics','Frec.','Leads Meta','CTR%','CPM','CPC','CPL Meta','C/Visita'];
+  var csv = [h.join(',')].concat(b1Ads.map(function(r){
+    return [r.nombre, r.gasto.toFixed(2), r.imp, r.cli, r.frec.toFixed(1), r.lm,
+      r.ctr.toFixed(2), r.cpm.toFixed(2), r.cpc.toFixed(2), r.cplm.toFixed(2),
+      r.cpv > 0 ? r.cpv.toFixed(2) : ''].join(',');
+  })).join('\n');
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = 'rendimiento_ads_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+  b1Toast('Reporte exportado.');
+};
+ 
+/* ---- CLOSE TIP ---- */
+document.addEventListener('click', function(e) {
+  var tip = document.getElementById('b1-scatter-tip');
+  if (tip && !tip.contains(e.target) && e.target.id !== 'b1-leads-chart') tip.style.display = 'none';
+});
+ 
 })();
 </script>
+ 
       </section>
  
       <!-- SECTION: DATOS & CONVERSIONES -->
